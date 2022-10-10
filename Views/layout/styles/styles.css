@@ -1,0 +1,55 @@
+body{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(227, 212, 241);
+}
+
+.login-screen{
+    position: relative;
+    text-align: center;
+    margin: auto;
+    margin-bottom: auto;
+    padding-top: 150px;
+}
+
+.h2-login{
+    font-size: 35px;
+    color: rgb(116, 27, 199);
+}
+
+.h2-login :hover{
+    color: rgb(244, 240, 255);
+    transition-delay: ease-in-out 2ms;
+}
+.label{
+    position: absolute;
+
+}
+
+.form{
+    position: absolute;
+}
+
+.form-input{
+    position: absolute;
+    text-align: center;
+    margin-left: 10px ;
+    
+}
+
+.footer{
+    margin-bottom: 10%;
+    
+}
+
+.input-text-login{
+    display: inline;
+    border-radius: 5%;
+    height: 30px;
+    width: 300px;
+    border-color: rgb(210, 199, 212);
+}
+
+.input-text-login:hover{
+    background-color: rgb(210, 199, 212);
+    transition-delay: 2ms;
+}
