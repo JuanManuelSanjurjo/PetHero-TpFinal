@@ -1,0 +1,149 @@
+html{
+  height: 100%;
+}
+body{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #46016e;
+  min-height: 100%;
+  background-image: linear-gradient(to bottom right,#d9c2ee,#aa7cc5 );
+  background-attachment: fixed;
+}
+/*  background-color: #d9c2ee;*/
+
+h1,h2{
+  text-shadow: 1px 1px  rgb(71, 56, 75);
+}
+
+h1:hover,
+h2:hover,
+input[type=email]:hover,
+input[type=password]:hover,
+input[type=text]:hover {
+  transition: ease-in-out 0.2s;
+  letter-spacing: 10px;
+  color: #ff9900;
+}
+
+input[type=email], 
+input[type=password],
+input[type=text] {
+  width: 50%;
+  padding: 12px 10px;
+  margin: 8px 0;
+  display:inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  text-align: center;
+}
+hr{
+ border: 1px solid#5d0391;
+ width: 50%;
+}
+
+input[type=radio]{
+  accent-color:#5d0391;
+  height: 25px;
+  width: 25px;
+}
+
+input[type=radio]:hover{
+  transform: scale(1.3);
+  transition:  ease-in-out 0.2s;
+}
+
+.p-text{
+  display: inline-block;
+  margin: 10px;
+  font-size:  20px;
+  font-weight:  bold;
+}
+
+a{
+  color: #46016e;
+}
+
+a:visited{
+ color: #46016e;
+}
+
+h1 a{
+  text-decoration: none;
+ }
+
+h1{
+  text-align: center;
+  position: relative;
+  font-size: 50px;
+  font-weight: bolder;
+  color: #46016e;
+}
+
+.h2-login:hover{
+  color: #ff7b00;
+  transition: ease-in-out 0.2s;
+}
+  
+.login-button {
+    /*background-image: linear-gradient(to bottom right, #6d04aa 0%, #9733EE  60%, #ff9900 100%);*/
+    background: linear-gradient( #6d04aa, #5f04aa);
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    border-radius: 10px;
+  }
+  
+  .login-button:hover {
+    opacity: 0.8;
+    background: linear-gradient( #ff9900, #e97100);
+    transition: ease-in-out 0.2s;
+    scale: 1.05;
+  }
+  
+  .cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+  }
+  
+  .imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+  }
+  
+  img.avatar {
+    width: 15%;
+  }
+  img.avatar:hover {
+    filter: grayscale();
+    transition: ease-in-out 0.5s;
+  }
+
+  
+  .container {
+    padding: 5px;
+    text-align: center;
+  }
+  
+  span.psw {
+    float: right;
+    padding-top: 16px;
+  }
+  @media screen and (max-width: 300px) {
+    span.psw {
+       display: block;
+       float: none;
+    }
+    .cancelbtn {
+       width: 100%;
+    }
+  }
+
+  .footer{
+    bottom: 0;
+    text-align: center;
+  }
+
+         
