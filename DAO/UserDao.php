@@ -1,7 +1,8 @@
 <?php
 namespace DAO;
 
-
+use Models\Keeper as Keeper;
+use Models\Owner as Owner;
 use Models\User as User;
 
 class UserDao{
@@ -28,15 +29,13 @@ class UserDao{
         });
         $users = array_values($users); //Reordering array indexes
         return (count($users) > 0) ? $users[0] : null;
-
     }
-
 
     public function register(User $user){
 
         $this->retrieveData();
-        
-        $user->setId($this->getNextId());  // SIGUE INDICANDO EN NULL EL ID
+
+        $user->setId($this->getNextId());  // SIGUE INDICANDO EN NULL EL ID      
         
         array_push($this->userList, $user);
 
@@ -50,6 +49,45 @@ class UserDao{
 
         return $this->userList;
     }
+
+    public function getKeepers(){
+        $this->retrieveData();
+        $keeperList = [];
+
+        foreach($this->userList as $user){
+            if($user->getUserType() == "keeper"){
+                array_push($keeperList,$user);
+            }
+        }
+        return $keeperList;
+    }
+
+    public function setPetType($size){
+        $sessionUser = $_SESSION["loggedUser"];
+        $sessionId = $sessionUser->getId();
+
+        $this->retrieveData();
+        foreach($this->userList as $user){
+            if($user->getId() == $sessionId && $user instanceof Keeper)
+                $user->setPetType($size);
+        }
+        $this->saveData();
+
+    }
+
+    public function setCompensation($compensation){
+        $sessionUser = $_SESSION["loggedUser"];
+        $sessionId = $sessionUser->getId();
+
+        $this->retrieveData();
+        foreach($this->userList as $user){
+            if($user->getId() == $sessionId && $user instanceof Keeper)
+                $user->setCompensation($compensation);
+        }
+        $this->saveData();
+
+    }
+
 /*
     public function removeUser($id)
         {            
@@ -74,14 +112,31 @@ class UserDao{
                 
                 foreach($contentArray as $content)
                 {
-                    $user = new User();
-                    $user->setId($content["id"]);
-                    $user->setMail($content["mail"]);
-                    $user->setPassword($content["password"]);
-                    $user->setUserName($content["userName"]);
-                    $user->setName($content["name"]);
-                    $user->setSurname($content["surname"]);
-                    $user->setUserType($content["userType"]);
+                    if($content["userType"]=="keeper"){
+                        $user = new Keeper();
+                        $user->setId($content["id"]);
+                        $user->setMail($content["mail"]);
+                        $user->setPassword($content["password"]);
+                        $user->setUserName($content["userName"]);
+                        $user->setName($content["name"]);
+                        $user->setSurname($content["surname"]);
+                        $user->setUserType($content["userType"]);
+                        $user->setCompensation($content["compensation"]);
+                        $user->setPetType($content["petType"]);
+                        $user->setAvailabilityList($content["availabilityList"]);
+
+                    }else if($content["userType"]=="owner"){
+
+                        $user = new Owner();
+                        $user->setId($content["id"]);
+                        $user->setMail($content["mail"]);
+                        $user->setPassword($content["password"]);
+                        $user->setUserName($content["userName"]);
+                        $user->setName($content["name"]);
+                        $user->setSurname($content["surname"]);
+                        $user->setUserType($content["userType"]);
+                        $user->setPetList($content["petList"]);
+                    }
 
                     array_push($this->userList, $user);
                 }
@@ -105,6 +160,14 @@ class UserDao{
                 $valuesArray["surname"] = $user->getSurname();
                 $valuesArray["userType"] = $user->getUserType();
 
+                if( $valuesArray["userType"] =="keeper"){
+                    $valuesArray["compensation"] = $user->getCompensation();
+                    $valuesArray["petType"] = $user->getPetType();
+                    $valuesArray["availabilityList"] = $user->getAvailabilityList();
+                }elseif($valuesArray["userType"] =="owner"){
+                    $valuesArray["petList"] = $user->getPetList();
+                }
+              
                 array_push($arrayToEncode, $valuesArray);
             }
 
@@ -113,7 +176,6 @@ class UserDao{
             file_put_contents($this->fileName, $fileContent);
     
     }
-
 
     private function getNextId()
     {

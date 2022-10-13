@@ -1,45 +1,33 @@
-<?php
- include('header.php');
- include('nav-bar.php');
-?>
+<?php  include('header.php'); ?>
 
-<div class="wrapper row4">
-  <main class="hoc container clear"> 
-    <!-- main body -->
-    <div class="content"> 
-      <div class="scrollable">
-      <form action="" method="">
+<form action="<?php echo FRONT_ROOT."Home/showKeeperList" ?>" method="get">
         <table style="text-align:center;">
           <thead>
             <tr>
-              <th style="width: 15%;">******</th>
-              <th style="width: 30%;">******</th>
-              <th style="width: 30%;">******</th>
-              <th style="width: 15%;">******</th>
-              <th style="width: 10%;">******</th>
+              <th style="width: 15%;">Username</th>
+              <th style="width: 30%;">Name</th>
+              <th style="width: 30%;">Compensation</th>
+              <th style="width: 15%;">Dogs Accepted</th>
+              <th style="width: 10%;">Availability</th>
             </tr>
           </thead>
           <tbody>
-
+            <?php    foreach($keeperList as $keeper){    ?>
               <tr>
-                <td>     </td>
-                <td>     </td>
-                <td>     </td>
-                <td>     </td>
+                <td>  <?php echo $keeper->getUsername()    ?></td>
+                <td>  <?php echo $keeper->getName()   ?></td>
+                <td>  <?php echo $keeper->getComepnsation()   ?></td>
+                <td>  <?php echo $keeper->getPetType()   ?></td>
+                <td>  <?php echo $keeper->getAvailabilityList()   ?></td>
                 <td>
-                  <button type="submit" name="" class="btn" value=""> ****** </button>
+                  <button type="submit" name="id" class="btn" value="<?php echo $cel->getId();  ?>"> Remove </button>
                 </td>
               </tr>
-
+            <?php  };  ?>
+            
           </tbody>
-        </table></form> 
-      </div>
-    </div>
-    <!-- / main body -->
-    <div class="clear"></div>
-  </main>
-</div>
+        </table>
+      </form> 
 
-<?php 
-  include('footer.php');
-?>
+
+<?php    include('footer.php'); ?>

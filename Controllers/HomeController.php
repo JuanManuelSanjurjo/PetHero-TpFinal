@@ -3,6 +3,8 @@ namespace Controllers;
 
 use DAO\UserDao as UserDao;
 use Models\User as User;
+use Models\Keeper as Keeper;
+use Models\Owner as Owner;
 
 class HomeController{
     private $UserDao;  
@@ -32,16 +34,36 @@ class HomeController{
                 session_destroy(); // NO SE SI CON EL FRAMEWORK ESTO VA ACA
                 $this->showRegisterView();
             }else{
-                $user = new User();
-                $user->setMail($email);
-                $user->setPassword($password);
-                $user->setUserName($userName);
-                $user->setName($name);
-                $user->setSurname($surname);
-                $user->setUserType($userType);
-    
-                $this->UserDao->register($user);
-    
+                if($userType == "keeper"){
+                    $user = new Keeper();
+                    $user->setMail($email);
+                    $user->setPassword($password);
+                    $user->setUserName($userName);
+                    $user->setName($name);
+                    $user->setSurname($surname);
+                    $user->setUserType($userType);
+                    $user->setCompensation("");
+                    $user->setPetType("");
+                    $user->setAvailabilityList("");
+
+                    $_SESSION["loggedUser"]= $user; 
+        
+                    $this->UserDao->register($user);
+                }else{
+                    $user = new Owner();
+                    $user->setMail($email);
+                    $user->setPassword($password);
+                    $user->setUserName($userName);
+                    $user->setName($name);
+                    $user->setSurname($surname);
+                    $user->setUserType($userType);
+                    $user->setPetList("");
+
+                    $_SESSION["loggedUser"]= $user; 
+        
+                    $this->UserDao->register($user);
+                }
+                
                 $this->showHomeView($user->getUserType());
             }
         }  
@@ -88,15 +110,39 @@ class HomeController{
     }
 
     public function showKeeperList(){
-
-        /// HAY QUE HACER VISTA Y FUNCION
+        $keeperList = $this->UserDao->getKeepers();
+        require_once(VIEWS_PATH."keeper-list.php");
     }
+    public function showTypeOfPet(){
+        if(isset($_SESSION["loggedUser"])){
+            require_once(VIEWS_PATH."type-pets.php");
+        }else{
+            $this->Index();
+        }
+    }
+
+    public function setPetType($size){
+       $this->UserDao->setPetType($size);
+       if(isset($_SESSION["loggedUser"])){
+        $this->showHomeView($_SESSION["loggedUser"]->getUserType());
+       }else{
+        $this->Index();
+       }
+      
+    }
+
+    public function setCompensation($compensation){
+        $this->UserDao->setCompensation($compensation);
+        $this->showHomeView($_SESSION["loggedUser"]->getUserType());
+    }
+
 
 
     public function login($email,$pass){
         $user = $this->UserDao->getByEmail($email);
       
         if($user!=null && $user->getPassword() == $pass){
+            $_SESSION["loggedUser"]= $user; 
             $this->showHomeView($user->getUserType());
         }else{
             echo '<script>alert("Las credenciales no coinciden, intente nuevamente")</script>';

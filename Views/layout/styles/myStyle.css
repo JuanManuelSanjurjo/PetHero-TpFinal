@@ -18,56 +18,67 @@ h1:hover,
 h2:hover,
 input[type=email]:hover,
 input[type=password]:hover,
-input[type=text]:hover {
+input[type=text]:hover,
+input[type=number]:hover
+ {
   transition: ease-in-out 0.2s;
   letter-spacing: 10px;
   color: #ff9900;
 }
 textarea{
-  max-width: 90%;
+  max-width: 50%;
   min-width: 50%;
   min-height: 100px;
-  max-height: 400px;
+  max-height: 300px;
   font-size: 15px;
-  border-color:  #46016e;
+  border-width: 2px;
+  border-color: #46016e;
+  border-radius: 4px;
+}
+textarea:hover{
+  transition: ease-in-out 0.2s;
+  border-color:  #ff9900;
 }
 
+
 .dog-select{
+  display: block;
   margin: auto;
   border: 1px solid  #46016e;
-  width: 20%;
-  height: 30px;
   text-align: center;
   display: inline-block;
+  font-weight: bolder;
 }
+
+.dog-select:hover{
+  font-weight: bolder;
+  transition: ease-in-out 0.2s;
+  letter-spacing: 10px;
+}
+
 
 input[type=file]{
 
   background-color: #46016e;
-  color: white;
+  color:#ccc;
+  width: 30%;
   padding: 0.5rem;
   font-family: sans-serif;
   border-radius: 0.3rem;
   cursor: pointer;
-  margin-top: 1rem;
-
-  /*
-  display: inline-block;
+  display: block;
   margin: auto;
-  width: 30%;
-  padding: 12px 10px;
-  margin: 8px 0;
-  display:inline-block;
-  border: 1px solid  #46016e;
-  box-sizing: border-box;
-  background-color: #ab66d3;
-  border-radius: 4px;
-  */
+}
+input[type=file]:hover{
+  background-color: #7e18b9;
+  transition: ease-in-out 0.2s;
 }
 
 input[type=email], 
 input[type=password],
-input[type=text] {
+input[type=text],
+input[type=number],
+.dog-select {
   width: 50%;
   padding: 12px 10px;
   margin: 8px 0;
@@ -75,6 +86,10 @@ input[type=text] {
   border: 1px solid #ccc;
   box-sizing: border-box;
   text-align: center;
+}
+
+input[type=number]{
+  width: 30%;
 }
 
 hr{
@@ -138,11 +153,33 @@ h1{
 }
 
 .large-button:hover {
+  transition: ease-in-out 0.3s;
   opacity: 0.8;
   background: linear-gradient( #ff9900, #e97100);
-  transition: ease-in-out 0.2s;
   scale: 1.05;
 }
+
+.medium-button {
+  /*background-image: linear-gradient(to bottom right, #6d04aa 0%, #9733EE  60%, #ff9900 100%);*/
+  background: linear-gradient( #6d04aa, #5f04aa);
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+  border-radius: 10px;
+}
+
+.medium-button:hover {
+transition: ease-in-out 0.2s;
+opacity: 0.8;
+background: linear-gradient( #ff9900, #e97100);
+scale: 1.01;
+
+}
+
+
 
 .cancelbtn {
   width: auto;

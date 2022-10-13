@@ -12,10 +12,11 @@ class PetController{
     
     function __construct(){
         $this->PetDao = new PetDao();
-       // $this->UserDao = new UserDao();
+        $this->UserDao = new UserDao();
     }
 
-    public function registerPet(User $user,$name,  $photo, $breed, $size, $vaxPlanImg, $observations){
+    public function registerPet($name, $breed, $size, $photo, $vaxPlanImg, $observations){
+        $user = $_SESSION["loggedUser"];
 
         $pet = new Pet();
 
@@ -26,8 +27,8 @@ class PetController{
         $pet->setSize($size);
         $pet->setVaxPlanImg($vaxPlanImg);
         $pet->setObservations($observations);
-         
-        $this->PetDao->register($pet);  
+        
+        $this->PetDao->register($pet); 
 
         require_once(VIEWS_PATH."home-owner.php");
     }
@@ -56,7 +57,13 @@ class PetController{
     }
 
     public function showPetList(){
-        require_once(VIEWS_PATH."pet-list.php");  
+
+        if(isset($_SESSION["loggedUser"])){
+            require_once(VIEWS_PATH."pet-list.php");  
+        }else{
+            require_once(VIEWS_PATH."login.php");  
+        }
+        
     }
 
     

@@ -1,3 +1,22 @@
 [
-   
+    {
+        "id": 1,
+        "idOwner": null,
+        "name": "Pochita",
+        "photo": "cheems samurai.jpg",
+        "breed": "Chainsaw dog",
+        "size": "small",
+        "vaxPlanImg": "cheems samurai.jpg",
+        "observations": "asdasdasd"
+    },
+    {
+        "id": 2,
+        "idOwner": null,
+        "name": "Pochita",
+        "photo": "cheems samurai.jpg",
+        "breed": "Chainsaw dog",
+        "size": "small",
+        "vaxPlanImg": "cheems samurai.jpg",
+        "observations": "asdasdasd"
+    }
 ]

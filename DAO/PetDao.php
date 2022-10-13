@@ -25,7 +25,7 @@ class PetDao{
 
         $this->retrieveData();
         
-        $pet->setId($this->getNextId());  // SIGUE INDICANDO EN NULL EL ID
+        $pet->setId($this->getNextId());  
         
         array_push($this->petList, $pet);
 
