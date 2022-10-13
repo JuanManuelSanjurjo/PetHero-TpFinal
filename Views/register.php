@@ -28,8 +28,8 @@
     <br>
     <p class="p-text"> How do you want to register as?</p>
     <br>
-    <input type="radio" name="userType" id="owner" required > <p class="p-text">Owner</p>  
-    <input type="radio" name="userType" id="keeper" required> <p class="p-text" >Keeper</p>  
+    <input type="radio" name="userType" id="owner" value="owner" required > <p class="p-text">Owner</p>  
+    <input type="radio" name="userType" id="keeper" value="keeper" required> <p class="p-text" >Keeper</p>  
     <br>
     <br>
 
