@@ -16,13 +16,13 @@
     <input type="text" placeholder="Enter your surname" name="surname" id="Surname" required>
     <br>
     <label for="psw"><b></b></label>
-    <input type="password" placeholder="Enter Password" name="pass" id="psw" required>
+    <input type="password" placeholder="Enter Password" name="pass" id="Pass" required>
     <br>
     <label for="psw-repeat"><b></b></label>
-    <input type="password" placeholder="Repeat Password" name="pass-repeat" id="passRepeat" required>
+    <input type="password" placeholder="Repeat Password" name="pass-repeat" id="PassRepeat" required>
     <hr>
     <label for="userName"><b></b></label>
-    <input type="text" placeholder="Set your username" name="userName" id="user-name" required>
+    <input type="text" placeholder="Set your username" name="user-name" id="UserName" required>
     <br>
     <br>
     <br>
@@ -37,7 +37,7 @@
 
     <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
 
-    <button type="submit" class="login-button">Register</button>
+    <button type="submit" class="large-button">Register</button>
   </div>
   
   <div class="container signin">

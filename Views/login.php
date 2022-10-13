@@ -7,7 +7,7 @@
 
           <form style="text-align: center;" action="<?php echo FRONT_ROOT."Home/login"?>" method="post">
                <div class="imgcontainer">
-               <img src=" <?php echo IMG_PATH."cheems.png"   ?>" alt="Avatar" class="avatar">
+               <img src=" <?php echo FRONT_ROOT.IMG_PATH."cheems.png"?>" alt="Avatar" class="avatar">
                </div>
 
                <p class="p-text" style="font-size: 30px;">Log in</p>
@@ -20,7 +20,7 @@
                <br>
                <br>
                <br>
-               <button type="submit" class="login-button">Login</button>
+               <button type="submit" class="large-button">Login</button>
              
                </div>
 
@@ -28,7 +28,7 @@
           </form>
           <div class="container">
                <form action="<?php echo FRONT_ROOT."Home/showRegisterView"?>">
-                    <button type="submmit" class="login-button">Register</button>
+                    <button type="submmit" class="large-button">Register</button>
                </form>
           </div>
 

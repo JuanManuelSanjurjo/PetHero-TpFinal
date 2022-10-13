@@ -5,7 +5,7 @@ body{
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #46016e;
   min-height: 100%;
-  background-image: linear-gradient(to bottom right,#d9c2ee,#aa7cc5 );
+  background-image: linear-gradient(to bottom ,#d9c2ee,#aa7cc5 );
   background-attachment: fixed;
 }
 /*  background-color: #d9c2ee;*/
@@ -83,7 +83,7 @@ h1{
   transition: ease-in-out 0.2s;
 }
   
-.login-button {
+.large-button {
     /*background-image: linear-gradient(to bottom right, #6d04aa 0%, #9733EE  60%, #ff9900 100%);*/
     background: linear-gradient( #6d04aa, #5f04aa);
     color: white;
@@ -95,7 +95,7 @@ h1{
     border-radius: 10px;
   }
   
-  .login-button:hover {
+  .large-button:hover {
     opacity: 0.8;
     background: linear-gradient( #ff9900, #e97100);
     transition: ease-in-out 0.2s;
@@ -114,7 +114,10 @@ h1{
   }
   
   img.avatar {
+    margin: auto;
     width: 15%;
+    display:block;
+    line-height: 1px;
   }
   img.avatar:hover {
     filter: grayscale();

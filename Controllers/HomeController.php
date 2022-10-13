@@ -19,16 +19,23 @@
 
         public function login($email,$pass){
           
-        if($email == "juanmanuelsanjurjo@hotmail.com" && $pass == 123){
-            $this->showHomeView();
+            if($email == "juanmanuelsanjurjo@hotmail.com" && $pass == 123){
+                $this->showHomeView();
 
-        }else{
-            echo '<script>alert("Las credenciales no coinciden, intente nuevamente")</script>';
-            session_destroy(); // no se si va esto aca
+            }else{
+                echo '<script>alert("Las credenciales no coinciden, intente nuevamente")</script>';
+                session_destroy(); // no se si va esto aca
+                $this->Index();
+            }
+        }
+
+        public function logout(){
+            
+            session_destroy();
             $this->Index();
-        }
 
         }
+       
 
         public function showRegisterView($message = ""){
             echo $message; // no se si funciona asi o hay que pasar el mensaje de otra manera
