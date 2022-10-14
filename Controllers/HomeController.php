@@ -149,6 +149,7 @@ class HomeController{
         echo $message; // no se si funciona asi o hay que pasar el mensaje de otra manera
         require_once(VIEWS_PATH."register.php");
     }
+
    
     
 }

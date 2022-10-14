@@ -18,5 +18,175 @@
         "size": "small",
         "vaxPlanImg": "cheems samurai.jpg",
         "observations": "corta"
+    },
+    {
+        "id": 3,
+        "idOwner": 5,
+        "name": "Carlos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "raza ",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": ""
+    },
+    {
+        "id": 4,
+        "idOwner": 5,
+        "name": "Carlos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "raza ",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": ""
+    },
+    {
+        "id": 5,
+        "idOwner": 5,
+        "name": "Carlos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "raza ",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": ""
+    },
+    {
+        "id": 6,
+        "idOwner": 5,
+        "name": "Carlos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "raza ",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": ""
+    },
+    {
+        "id": 7,
+        "idOwner": 5,
+        "name": "Carlos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "raza ",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": ""
+    },
+    {
+        "id": 8,
+        "idOwner": 5,
+        "name": "Carlos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "raza ",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": ""
+    },
+    {
+        "id": 9,
+        "idOwner": 5,
+        "name": "Carlos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "raza ",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": ""
+    },
+    {
+        "id": 10,
+        "idOwner": 5,
+        "name": "Carlos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "raza ",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": ""
+    },
+    {
+        "id": 11,
+        "idOwner": 5,
+        "name": "Carlos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "raza ",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": ""
+    },
+    {
+        "id": 12,
+        "idOwner": 5,
+        "name": "Carlos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "raza ",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": ""
+    },
+    {
+        "id": 13,
+        "idOwner": 5,
+        "name": "carlitos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "chica",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": "carlitos"
+    },
+    {
+        "id": 14,
+        "idOwner": 5,
+        "name": "carlitos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "chica",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": "carlitos"
+    },
+    {
+        "id": 15,
+        "idOwner": 5,
+        "name": "carlitos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "chica",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": "carlitos"
+    },
+    {
+        "id": 16,
+        "idOwner": 5,
+        "name": "carlitos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "chica",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": "carlitos"
+    },
+    {
+        "id": 17,
+        "idOwner": 5,
+        "name": "carlitos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "chica",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": "carlitos"
+    },
+    {
+        "id": 18,
+        "idOwner": 5,
+        "name": "carlitos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "chica",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": "carlitos"
+    },
+    {
+        "id": 19,
+        "idOwner": 5,
+        "name": "carlitos",
+        "photo": "Screenshot 2022-06-01 213641.png",
+        "breed": "chica",
+        "size": "small",
+        "vaxPlanImg": "Screenshot 2022-04-03 142826.png",
+        "observations": "carlitos"
     }
 ]

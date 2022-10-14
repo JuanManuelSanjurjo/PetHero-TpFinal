@@ -62,6 +62,18 @@ class PetController{
             require_once(VIEWS_PATH."login.php");  
         } 
     }
+
+    public function showMyPetList(){
+        $petList=$this->PetDao->getAll();
+        echo "dale estupido";
+        var_dump($petList);
+        if(isset($_SESSION["loggedUser"])){
+            require_once(VIEWS_PATH."pet-list.php");
+        }
+    }
+
+    
+    
     
 }
 ?>
