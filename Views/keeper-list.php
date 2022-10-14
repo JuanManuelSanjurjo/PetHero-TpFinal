@@ -1,6 +1,6 @@
 <?php  include('header.php'); ?>
 
-<form action="<?php echo FRONT_ROOT."Home/showKeeperList" ?>" method="get">
+<form action="<?php echo FRONT_ROOT."Home/showKeeperList" ?>" method="GET">
         <table style="text-align:center;">
           <thead>
             <tr>
@@ -14,14 +14,14 @@
           <tbody>
             <?php    foreach($keeperList as $keeper){    ?>
               <tr>
-                <td>  <?php echo $keeper->getUsername()    ?></td>
-                <td>  <?php echo $keeper->getName()   ?></td>
-                <td>  <?php echo $keeper->getComepnsation()   ?></td>
-                <td>  <?php echo $keeper->getPetType()   ?></td>
-                <td>  <?php echo $keeper->getAvailabilityList()   ?></td>
-                <td>
+                <td>  <?php echo $keeper->getUsername()               ?></td>
+                <td>  <?php echo $keeper->getName()                   ?></td>
+                <td>  <?php echo $keeper->getCompensation()           ?></td>
+                <td>  <?php echo $keeper->getPetType()                ?></td>
+                <td>  <?php print_r($keeper->getAvailabilityList())   ?></td>
+               <!-- <td>
                   <button type="submit" name="id" class="btn" value="<?php echo $cel->getId();  ?>"> Remove </button>
-                </td>
+                </td> -->
               </tr>
             <?php  };  ?>
             

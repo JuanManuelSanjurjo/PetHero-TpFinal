@@ -18,18 +18,18 @@
             <optgroup label="Dog Size">
                 <option value="small">Small dog</option>
                 <option value="medium">Medium dog</option>
-                <option value="bif">Big dog</option>
+                <option value="big">Big dog</option>
             </optgroup>
         </select> 
     <br>
     <label for="photo"><b class="p-text">Photo of your pet</b></label>
-    <input type="file" placeholder="Photo of your pet" name="photo" id="Photo" required>
+    <input type="file" placeholder="Photo of your pet" name="photo" id="Photo" accept=".jpeg,.jpg,.pdf,.gif,.png,.jfif" required>
     <br>
     <label for="vaxPlanImg"><b class="p-text">Image of the Vaxination schedule</b></label>
-    <input type="file" placeholder="Image of the Vaxination plan" name="vaxPlanImg" id="VaxPlanImg" required>
+    <input type="file" placeholder="Image of the Vaxination plan" name="vaxPlanImg" id="VaxPlanImg" accept=".jpeg,.jpg,.pdf,.gif,.png,.jfif" required>
     <hr>
     <label for="observations"></label> <br>
-    <textarea name="observations" placeholder="Something special the keeper needs to know about" id="Observations" cols="30" rows="10"></textarea> 
+    <textarea name="observations" maxlength="1000" placeholder="Something special the keeper needs to know about (up to 1000 characters)" id="Observations" cols="30" rows="10"></textarea> 
     <br> <!-- aca es donde iria los datos de usuario SESSION -->
     <input type="hidden" id="custId" name="custId" value="<?php $_SESSION["loggedUser"]  ?>"> 
     <br>

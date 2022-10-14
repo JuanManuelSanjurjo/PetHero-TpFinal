@@ -1,24 +1,48 @@
 [
     {
-        "id": null,
-        "mail": "melisa.labra@outlook.com",
-        "password": "Juanma123",
-        "userName": "Meli",
-        "name": "Melisa",
-        "surname": "Labra",
-        "userType": "owner",
-        "petList": ""
-    },
-    {
-        "id": null,
+        "id": 1,
         "mail": "juanmanuelsanjurjo@hotmail.com",
         "password": "Juanma123",
         "userName": "Devendra",
-        "name": "Juanma",
+        "name": "Juan Manuel",
         "surname": "Sanjurjo",
         "userType": "keeper",
-        "compensation": "12000",
-        "petType": "big",
-        "availabilityList": ""
+        "compensation": "2000",
+        "petType": "medium",
+        "availabilityList": []
+    },
+    {
+        "id": 2,
+        "mail": "metal_8920@hotmail.com",
+        "password": "Juanma123",
+        "userName": "Devendra",
+        "name": "juanma",
+        "surname": "Manuel",
+        "userType": "owner",
+        "petList": []
+    },
+    {
+        "id": 3,
+        "mail": "asd@asd.com",
+        "password": "Juanma123",
+        "userName": "asd",
+        "name": "asd",
+        "surname": "asd",
+        "userType": "keeper",
+        "compensation": null,
+        "petType": null,
+        "availabilityList": []
+    },
+    {
+        "id": 4,
+        "mail": "asdasd@asdasdasd.com",
+        "password": "Juanma123",
+        "userName": "ASDASD",
+        "name": "asdasd",
+        "surname": "sanj",
+        "userType": "keeper",
+        "compensation": null,
+        "petType": null,
+        "availabilityList": []
     }
 ]

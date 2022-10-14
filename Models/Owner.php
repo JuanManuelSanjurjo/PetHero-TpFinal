@@ -4,7 +4,7 @@ namespace Models;
 
 
 class Owner extends User{
-    private $petList;
+    private $petList=[];
 
     public function getPetList()
     {

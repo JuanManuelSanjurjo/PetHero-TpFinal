@@ -17,7 +17,7 @@ class User {
 
     public function setId($id)
     {
-        $this->id;
+        $this->id= $id;
 
         return $this;
     }

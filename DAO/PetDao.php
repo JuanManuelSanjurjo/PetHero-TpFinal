@@ -8,7 +8,6 @@ class PetDao{
     private $fileName = ROOT."Data/Pets.json";
 
 
-
     public function getById($id){
         $this->retrieveData();
 
@@ -19,7 +18,6 @@ class PetDao{
         return (count($pets) > 0) ? $pets[0] : null;
 
     }
-
 
     public function register(Pet $pet){
 

@@ -36,39 +36,24 @@ class HomeController{
             }else{
                 if($userType == "keeper"){
                     $user = new Keeper();
-                    $user->setMail($email);
-                    $user->setPassword($password);
-                    $user->setUserName($userName);
-                    $user->setName($name);
-                    $user->setSurname($surname);
-                    $user->setUserType($userType);
-                    $user->setCompensation("");
-                    $user->setPetType("");
-                    $user->setAvailabilityList("");
-
-                    $_SESSION["loggedUser"]= $user; 
-        
-                    $this->UserDao->register($user);
                 }else{
                     $user = new Owner();
-                    $user->setMail($email);
-                    $user->setPassword($password);
-                    $user->setUserName($userName);
-                    $user->setName($name);
-                    $user->setSurname($surname);
-                    $user->setUserType($userType);
-                    $user->setPetList("");
-
-                    $_SESSION["loggedUser"]= $user; 
-        
-                    $this->UserDao->register($user);
                 }
+                $user->setMail($email);
+                $user->setPassword($password);
+                $user->setUserName($userName);
+                $user->setName($name);
+                $user->setSurname($surname);
+                $user->setUserType($userType);
+
+                $_SESSION["loggedUser"]= $user; 
+    
+                $this->UserDao->register($user);
                 
                 $this->showHomeView($user->getUserType());
             }
         }  
     }
-
 
     public function checkMail($email){
         $regexEmail = "/^([a-z\\d\\._-]{1,30})@([a-z\\d_-]{2,15})\\.([a-z]{2,8})(\\.[a-z]{2,8})?$/";
@@ -111,6 +96,7 @@ class HomeController{
 
     public function showKeeperList(){
         $keeperList = $this->UserDao->getKeepers();
+        var_dump($keeperList);
         require_once(VIEWS_PATH."keeper-list.php");
     }
     public function showTypeOfPet(){
@@ -128,7 +114,6 @@ class HomeController{
        }else{
         $this->Index();
        }
-      
     }
 
     public function setCompensation($compensation){
@@ -137,6 +122,10 @@ class HomeController{
     }
 
 
+    public function addAvilability ($dates){
+        $this->UserDao->addAvilability($dates);
+        $this->showHomeView($_SESSION["loggedUser"]->getUserType());
+    }
 
     public function login($email,$pass){
         $user = $this->UserDao->getByEmail($email);

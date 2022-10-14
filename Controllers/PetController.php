@@ -32,8 +32,6 @@ class PetController{
 
         require_once(VIEWS_PATH."home-owner.php");
     }
-      
-
 
     public function Index($message = "")
     {
@@ -62,10 +60,8 @@ class PetController{
             require_once(VIEWS_PATH."pet-list.php");  
         }else{
             require_once(VIEWS_PATH."login.php");  
-        }
-        
+        } 
     }
-
     
 }
 ?>

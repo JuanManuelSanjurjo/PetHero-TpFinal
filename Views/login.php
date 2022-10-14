@@ -2,7 +2,7 @@
 <?php require 'header.php'; ?>
 
           <header class="">
-               <h1>Pet Hero</h1>
+               <h1>PET HERO</h1>
           </header>
 
           <form style="text-align: center;" action="<?php echo FRONT_ROOT."Home/login"?>" method="post">

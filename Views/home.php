@@ -24,7 +24,6 @@
       </form>
   </div>
 
-
   <!-- PARA USUARIO KEEPER   HAY QUE DIVIDIRLO -->
   <div class="container">
     <p class="p-text">Set you availabilities</p>
@@ -40,7 +39,6 @@
       </form>
   </div>
 
-
   <!-- LOG OUT LOG OUT LOG OUT -->
   <div class="container">
     <p class="p-text">Log Out</p>
@@ -49,7 +47,7 @@
       </form>
   </div>
 
-
+  
 <?php    include('footer.php'); ?>
 
 

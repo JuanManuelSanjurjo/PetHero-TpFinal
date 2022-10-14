@@ -27,7 +27,7 @@ class UserDao{
         $users = array_filter($this->userList, function($user) use($id){
             return $user->getId() == $id;
         });
-        $users = array_values($users); //Reordering array indexes
+        $users = array_values($users);
         return (count($users) > 0) ? $users[0] : null;
     }
 
@@ -73,6 +73,19 @@ class UserDao{
         }
         $this->saveData();
 
+    }
+
+    public function addAvilability ($dates){
+        $sessionUser = $_SESSION["loggedUser"];
+        $sessionId = $sessionUser->getId();
+
+        $this->retrieveData();
+        foreach($this->userList as $user){
+            if($user->getId() == $sessionId && $user instanceof Keeper)
+                 array_push($user->getAvailabilityList(),$dates);
+          
+        }
+        $this->saveData();
     }
 
     public function setCompensation($compensation){
@@ -180,9 +193,12 @@ class UserDao{
     private function getNextId()
     {
         $id = 0;
-        foreach($this->userList as $user)
-        {
-            $id = ($user->getId() > $id) ? $user->getId() : $id;
+        if(sizeof($this->userList) != 0){
+            foreach($this->userList as $user)
+            {
+                $id = ($user->getId() > $id) ? $user->getId() : $id;
+
+            }   
         }
         return $id+1;
     }
