@@ -44,5 +44,25 @@
         "compensation": null,
         "petType": null,
         "availabilityList": []
+    },
+    {
+        "id": 5,
+        "mail": "mariano@hotmail.com",
+        "password": "Mariano123",
+        "userName": "Mariano",
+        "name": "Mariano",
+        "surname": "Fernandez",
+        "userType": "owner",
+        "petList": []
+    },
+    {
+        "id": 6,
+        "mail": "mariano2@gmail.com",
+        "password": "Mariano123",
+        "userName": "Mariano2",
+        "name": "Fernandez",
+        "surname": "Mariano",
+        "userType": "owner",
+        "petList": []
     }
 ]
