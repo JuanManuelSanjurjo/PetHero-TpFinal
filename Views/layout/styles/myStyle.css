@@ -11,12 +11,18 @@ body{
 
 h1,h2{
   text-shadow: 1px 2px 2px rgb(124, 17, 153);
+  letter-spacing: 2px;
 }
 
 input[type=date]{
   width: 50%;
 }
 
+.table{
+  text-align: center;
+  border-color: #46016e;
+  font-size: 30px;
+}
 
 input[type=email], 
 input[type=password],
@@ -46,7 +52,7 @@ input[type=number]:hover,
 input[type=date]
 {
   transition: ease-in-out 0.2s;
-  letter-spacing: 10px;
+  letter-spacing: 8px;
   color: #ff9900;
 }
 textarea{

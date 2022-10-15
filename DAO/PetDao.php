@@ -7,7 +7,6 @@ class PetDao{
     private $petList = [];
     private $fileName = ROOT."Data/Pets.json";
 
-
     public function getById($id){
         $this->retrieveData();
 

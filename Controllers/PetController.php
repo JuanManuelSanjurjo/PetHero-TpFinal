@@ -16,6 +16,7 @@ class PetController{
     }
 
     public function registerPet($name, $breed, $size, $photo, $vaxPlanImg, $observations){
+        require_once(VIEWS_PATH."validate-session.php");
         $user = $_SESSION["loggedUser"];
 
         $pet = new Pet();
@@ -36,11 +37,13 @@ class PetController{
     public function Index($message = "")
     {
         echo $message; 
+        require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."login.php");
     }        
 
     public function showHomeView($userType)
     {
+        require_once(VIEWS_PATH."validate-session.php");
         if($userType == "owner"){
             require_once(VIEWS_PATH."home-owner.php");
         }else if($userType == "keeper"){
@@ -51,10 +54,12 @@ class PetController{
     }
 
     public function showAddPet(){
+        require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."add-pet.php");  
     }
 
     public function showPetList(){
+        require_once(VIEWS_PATH."validate-session.php");
 
         if(isset($_SESSION["loggedUser"])){
             require_once(VIEWS_PATH."pet-list.php");  

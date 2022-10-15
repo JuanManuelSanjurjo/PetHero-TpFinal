@@ -1,7 +1,7 @@
 <?php  include('header.php'); ?>
 
-<form action="<?php echo FRONT_ROOT."Home/showKeeperList" ?>" method="GET">
-        <table style="text-align:center;">
+<form action="<?php echo FRONT_ROOT."Home/showKeeperList" ?>" method="get">
+        <table class="table">
           <thead>
             <tr>
               <th style="width: 15%;">Username</th>
@@ -12,19 +12,17 @@
             </tr>
           </thead>
           <tbody>
-            <?php    foreach($keeperList as $keeper){    ?>
+            <?php  foreach($keeperList as $keeper){     
+                ?>
               <tr>
-                <td>  <?php echo $keeper->getUsername()               ?></td>
-                <td>  <?php echo $keeper->getName()                   ?></td>
-                <td>  <?php echo $keeper->getCompensation()           ?></td>
-                <td>  <?php echo $keeper->getPetType()                ?></td>
-                <td>  <?php print_r($keeper->getAvailabilityList())   ?></td>
-               <!-- <td>
-                  <button type="submit" name="id" class="btn" value="<?php echo $cel->getId();  ?>"> Remove </button>
-                </td> -->
+                <td>  <?php echo $keeper->getUsername();             ?></td>
+                <td>  <?php echo $keeper->getName();                 ?></td>
+                <td>  <?php echo $keeper->getCompensation();         ?></td>
+                <td>  <?php echo $keeper->getPetType();              ?></td>
+                <td>  <?php print_r($keeper->getAvailabilityList()); ?></td>
               </tr>
             <?php  };  ?>
-            
+
           </tbody>
         </table>
       </form> 

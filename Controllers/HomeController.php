@@ -35,9 +35,9 @@ class HomeController{
                 $this->showRegisterView();
             }else{
                 if($userType == "keeper"){
-                    $user = new Keeper();
+                    $user = new Keeper();  
                 }else{
-                    $user = new Owner();
+                    $user = new Owner();  
                 }
                 $user->setMail($email);
                 $user->setPassword($password);
@@ -83,8 +83,9 @@ class HomeController{
         require_once(VIEWS_PATH."login.php");
     }        
 
-    public function showHomeView($userType)
-    {
+    public function showHomeView($userType){
+        require_once(VIEWS_PATH."validate-session.php");
+
         if($userType == "owner"){
             require_once(VIEWS_PATH."home-owner.php");
         }else if($userType == "keeper"){
@@ -96,9 +97,11 @@ class HomeController{
 
     public function showKeeperList(){
         $keeperList = $this->UserDao->getKeepers();
-        var_dump($keeperList);
+        //var_dump($keeperList);
+        require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."keeper-list.php");
     }
+
     public function showTypeOfPet(){
         if(isset($_SESSION["loggedUser"])){
             require_once(VIEWS_PATH."type-pets.php");
@@ -146,6 +149,7 @@ class HomeController{
     }
    
     public function showRegisterView($message = ""){
+        require_once(VIEWS_PATH."validate-session.php");
         echo $message; // no se si funciona asi o hay que pasar el mensaje de otra manera
         require_once(VIEWS_PATH."register.php");
     }
