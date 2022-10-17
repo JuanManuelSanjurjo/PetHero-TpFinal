@@ -8,8 +8,11 @@
         "surname": "Sanjurjo",
         "userType": "keeper",
         "compensation": "2000",
-        "petType": "medium",
-        "availabilityList": []
+        "petType": "big",
+        "availabilityList": [
+            "2022-10-22",
+            "2022-10-21"
+        ]
     },
     {
         "id": 2,
@@ -67,14 +70,12 @@
     },
     {
         "id": 7,
-        "mail": "carlos@hotmail.com",
-        "password": "Carlos26",
-        "userName": "asdas",
-        "name": "asdas",
-        "surname": "asdas",
-        "userType": "keeper",
-        "compensation": null,
-        "petType": null,
-        "availabilityList": []
+        "mail": "melisa.labra@outlook.com",
+        "password": "Juanma123",
+        "userName": "Meli",
+        "name": "Melisa",
+        "surname": "Labra",
+        "userType": "owner",
+        "petList": []
     }
 ]

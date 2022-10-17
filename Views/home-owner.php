@@ -24,13 +24,15 @@
       </form>
   </div>
 
-  <!-- LOG OUT LOG OUT LOG OUT -->
+  <!-- LOG OUT / go back -->
+
   <div class="container">
     <p class="p-text">Log Out</p>
-      <form action="<?php echo FRONT_ROOT."Home/logout"?>"> <!-- cambiar el CONTROLLER -->
+      <form action="<?php echo FRONT_ROOT."Home/logout"?>" method="post"> 
           <button type="submmit" class="large-button">Log Out</button>
       </form>
   </div>
+
 
 
 <?php    include('footer.php'); ?>

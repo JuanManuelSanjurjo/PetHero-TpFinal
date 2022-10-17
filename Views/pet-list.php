@@ -1,34 +1,47 @@
 <?php  include('header.php'); ?>
 
 <form action="<?php echo FRONT_ROOT."Pet/showMyPetList" ?>" method="GET">
-        <table style="text-align:center;">
-          <thead>
+    <h1>Your Pets</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Breed</th>
+            <th>Size</th>
+            <th>Observations</th>
+            <th>Photo</th>
+            <th>Vaxination Plan</th>
+            <th>Video</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php    foreach($petList as $pet){  
+              if($_SESSION["loggedUser"]->getId()===$pet->getIdOwner()){                
+              ?>
             <tr>
-              <th style="width: 15%;">Name</th>
-              <th style="width: 30%;">Photo</th>
-              <th style="width: 30%;">Breed</th>
-              <th style="width: 15%;">Size</th>
-              <th style="width: 10%;">Vaxination Plan</th>
-              <th style="width: 30%;">Observations</th>
+              <td class="first-td">  <?php echo $pet->getName()                    ?></td>
+              <td>  <?php echo $pet->getBreed()                   ?></td>
+              <td>  <?php echo $pet->getSize()                    ?></td>
+              <td>  <?php echo $pet->getObservations()            ?></td>
+              <td><img class="pet-img" src="<?php echo FRONT_ROOT.VIEWS_PATH.'user-images/'. $pet->getPhoto(); ?>" alt="<?php echo $pet->getPhoto()  ?>" ></td>
+              <td><img  class="pet-img" src="<?php echo FRONT_ROOT.VIEWS_PATH.'user-images/'. $pet->getVaxPlanImg(); ?>" alt="<?php echo $pet->getVaxPlanImg()  ?>" ></td>
+              <td> 
+                   <?php  if($pet->getVideo() != null){ ?>
+                      <video class="pet-video" controls alt="NO VIDEO" width=320 height=240> 
+                      <source src="<?php echo FRONT_ROOT.VIEWS_PATH.'user-videos/'. $pet->getVideo();?>"></video>
+              </td>
+                   <?php  };  ?>
             </tr>
-          </thead>
-          <tbody>
-            <?php    foreach($petList as $pet){  
-                if($_SESSION["loggedUser"]->getId()===$pet->getIdOwner()){                
-                ?>
-              <tr>
-                <td>  <?php echo $pet->getName()                    ?></td>
-                <td>  <?php echo $pet->getPhoto()                   ?></td>
-                <td>  <?php echo $pet->getBreed()                   ?></td>
-                <td>  <?php echo $pet->getSize()                    ?></td>
-                <td>  <?php echo $pet->getVaxPlanImg()              ?></td>
-                <td>  <?php echo $pet->getObservations()            ?></td>
-              </tr>
-            <?php  }};  ?>
-            
-          </tbody>
-        </table>
-      </form> 
+          <?php  }};  ?>
+          
+        </tbody>
+      </table>
+    </form> 
+
+  <div class="container">
+    <br>
+    <a  href="<?php echo FRONT_ROOT.'Home/showHomeView'?>"><button class="medium-button">go back</button></a>
+  </div>
 
 
 <?php    include('footer.php'); ?>

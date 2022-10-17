@@ -7,7 +7,6 @@ class PetDao{
     private $petList = [];
     private $fileName = ROOT."Data/Pets.json";
 
-
     public function getById($id){
         $this->retrieveData();
 
@@ -17,6 +16,17 @@ class PetDao{
         $pets = array_values($pets); //Reordering array indexes
         return (count($pets) > 0) ? $pets[0] : null;
 
+    }
+
+    public function getByOwnerId($id){
+        $this->retrieveData();
+        $pet=null;
+        foreach($this->petList as $pets){
+            if($pets->getIdOwner() == $id){
+                $pet=$pets;
+            }
+        }
+       return $pet;
     }
 
     public function register(Pet $pet){
@@ -31,14 +41,27 @@ class PetDao{
 
     }
 
+    public function addFilesToPet(Pet $pet){
+        $this->retrieveData();
+        
+        foreach($this->petList as $pets){
+            if($pets->getId() == $pet->getId()){
+                $pets->setPhoto($pet->getPhoto());
+                $pets->setVaxPlanImg($pet->getVaxPlanImg());
+                $pets->setVideo($pet->getVideo());
+            }
+        }
+        $this->saveData();
+    }
+
     public function getAll()
     {
         $this->retrieveData();
 
         return $this->petList;
     }
-/*
-    public function removePet($id)
+//borra pet, no FILES
+    public function cancelPetRegister($id)
         {            
             $this->retrieveData();
             
@@ -48,8 +71,7 @@ class PetDao{
             
             $this->saveData();
         }
-*/
-    
+
     public function retrieveData(){
 
         $this->petList = [];
@@ -69,6 +91,7 @@ class PetDao{
                     $pet->setBreed($content["breed"]);
                     $pet->setSize($content["size"]);
                     $pet->setVaxPlanImg($content["vaxPlanImg"]);
+                    $pet->setVideo($content["video"]);
                     $pet->setObservations($content["observations"]);
 
                     array_push($this->petList, $pet);
@@ -92,6 +115,7 @@ class PetDao{
                 $valuesArray["breed"] = $pet->getBreed();
                 $valuesArray["size"] = $pet->getSize();
                 $valuesArray["vaxPlanImg"] = $pet->getVaxPlanImg();
+                $valuesArray["video"] = $pet->getVideo();
                 $valuesArray["observations"] = $pet->getObservations();
 
                 array_push($arrayToEncode, $valuesArray);
@@ -104,7 +128,7 @@ class PetDao{
     }
 
 
-    private function getNextId()
+    private function getNextId() // deberia ser privada
     {
         $id = 0;
         foreach($this->petList as $pet)

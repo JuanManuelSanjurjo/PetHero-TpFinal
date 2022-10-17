@@ -1,9 +1,8 @@
 
 <?php require 'header.php'; ?>
-
-          <header class="">
+          <header >
                <h1>PET HERO</h1>
-          </header>
+          </header>          
 
           <form style="text-align: center;" action="<?php echo FRONT_ROOT."Home/login"?>" method="post">
                <div class="imgcontainer">
@@ -21,9 +20,7 @@
                <br>
                <br>
                <button type="submit" class="large-button">Login</button>
-             
                </div>
-
 
           </form>
           <div class="container">
