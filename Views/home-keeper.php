@@ -4,13 +4,13 @@
       <h1>   WELCOME TO <br> PET HERO </h1>
   </div>
 
-  
+
 
   <!-- PARA USUARIO KEEPER   HAY QUE DIVIDIRLO -->  
   <div class="container">
     <p class="p-text">Indicate Availability</p>
       <form action="<?php echo FRONT_ROOT."Home/addAvilability"?>" method="post"> 
-          <input type="date" id="Dates" name="dates" placeholder="Select days" multiple="true" />
+          <input type="date" min="<?php getdate() ?>" id="Dates" name="dates" placeholder="Select days" multiple="true" />
           <button type="submmit" class="large-button">Update Availability</button>
       </form>
   </div>

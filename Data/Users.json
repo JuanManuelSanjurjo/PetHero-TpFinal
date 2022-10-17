@@ -7,9 +7,16 @@
         "name": "Juan Manuel",
         "surname": "Sanjurjo",
         "userType": "keeper",
-        "compensation": "4000",
-        "petType": "medium",
-        "availabilityList": []
+        "compensation": "2000",
+        "petType": "big",
+        "availabilityList": [
+            "2022-10-22",
+            "2022-10-21",
+            "2022-10-28",
+            "2022-10-15",
+            "2022-11-25",
+            "2022-10-04"
+        ]
     },
     {
         "id": 2,

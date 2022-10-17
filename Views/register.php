@@ -1,7 +1,7 @@
 <?php require 'header.php'; ?>
 
 
-<form action="<?php echo FRONT_ROOT."Home/register"?>">
+<form action="<?php echo FRONT_ROOT."Home/register"?>" method="post">
   <div class="container">
     <h1>Register</h1>
     <p>Please fill in this form to create an account.</p>
@@ -19,10 +19,10 @@
     <input type="password" placeholder="Enter Password" name="pass" id="Pass" required>
     <br>
     <label for="psw-repeat"><b></b></label>
-    <input type="password" placeholder="Repeat Password" name="pass-repeat" id="PassRepeat" required>
+    <input type="password" placeholder="Repeat Password" name="repeatPass" id="PassRepeat" required>
     <hr>
     <label for="userName"><b></b></label>
-    <input type="text" placeholder="Set your username" name="user-name" id="UserName" required>
+    <input type="text" placeholder="Set your username" name="userName" id="UserName" required>
     <br>
     <br>
     <br>

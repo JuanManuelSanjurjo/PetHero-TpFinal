@@ -1,3 +1,35 @@
 [
-    
+    {
+        "id": 1,
+        "idOwner": 2,
+        "name": "Pochita",
+        "photo": "2_1.jpg",
+        "breed": "Chainsaw dog",
+        "size": "medium",
+        "vaxPlanImg": "2_1_vaxplan.png",
+        "video": null,
+        "observations": ""
+    },
+    {
+        "id": 2,
+        "idOwner": 2,
+        "name": "Juan Manuel Sanjurjo",
+        "photo": "2_2.jpg",
+        "breed": "dasasdasd",
+        "size": "small",
+        "vaxPlanImg": "2_2_vaxplan.jfif",
+        "video": null,
+        "observations": ""
+    },
+    {
+        "id": 3,
+        "idOwner": 2,
+        "name": "Juan Manuel",
+        "photo": "2_3.jpg",
+        "breed": "dog",
+        "size": "small",
+        "vaxPlanImg": "2_3_vaxplan.jpg",
+        "video": null,
+        "observations": "dfsdf"
+    }
 ]

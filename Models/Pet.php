@@ -10,6 +10,7 @@ class Pet{
     private $breed;
     private $size;
     private $vaxPlanImg;
+    private $video;
     private $observations;
 
     public function getId()
@@ -108,9 +109,17 @@ class Pet{
         return $this;
     }
 
-    
+    public function getVideo()
+    {
+        return $this->video;
+    }
 
-    
+    public function setVideo($video)
+    {
+        $this->video = $video;
+
+        return $this;
+    }
 }
 
 
