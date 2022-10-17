@@ -64,5 +64,17 @@
         "surname": "Mariano",
         "userType": "owner",
         "petList": []
+    },
+    {
+        "id": 7,
+        "mail": "carlos@hotmail.com",
+        "password": "Carlos26",
+        "userName": "asdas",
+        "name": "asdas",
+        "surname": "asdas",
+        "userType": "keeper",
+        "compensation": null,
+        "petType": null,
+        "availabilityList": []
     }
 ]

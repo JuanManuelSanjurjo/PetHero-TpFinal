@@ -1,7 +1,6 @@
 <?php  include('header.php'); ?>
 
 <form action="<?php echo FRONT_ROOT."Pet/showMyPetList" ?>" method="GET">
-    <?php echo "dale pa";?>
         <table style="text-align:center;">
           <thead>
             <tr>

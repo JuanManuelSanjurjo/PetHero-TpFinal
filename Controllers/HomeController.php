@@ -124,7 +124,7 @@ class HomeController{
 
     public function addAvilability ($dates){
         $this->UserDao->addAvilability($dates);
-        $this->showHomeView($_SESSION["loggedUser"]->getUserType());
+        $this->showHomeView($_SESSION["loggedUser"]->getUserType());              
     }
 
     public function login($email,$pass){

@@ -81,8 +81,11 @@ class UserDao{
 
         $this->retrieveData();
         foreach($this->userList as $user){
-            if($user->getId() == $sessionId && $user instanceof Keeper)
-                 array_push($user->getAvailabilityList(),$dates);
+            if($user->getId() == $sessionId && $user instanceof Keeper){
+                
+                array_push($user->getAvailabilityList(),$dates);
+            }
+              
           
         }
         $this->saveData();
