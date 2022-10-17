@@ -1,35 +1,79 @@
 [
     {
         "id": 1,
-        "idOwner": 2,
+        "idOwner": 7,
         "name": "Pochita",
-        "photo": "2_1.jpg",
+        "photo": "7_1.jpg",
         "breed": "Chainsaw dog",
-        "size": "medium",
-        "vaxPlanImg": "2_1_vaxplan.png",
-        "video": null,
+        "size": "small",
+        "vaxPlanImg": "7_1_vaxplan.jfif",
+        "video": "7_1_video.mkv",
         "observations": ""
     },
     {
         "id": 2,
-        "idOwner": 2,
+        "idOwner": 7,
         "name": "Juan Manuel Sanjurjo",
-        "photo": "2_2.jpg",
-        "breed": "dasasdasd",
+        "photo": "7_2.png",
+        "breed": "chainsaw",
         "size": "small",
-        "vaxPlanImg": "2_2_vaxplan.jfif",
-        "video": null,
+        "vaxPlanImg": "7_2_vaxplan.jpg",
+        "video": "7_2_video.mkv",
         "observations": ""
     },
     {
         "id": 3,
-        "idOwner": 2,
-        "name": "Juan Manuel",
-        "photo": "2_3.jpg",
-        "breed": "dog",
+        "idOwner": 7,
+        "name": "Juan Manuel Sanjurjo",
+        "photo": "7_3.png",
+        "breed": "chainsaw",
         "size": "small",
-        "vaxPlanImg": "2_3_vaxplan.jpg",
+        "vaxPlanImg": "7_3_vaxplan.png",
         "video": null,
-        "observations": "dfsdf"
+        "observations": ""
+    },
+    {
+        "id": 4,
+        "idOwner": 7,
+        "name": "Juan Manuel Sanjurjo",
+        "photo": "7_4.png",
+        "breed": "chainsaw",
+        "size": "small",
+        "vaxPlanImg": "7_4_vaxplan.png",
+        "video": null,
+        "observations": ""
+    },
+    {
+        "id": 5,
+        "idOwner": 7,
+        "name": "Juan Manuel Sanjurjo",
+        "photo": "7_5.png",
+        "breed": "Chainsaw",
+        "size": "small",
+        "vaxPlanImg": "7_5_vaxplan.png",
+        "video": null,
+        "observations": ""
+    },
+    {
+        "id": 6,
+        "idOwner": 7,
+        "name": "Juan Manuel Sanjurjo",
+        "photo": "7_6.jpg",
+        "breed": "chainsaw",
+        "size": "small",
+        "vaxPlanImg": "7_6_vaxplan.jpg",
+        "video": null,
+        "observations": ""
+    },
+    {
+        "id": 7,
+        "idOwner": 7,
+        "name": "Juan Manuel",
+        "photo": "7_7.jpg",
+        "breed": "dasasdasd",
+        "size": "small",
+        "vaxPlanImg": "7_7_vaxplan.jfif",
+        "video": null,
+        "observations": ""
     }
 ]

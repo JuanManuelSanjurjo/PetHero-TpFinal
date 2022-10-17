@@ -25,10 +25,10 @@
               <td>  <?php echo $pet->getObservations()            ?></td>
               <td><img class="pet-img" src="<?php echo FRONT_ROOT.VIEWS_PATH.'user-images/'. $pet->getPhoto(); ?>" alt="<?php echo $pet->getPhoto()  ?>" ></td>
               <td><img  class="pet-img" src="<?php echo FRONT_ROOT.VIEWS_PATH.'user-images/'. $pet->getVaxPlanImg(); ?>" alt="<?php echo $pet->getVaxPlanImg()  ?>" ></td>
-              <td> no video
+              <td> 
                    <?php  if($pet->getVideo() != null){ ?>
-                      <video controls alt="NO VIDEO" width=320 height=240> 
-                      <source src="<?php echo FRONT_ROOT.VIEWS_PATH.'user-images/'. $pet->getVideo();?>"></video>
+                      <video class="pet-video" controls alt="NO VIDEO" width=320 height=240> 
+                      <source src="<?php echo FRONT_ROOT.VIEWS_PATH.'user-videos/'. $pet->getVideo();?>"></video>
               </td>
                    <?php  };  ?>
             </tr>

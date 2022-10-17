@@ -56,13 +56,12 @@ tr:hover{
   text-shadow: 0 0 3px #4e1f69;
 }
 
-
 .table{
   /*border-collapse: collapse;*/
-  table-layout: auto;
+  table-layout: fixed;
   border-radius: 5px;
   margin: auto;
-  width: 98%;
+  width: 100%;
   background-color: #BFACE0;
   text-align: center;
   border: 1px solid #8145a1;
@@ -263,16 +262,32 @@ scale: 1.01;
 
 .pet-img{   /* no estaria funcionando este estilo */
   vertical-align: middle;
-  width: 150px;
+  width: 100%;
   height: auto;
+  margin: 0%;
+  padding: 0%;
 }
 
 .pet-img:hover{   /* no estaria funcionando este estilo */
-  scale: 300%;
+  scale: 200%;
   border-radius: 3px;
   box-shadow: 8px 8px 5px #00000094;
   transition: ease-in-out 0.2s;
 }
+
+.pet-video{   /* no estaria funcionando este estilo */
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  margin: 0%;
+  padding: 0%;
+}
+
+.pet-video:hover{   /* no estaria funcionando este estilo */
+  box-shadow: 8px 8px 5px #00000094;
+  transition: ease-in-out 0.2s;
+}
+
 
 
 img.avatar {

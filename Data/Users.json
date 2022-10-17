@@ -11,11 +11,7 @@
         "petType": "big",
         "availabilityList": [
             "2022-10-22",
-            "2022-10-21",
-            "2022-10-28",
-            "2022-10-15",
-            "2022-11-25",
-            "2022-10-04"
+            "2022-10-21"
         ]
     },
     {
@@ -69,6 +65,16 @@
         "userName": "Mariano2",
         "name": "Fernandez",
         "surname": "Mariano",
+        "userType": "owner",
+        "petList": []
+    },
+    {
+        "id": 7,
+        "mail": "melisa.labra@outlook.com",
+        "password": "Juanma123",
+        "userName": "Meli",
+        "name": "Melisa",
+        "surname": "Labra",
         "userType": "owner",
         "petList": []
     }
