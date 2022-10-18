@@ -1,6 +1,5 @@
 <?php require 'header.php'; ?>
 
-
 <form action="<?php echo FRONT_ROOT."Pet/registerPet"?>" method="post" enctype="multipart/form-data">
   <div class="container">
     <h1>Register Pet</h1>
@@ -14,18 +13,18 @@
     <input type="text" placeholder="Enter the breed" name="breed" id="Breed" required>
     <br>
     <label for="role" class="p-text">Size</label>
-     <br>
+    <br>
         <select class="dog-select"   name="size" id="role" required>
             <optgroup label="Dog Size" >
-                <option value="small">Small dog</option>
-                <option value="medium">Medium dog</option>
-                <option value="big">Big dog</option>
+                <option value="Small">Small dog</option>
+                <option value="Medium">Medium dog</option>
+                <option value="Big">Big dog</option>
             </optgroup>
-        </select> 
+        </select>
     <br>
     <label for="observations"></label> <br>
     <textarea name="observations" maxlength="1000" placeholder="Something special the keeper needs to know about (up to 1000 characters)" id="Observations" cols="30" rows="10"></textarea> 
-    <br> 
+    <br>
     <br>
     <br>
     <button type="submit" value="submit"  class="large-button">Add Pet</button>

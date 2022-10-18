@@ -1,7 +1,6 @@
 <?php
 namespace Models ;
 
-
 class Keeper extends User{
     private $compensation;
     private $petType;

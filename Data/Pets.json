@@ -64,5 +64,16 @@
         "vaxPlanImg": "3_7_vaxplan.jpg",
         "video": null,
         "observations": ""
+    },
+    {
+        "id": 8,
+        "idOwner": 1,
+        "name": "Pochita",
+        "photo": "1_8.gif",
+        "breed": "Chainsaw dog",
+        "size": "Small",
+        "vaxPlanImg": "1_8_vaxplan.jpg",
+        "video": "1_8_video.mkv",
+        "observations": ""
     }
 ]

@@ -15,26 +15,26 @@ class HomeController{
 
     public function register($email, $name, $surname, $pass, $repeatPass, $userName, $userType){
 
-        if(!$this->confirmPassword($pass, $repeatPass)){
-            echo '<script>alert("Passwords dont match, try again")</script>';
-            $this->showRegisterView();
-        }else if($this->UserDao->getByEmail($email)){
-            echo '<script>alert("There isalready a user registered with this email ")</script>';
-            session_destroy(); // NO SE SI CON EL FRAMEWORK ESTO VA ACA
+        if(!$this->confirmPassword($pass, $repeatPass)){ 
+            echo '<script>alert("Passwords dont match, try again")</script>'; 
+            $this->showRegisterView(); 
+        }else if($this->UserDao->getByEmail($email)){ 
+            echo '<script>alert("There isalready a user registered with this email ")</script>'; 
+            session_destroy(); // NO SE SI CON EL FRAMEWORK ESTO VA ACA 
             $this->showRegisterView();
         }
         else{
-            if(!$this->checkMail($email)){
-                echo '<script>alert("Provide a valid email adress format")</script>';
-                session_destroy(); // NO SE SI CON EL FRAMEWORK ESTO VA ACA
-                $this->showRegisterView();
-            }else if(!$this->checkPassword($pass)){
+            if(!$this->checkMail($email)){ 
+                echo '<script>alert("Provide a valid email adress format")</script>'; 
+                session_destroy(); // NO SE SI CON EL FRAMEWORK ESTO VA ACA 
+                $this->showRegisterView(); 
+            }else if(!$this->checkPassword($pass)){ 
                 echo '<script>alert("Your password must include a minimum of 8 characters, one uppercase, one lowercase and one number to be valid")</script>';
-                session_destroy(); // NO SE SI CON EL FRAMEWORK ESTO VA ACA
-                $this->showRegisterView();
+                session_destroy(); // NO SE SI CON EL FRAMEWORK ESTO VA ACA 
+                $this->showRegisterView(); 
             }else{
-                if($userType == "keeper"){
-                    $user = new Keeper();  
+                if($userType == "keeper"){ 
+                    $user = new Keeper();   
                 }else{
                     $user = new Owner();  
                 }

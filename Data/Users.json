@@ -19,7 +19,9 @@
         "userType": "keeper",
         "compensation": "3500",
         "petType": "Medium",
-        "availabilityList": []
+        "availabilityList": [
+            "2022-10-27"
+        ]
     },
     {
         "id": 3,
@@ -66,5 +68,20 @@
         "compensation": "2500",
         "petType": "Small",
         "availabilityList": []
+    },
+    {
+        "id": 7,
+        "mail": "maria@hotmail.com",
+        "password": "Juanma123",
+        "userName": "juanma",
+        "name": "Juan",
+        "surname": "Manuel",
+        "userType": "keeper",
+        "compensation": "4000",
+        "petType": "Big",
+        "availabilityList": [
+            "2022-10-27",
+            "2022-10-22"
+        ]
     }
 ]
