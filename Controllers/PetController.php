@@ -100,8 +100,8 @@ class PetController{
 
         $pet = $this->PetDao->getByOwnerId($user->getId());
 
-        $size = (int) $_SERVER['CONTENT_LENGTH'];
-        
+        $size = (int) $_SERVER['CONTENT_LENGTH'];   
+
         if(isset($_POST)  )  {
 
                 $photo = $_FILES['photo'];
