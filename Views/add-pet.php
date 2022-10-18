@@ -23,19 +23,6 @@
             </optgroup>
         </select> 
     <br>
-    <!--
-    <label for="photo"><b class="p-text">Photo of your pet</b></label>
-    <input type="file" placeholder="Photo of your pet" name="photo" id="Photo" required>
-    <br>
-    <label for="vaxPlanImg"><b class="p-text">Image of Vaxination schedule</b></label>
-    <input type="file" placeholder="Image of the Vaxination plan" name="vaxPlanImg" id="VaxPlanImg" >
-    <br>
-    <label for="video"><b class="p-text">Upload a video of your pet</b></label>
-    <input type="file" placeholder="Video of your pet" name="video" id="Video"  > 
-    <br>
-    <hr>
-    <br>
--->
     <label for="observations"></label> <br>
     <textarea name="observations" maxlength="1000" placeholder="Something special the keeper needs to know about (up to 1000 characters)" id="Observations" cols="30" rows="10"></textarea> 
     <br> 

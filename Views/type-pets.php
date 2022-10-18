@@ -9,21 +9,21 @@
 
   <div class="container">
       <form action="<?php echo FRONT_ROOT."Home/setPetType"?>">    <!-- cambiar el CONTROLLER -->
-          <button type="submmit" class="large-button" name="size" value="small">Small</button>
+          <button type="submmit" class="large-button" name="size" value="Small">Small</button>
       </form>
   </div>
   <br>
   <br>
   <div class="container">
       <form action="<?php echo FRONT_ROOT."Home/setPetType"?>"> <!-- cambiar el CONTROLLER -->
-          <button type="submmit" class="large-button" name="size" value="medium">Medium</button>
+          <button type="submmit" class="large-button" name="size" value="Medium">Medium</button>
       </form>
   </div>
   <br>
   <br>
   <div class="container">
       <form action="<?php echo FRONT_ROOT."Home/setPetType"?>"> <!-- cambiar el CONTROLLER -->
-          <button type="submmit" class="large-button" name="size" value="big">Big</button>
+          <button type="submmit" class="large-button" name="size" value="Big">Big</button>
       </form>
   </div>
   <br>

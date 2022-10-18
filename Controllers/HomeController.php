@@ -126,9 +126,30 @@ class HomeController{
 
 
     public function addAvilability ($dates){
-        $this->UserDao->addAvilability($dates);
+        $today = date('Y-m-d');
+        $maxDate = date_add(date_create($today), date_interval_create_from_date_string('2 months'));
+        $maxDate = date_format($maxDate,'Y-m-d');
+        
+        if($dates > $today  &&  $dates < $maxDate){
+            $this->UserDao->addAvilability($dates);
+        }else{
+            echo '<script>alert("You can\'t enter dates in the past or placed more than 2 months in advance")</script>';
+        }
         $this->showHomeView($_SESSION["loggedUser"]->getUserType());
     }
+
+// FUNCION EN DESARROLLO hay que cambiar MODELO para que tenga fechas especificas y dias
+    public function setWorkingDays ($days){
+    
+    //sera util para chequear que keepers estan dispuesto ese dia de la semana
+    //$solicited = date_parse_from_format("Y-m-d","2022-10-29");
+        
+        //D - A textual representation of a day (three letters)
+        //w - A numeric representation of the day (0 for Sunday, 6 for Saturday)
+        //l (lowercase 'L') - A full textual representation of a day
+
+    }
+
 
     public function login($email,$pass){
         $user = $this->UserDao->getByEmail($email);

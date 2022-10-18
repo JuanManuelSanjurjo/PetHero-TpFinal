@@ -29,35 +29,42 @@ class PetController{
 
             $allowed = array('jpeg','jpg','pdf','gif','png','jfif');
     
-            $size = 2000000;
+            $size = 50000000;
 
         }else{
             $fileName = $user->getId() . '_' . $pet->getId() .'_video.' . $fileExt;
             $fileDestination = ROOT.VIEWS_PATH."user-videos/" . $fileName ;
             $allowed = array('mkv','mov','mp4','264','mpg4','avi');
 
-            $size = 200000000;
+            $size = 2000000000;
         }
 
         if(in_array($fileExt,$allowed)){
-            if($file['error'] === 0){
+            if($file['error'] == 0){
                 if($file['size'] < $size ){   //20mb
                     move_uploaded_file($file['tmp_name'],$fileDestination);
                     echo '<script>alert("your file:  ' . $file['name'] . ', was uploaded succesfully")</script>';
                 } else{
-                    echo '<script>alert("The image file is too big")</script>';
+                    echo '<script>alert("The file is too big")</script>';
+                    $this->cancelPetRegister($pet->getId());
+                    unlink($fileDestination);
                 }
             }else{
                 echo '<script>alert("There was an error uploading your file")</script>';
+                $this->cancelPetRegister($pet->getId());
+                unlink($fileDestination);
             }
         }else{
-            echo '<script>alert("Extention not suported: upload as jpg , png , gif")</script>';
+            echo '<script>alert("there was an error uploading files, try again")</script>';
+            $this->cancelPetRegister($pet->getId());
+            unlink($fileDestination);
         }
 
         return $fileName;
 
     }
 // NO ESTA SIENDO USADA
+/*
     private function checkVideoFiles($file,$user,$pet){
         $fileExtExplode = explode('.',$file['name']);
         $fileExt = strtolower(end( $fileExtExplode));
@@ -86,34 +93,37 @@ class PetController{
 
         return $fileName;
     }
-
+*/
     public function uploadFile(){
         require_once(VIEWS_PATH."validate-session.php");
         $user = $_SESSION["loggedUser"];
 
         $pet = $this->PetDao->getByOwnerId($user->getId());
 
-        if(isset($_POST)){
-            $photo = $_FILES['photo'];
+        $size = (int) $_SERVER['CONTENT_LENGTH'];
+        
+        if(isset($_POST)  )  {
+
+                $photo = $_FILES['photo'];
+                    
+                $photoName = $this->checkImgFiles($photo,$user,$pet,'profile');
+    
+                $vaxPlanImg = $_FILES['vaxPlanImg'];
+    
+                $vaxImgName = $this->checkImgFiles($vaxPlanImg,$user,$pet,'vaxImg');
+    
+                $pet->setPhoto($photoName);
+                $pet->setVaxPlanImg($vaxImgName);
                 
-            $photoName = $this->checkImgFiles($photo,$user,$pet,'profile');
-
-            $vaxPlanImg = $_FILES['vaxPlanImg'];
-
-            $vaxImgName = $this->checkImgFiles($vaxPlanImg,$user,$pet,'vaxImg');
-
-            $pet->setPhoto($photoName);
-            $pet->setVaxPlanImg($vaxImgName);
-            
-            if($_FILES['video']['size'] != 0){
-                $video = $_FILES['video'];
-
-                $videoFileName =  $this->checkImgFiles($video,$user,$pet,'video');
-                $pet->setVideo($videoFileName); 
+                if($_FILES['video']['size'] != 0){
+                    $video = $_FILES['video'];
+    
+                    $videoFileName =  $this->checkImgFiles($video,$user,$pet,'video');
+                    $pet->setVideo($videoFileName); 
+                }
+                
             }
-            
-            
-        }
+
 
         $this->PetDao->addFilesToPet($pet);
         require_once(VIEWS_PATH."home-owner.php");
