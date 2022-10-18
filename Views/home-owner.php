@@ -1,4 +1,5 @@
 <?php  include('header.php'); ?>
+<!-- <?php  include('nav-bar.php'); ?> -->
 
   <div class="">
       <h1> <a href="<?php echo FRONT_ROOT.'Home/showHomeView'?>">  WELCOME TO <br> PET HERO </a></h1>

@@ -11,7 +11,6 @@ class HomeController{
 
     function __construct(){
         $this->UserDao = new UserDao();
-        
     }
 
     public function register($email, $name, $surname, $pass, $repeatPass, $userName, $userType){
@@ -88,9 +87,9 @@ class HomeController{
         
         $user=$_SESSION["loggedUser"];
 
-        if($user->getUserType()== "owner"){
+        if($user->getUserType()== "owner"){  // o instance of
             require_once(VIEWS_PATH."home-owner.php");
-        }else if($user->getUserType()== "keeper"){
+        }else if($user->getUserType()== "keeper"){  // o instance of
             require_once(VIEWS_PATH."home-keeper.php");
         }else{
             require_once(VIEWS_PATH."home.php");  // LUEGO SI SE PUEDE SER LOS DOS, LO USAREMOS (contiene todas las opciones)
@@ -99,7 +98,6 @@ class HomeController{
 
     public function showKeeperList(){
         $keeperList = $this->UserDao->getKeepers();
-        //var_dump($keeperList);
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."keeper-list.php");
     }
@@ -156,4 +154,4 @@ class HomeController{
 
 }   
     
-?>
+?> 

@@ -8,10 +8,14 @@
         "surname": "Sanjurjo",
         "userType": "keeper",
         "compensation": "2000",
-        "petType": "big",
+        "petType": "medium",
         "availabilityList": [
             "2022-10-22",
-            "2022-10-21"
+            "2022-10-21",
+            "2022-10-21",
+            "",
+            "",
+            ""
         ]
     },
     {

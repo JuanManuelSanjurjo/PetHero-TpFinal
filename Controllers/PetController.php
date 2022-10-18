@@ -15,7 +15,6 @@ class PetController{
         $this->UserDao = new UserDao();
     }
 
-
     private function checkImgFiles($file,$user,$pet,$type){
         $fileExtExplode = explode('.',$file['name']);
         $fileExt = strtolower(end( $fileExtExplode));
@@ -26,9 +25,8 @@ class PetController{
             }elseif($type == 'profile'){
                 $fileName = $user->getId() . '_' . $pet->getId() . '.' . $fileExt;
             }
-            
             $fileDestination = ROOT.VIEWS_PATH."user-images/" . $fileName ;
-            
+
             $allowed = array('jpeg','jpg','pdf','gif','png','jfif');
     
             $size = 2000000;
@@ -38,7 +36,7 @@ class PetController{
             $fileDestination = ROOT.VIEWS_PATH."user-videos/" . $fileName ;
             $allowed = array('mkv','mov','mp4','264','mpg4','avi');
 
-            $size = 2000000000;
+            $size = 200000000;
         }
 
         if(in_array($fileExt,$allowed)){
@@ -59,7 +57,7 @@ class PetController{
         return $fileName;
 
     }
-
+// NO ESTA SIENDO USADA
     private function checkVideoFiles($file,$user,$pet){
         $fileExtExplode = explode('.',$file['name']);
         $fileExt = strtolower(end( $fileExtExplode));
@@ -87,16 +85,13 @@ class PetController{
         }
 
         return $fileName;
-
     }
-
 
     public function uploadFile(){
         require_once(VIEWS_PATH."validate-session.php");
         $user = $_SESSION["loggedUser"];
 
         $pet = $this->PetDao->getByOwnerId($user->getId());
-
 
         if(isset($_POST)){
             $photo = $_FILES['photo'];
