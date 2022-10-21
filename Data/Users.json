@@ -77,5 +77,19 @@
         "surname": "Labra",
         "userType": "owner",
         "petList": []
+    },
+    {
+        "id": 8,
+        "mail": "carlos@hotmail.com",
+        "password": "Carlos123",
+        "userName": "asdas",
+        "name": "asda",
+        "surname": "asdasd",
+        "userType": "keeper",
+        "compensation": "4",
+        "petType": "medium",
+        "availabilityList": [
+            "2022-10-21"
+        ]
     }
 ]
