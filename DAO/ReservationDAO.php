@@ -6,7 +6,7 @@ use Models\Owner as Owner;
 use Models\User as User;
 use Models\Reservation as Reservation;
 
-class UserDao{
+class ReservationDAO{
     private $reservationList = [];
     private $fileName = ROOT."Data/Reservation.json";
 
