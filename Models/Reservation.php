@@ -1,10 +1,13 @@
 <?php
 namespace Models;
 
+use Models\Owner as Owner;
+use Models\Keeper as Keeper;
+use Models\ReservationPeriod as ReservationPeriod;
 
 class Reservation{
 
-
+    private $reservationNumber;
     private $owner;
     private $keeper;
     private $reservationPeriod; //capaz que owner no ahce falta pq el id de owner estaria como atributo en PET
@@ -107,6 +110,26 @@ class Reservation{
     public function setConfirmation($confirmation)
     {
         $this->confirmation = $confirmation;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of reservationNumber
+     */ 
+    public function getReservationNumber()
+    {
+        return $this->reservationNumber;
+    }
+
+    /**
+     * Set the value of reservationNumber
+     *
+     * @return  self
+     */ 
+    public function setReservationNumber($reservationNumber)
+    {
+        $this->reservationNumber = $reservationNumber;
 
         return $this;
     }
