@@ -11,6 +11,7 @@ class HomeController{
 
     function __construct(){
         $this->UserDao = new UserDao();
+        
     }
 
     public function register($email, $name, $surname, $pass, $repeatPass, $userName, $userType){
@@ -87,9 +88,9 @@ class HomeController{
         
         $user=$_SESSION["loggedUser"];
 
-        if($user->getUserType()== "owner"){  // o instance of
+        if($user->getUserType()== "owner"){
             require_once(VIEWS_PATH."home-owner.php");
-        }else if($user->getUserType()== "keeper"){  // o instance of
+        }else if($user->getUserType()== "keeper"){
             require_once(VIEWS_PATH."home-keeper.php");
         }else{
             require_once(VIEWS_PATH."home.php");  // LUEGO SI SE PUEDE SER LOS DOS, LO USAREMOS (contiene todas las opciones)
@@ -98,6 +99,7 @@ class HomeController{
 
     public function showKeeperList(){
         $keeperList = $this->UserDao->getKeepers();
+        //var_dump($keeperList);
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."keeper-list.php");
     }
@@ -126,30 +128,9 @@ class HomeController{
 
 
     public function addAvilability ($dates){
-        $today = date('Y-m-d');
-        $maxDate = date_add(date_create($today), date_interval_create_from_date_string('2 months'));
-        $maxDate = date_format($maxDate,'Y-m-d');
-        
-        if($dates > $today  &&  $dates < $maxDate){
-            $this->UserDao->addAvilability($dates);
-        }else{
-            echo '<script>alert("You can\'t enter dates in the past or placed more than 2 months in advance")</script>';
-        }
-        $this->showHomeView($_SESSION["loggedUser"]->getUserType());
+        $this->UserDao->addAvilability($dates);
+        $this->showHomeView($_SESSION["loggedUser"]->getUserType());              
     }
-
-// FUNCION EN DESARROLLO hay que cambiar MODELO para que tenga fechas especificas y dias
-    public function setWorkingDays ($days){
-    
-    //sera util para chequear que keepers estan dispuesto ese dia de la semana
-    //$solicited = date_parse_from_format("Y-m-d","2022-10-29");
-        
-        //D - A textual representation of a day (three letters)
-        //w - A numeric representation of the day (0 for Sunday, 6 for Saturday)
-        //l (lowercase 'L') - A full textual representation of a day
-
-    }
-
 
     public function login($email,$pass){
         $user = $this->UserDao->getByEmail($email);
@@ -175,4 +156,4 @@ class HomeController{
 
 }   
     
-?> 
+?>
