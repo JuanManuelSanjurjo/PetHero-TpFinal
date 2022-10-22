@@ -92,7 +92,7 @@ class OwnerDAO{
         }
         $this->saveData();
     }
-*/
+
 
     public function setCompensation($compensation){
         $sessionUser = $_SESSION["loggedUser"];
@@ -106,7 +106,7 @@ class OwnerDAO{
         $this->saveData();
 
     }
-
+*/
 /*
     public function removeUser($id)
         {            
