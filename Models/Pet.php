@@ -12,6 +12,7 @@ class Pet{
     private $vaxPlanImg;
     private $video;
     private $observations;
+    // type gato/perro
 
     public function getId()
     {

@@ -8,11 +8,11 @@ use Models\User as User;
 class UserDao{
     private $userList = [];
     private $fileName = ROOT."Data/Users.json";
-
+ 
 
     public function getByEmail($mail){
         $this->retrieveData();
-
+        
         $users = array_filter($this->userList, function($user) use($mail){
             return $user->getMail() == $mail;
         });

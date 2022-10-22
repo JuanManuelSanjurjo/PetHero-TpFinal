@@ -10,7 +10,10 @@
   <div class="container">
     <p class="p-text">Indicate Availability</p>
       <form action="<?php echo FRONT_ROOT."Home/addAvilability"?>" method="post"> 
-          <input type="date" min="<?php getdate() ?>" id="Dates" name="dates" placeholder="Select days" multiple="true" />
+          <p class="p-text" style="position:relative; right:5%">Select start of period</p><p class="p-text" style="position:relative; left:5%">Select end of period</p>
+          <br>
+          <input type="date" style="width: 25%;" min="<?php getdate() ?>" id="Dates" name="date-start" placeholder="Select start of period" multiple="true" />
+          <input type="date" style="width: 25%;" min="<?php getdate() ?>" id="Dates" name="date-end" placeholder="Select end of period" multiple="true" />
           <button type="submmit" class="large-button">Update Availability</button>
       </form>
   </div>

@@ -1,7 +1,7 @@
 <?php
 namespace Models;
 
-class User {
+abstract class User {   /// HACER ABSTRACTA
     private $id;
     private $mail;
     private $password;

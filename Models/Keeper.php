@@ -4,7 +4,7 @@ namespace Models ;
 class Keeper extends User{
     private $compensation;
     private $petType;
-    private $availabilityList = [];
+    private $availabilityList = [];  // OBJETO periodoDeReservas (inicio/fin)
 
     public function getCompensation()
     {
