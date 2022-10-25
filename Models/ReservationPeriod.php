@@ -7,7 +7,6 @@ class ReservationPeriod{
     private $startDate; //objeto date
     private $finishDate;
 
-
     /**
      * Get the value of startDate
      */ 

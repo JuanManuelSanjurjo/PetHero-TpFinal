@@ -6,20 +6,20 @@
     <p class="p-text">Fill in this form to add a Pet</p>
     <br>    
     <br>
+    <input type="radio" name="petType" id="dog" value="dog" required > <p class="p-text">Add Dog</p>  
+    <input type="radio" name="petType" id="cat" value="cat" required> <p class="p-text" >Add Cat</p>  
+    <br>
     <label for="name"><b></b></label>
     <input type="text" placeholder="Enter name" name="name" id="Name" required>
-    <br>
     <label for="breed"><b></b></label>
     <input type="text" placeholder="Enter the breed" name="breed" id="Breed" required>
     <br>
     <label for="role" class="p-text">Size</label>
     <br>
         <select class="dog-select"   name="size" id="role" required>
-            <optgroup label="Dog Size" >
-                <option value="Small">Small dog</option>
-                <option value="Medium">Medium dog</option>
-                <option value="Big">Big dog</option>
-            </optgroup>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Big">Big</option>
         </select>
     <br>
     <label for="observations"></label> <br>

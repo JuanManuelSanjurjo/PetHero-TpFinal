@@ -15,11 +15,12 @@ class PetController{
         $this->UserDao = new UserDao();
     }
 
-    public function registerPet($name, $breed, $size, $photo, $vaxPlanImg, $observations){
+    public function registerPet($petType, $name, $breed, $size, $photo, $vaxPlanImg, $observations){
         $user = $_SESSION["loggedUser"];
 
         $pet = new Pet();
-
+        
+        $pet->setPetType($petType);
         $pet->setIdOwner($user->getId());
         $pet->setName($name);
         $pet->setPhoto($photo);

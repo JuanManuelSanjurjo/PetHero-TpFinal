@@ -9,42 +9,36 @@ use DAO\OwnerDao as OwnerDao;
 use DAO\KeeperDAO as KeeperDao;
 
 class HomeController{
-    private $UserDao;  
     private $OwnerDao;  
     private $KeeperDao;  
 
     function __construct(){
-      //  $this->UserDao = new UserDao();
         $this->OwnerDao = new OwnerDao();
         $this->KeeperDao = new KeeperDao();
         
     }
 
     public function register($email, $name, $surname, $pass, $repeatPass, $userName, $userType){
+        $user = $this->userExist($email);
 
         if(!$this->confirmPassword($pass, $repeatPass)){ 
-           // echo '<script>alert("Passwords dont match, try again")</script>'; 
             $this->showRegisterView("Passwords dont match, try again"); 
-        }else if($this->userExist($email)){ 
-            //echo '<script>alert("There isalready a user registered with this email ")</script>'; 
+        }else if($user){ 
             session_destroy(); 
-            $this->showRegisterView("There isalready a user registered with this email ");
+            $this->showRegisterView("There isalready a user registered with this email");
         }
         else{
             if(!$this->checkMail($email)){ 
-               // echo '<script>alert("Provide a valid email adress format")</script>'; 
                 session_destroy(); 
                 $this->showRegisterView("Provide a valid email adress format"); 
             }else if(!$this->checkPassword($pass)){ 
-                //echo '<script>alert("Your password must include a minimum of 8 characters, one uppercase, one lowercase and one number to be valid")</script>';
                 session_destroy(); 
                 $this->showRegisterView("Your password must include a minimum of 8 characters, one uppercase, one lowercase and one number to be valid"); 
             }else{
-                if($userType instanceof Keeper){ 
+                if($user instanceof Keeper){
                     $keeperController = new KeeperController();
                     $keeperController->register($email, $name, $surname, $pass, $userName, $userType);
                     $keeperController->showHomeView();
-
                 }else{
                     $OwnerController = new OwnerController();
                     $OwnerController->register($email, $name, $surname, $pass, $userName, $userType);
@@ -82,26 +76,17 @@ class HomeController{
         echo $message; 
         require_once(VIEWS_PATH."login.php");
     }        
-/*
-    public function showHomeView(){
-        require_once(VIEWS_PATH."validate-session.php");
-        
-        $user=$_SESSION["loggedUser"];
 
-        if($user instanceof Owner){
-            require_once(VIEWS_PATH."home-owner.php");
-        }else if($user instanceof Keeper){
-            require_once(VIEWS_PATH."home-keeper.php");
-        }else{
-            require_once(VIEWS_PATH."home.php");  // LUEGO SI SE PUEDE SER LOS DOS, LO USAREMOS (contiene todas las opciones)
-        }
-    }
-*/
     public function userExist($email){
-        $keeper = $this->KeeperDao->getByEmail($email);
+       // $keeper = $this->KeeperDao->getByEmail($email);
+       // $owner = $this->OwnerDao->getByEmail($email);
 
-        $owner = $this->OwnerDao->getByEmail($email);
+        $keeperController = new KeeperController();
+        $ownerController = new OwnerController();
 
+        $keeper = $keeperController->keeperExist($email);
+        $owner = $ownerController->ownerExist($email);
+        
         if($keeper != null){
             return $keeper;
         }else if($owner != null){

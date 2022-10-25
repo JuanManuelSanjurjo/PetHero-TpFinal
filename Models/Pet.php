@@ -12,8 +12,8 @@ class Pet{
     private $vaxPlanImg;
     private $video;
     private $observations;
-    // type gato/perro
-
+    private $petType;
+    
     public function getId()
     {
         return $this->id;
@@ -118,6 +118,18 @@ class Pet{
     public function setVideo($video)
     {
         $this->video = $video;
+
+        return $this;
+    }
+
+    public function getPetType()
+    {
+        return $this->petType;
+    }
+
+    public function setPetType($petType)
+    {
+        $this->petType = $petType;
 
         return $this;
     }

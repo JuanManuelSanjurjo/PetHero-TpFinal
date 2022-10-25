@@ -9,8 +9,15 @@ use Models\TimeInterval;
 class KeeperController{
     private $KeeperDao;
 
+
     function __construct(){
         $this->KeeperDao = new KeeperDAO();
+    }
+
+    public function keeperExist($email){
+        $keeper = $this->KeeperDao->getByEmail($email);
+        
+        return $keeper;
     }
 
     public function showKeeperList(){
@@ -45,6 +52,7 @@ class KeeperController{
     }
 
     public function addAvilability ($dateStart,$dateEnd){
+        var_dump($dateStart);
         $date1=date_create($dateStart);
         $date2=date_create($dateEnd);
         
@@ -55,6 +63,7 @@ class KeeperController{
             $date->setStart($date1);
             $date->setEnd($date2);
             var_dump($date);
+            
             $this->KeeperDao->addAvilability($date);
         }
     }

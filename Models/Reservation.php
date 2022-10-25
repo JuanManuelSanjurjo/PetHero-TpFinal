@@ -10,7 +10,7 @@ class Reservation{
     private $reservationNumber;
     private $owner;
     private $keeper;
-    private $reservationPeriod; //capaz que owner no ahce falta pq el id de owner estaria como atributo en PET
+    private $reservationPeriod; //TimeInterval
     private $pet;    
     private $confirmation;  //se setea null y se cambia a true or false
 
