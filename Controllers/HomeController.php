@@ -98,11 +98,6 @@ class HomeController{
     }
 */
     public function userExist($email){
-        $keeperC = new KeeperController();
-        $keeperC->showHomeView();
-        $OwnerC = new OwnerController();
-        $OwnerC->showHomeView();
-
         $keeper = $this->KeeperDao->getByEmail($email);
 
         $owner = $this->OwnerDao->getByEmail($email);

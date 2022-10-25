@@ -4,12 +4,19 @@ namespace Controllers;
 
 use DAO\KeeperDAO;
 use Models\Keeper;
+use Models\TimeInterval;
 
 class KeeperController{
     private $KeeperDao;
 
     function __construct(){
         $this->KeeperDao = new KeeperDAO();
+    }
+
+    public function showKeeperList(){
+        $keeperList = $this->KeeperDao->getAll();
+        require_once(VIEWS_PATH."validate-session.php");
+        require_once(VIEWS_PATH."keeper-list.php");
     }
 
 
@@ -33,17 +40,27 @@ class KeeperController{
     }
 
     public function setCompensation($compensation){
-        $this->UserDao->setCompensation($compensation);
+        $this->KeeperDao->setCompensation($compensation);
         $this->showHomeView();
     }
 
-
-    public function addAvilability ($dates){
-        $this->UserDao->addAvilability($dates);
-        $this->showHomeView();      
+    public function addAvilability ($dateStart,$dateEnd){
+        $date1=date_create($dateStart);
+        $date2=date_create($dateEnd);
+        
+        if(date_diff($date1,$date2) < 0){
+            $this->showHomeView("End date cant be less than start date");   
+        }else{
+            $date = new TimeInterval();
+            $date->setStart($date1);
+            $date->setEnd($date2);
+            var_dump($date);
+            $this->KeeperDao->addAvilability($date);
+        }
     }
 
-    public function showHomeView(){
+    public function showHomeView($message = ""){
+        echo $message;
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."home-keeper.php");
     }

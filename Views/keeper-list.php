@@ -30,7 +30,7 @@
 
    <div class="container">
     <br>
-    <a  href="<?php echo FRONT_ROOT.'Home/showHomeView'?>"><button class="medium-button">go back</button></a>
+    <a  href="<?php echo FRONT_ROOT.'Owner/showHomeView'?>"><button class="medium-button">go back</button></a>
   </div>
 
 

@@ -6,6 +6,7 @@ use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use Models\User as User;
 use Models\Reservation as Reservation;
+use Models\TimeInterval;
 
 class KeeperDAO{
     private $keeperList = [];
@@ -65,7 +66,7 @@ class KeeperDAO{
     }
 
 
-    public function addAvilability ($dates){
+    public function addAvilability (TimeInterval $date){
         $sessionUser = $_SESSION["loggedUser"];
         $sessionId = $sessionUser->getId();
 
@@ -73,7 +74,7 @@ class KeeperDAO{
         foreach($this->keeperList as $user){
             if($user->getId() == $sessionId && $user instanceof Keeper){
                 $array = $user->getAvailabilityList();
-                array_push($array,$dates);
+                array_push($array,$date);
                 $user->setAvailabilityList($array);
             
             }

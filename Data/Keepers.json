@@ -7,10 +7,13 @@
         "name": "Melisa",
         "surname": "Labra",
         "userType": "keeper",
-        "compensation": "3500",
-        "petType": "Medium",
+        "compensation": "2000",
+        "petType": "Big",
         "availabilityList": [
-            "2022-10-27"
+            null,
+            null,
+            null,
+            null
         ]
     },
     {
@@ -59,9 +62,6 @@
         "userType": "keeper",
         "compensation": "4000",
         "petType": "Big",
-        "availabilityList": [
-            "2022-10-27",
-            "2022-10-22"
-        ]
+        "availabilityList": []
     }
 ]

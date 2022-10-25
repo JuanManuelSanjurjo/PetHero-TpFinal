@@ -12,17 +12,13 @@ class OwnerController{
         $this->OwnerDao = new OwnerDAO();
     }
 
-    public function showHomeView(){
+    public function showHomeView($message = ""){
+        echo $message;
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."home-owner.php");
     }
 
-    public function showOwnerList(){
-        $keeperList = $this->OwnerDao->getAll();
-        //var_dump($keeperList);
-        require_once(VIEWS_PATH."validate-session.php");
-        require_once(VIEWS_PATH."keeper-list.php");
-    }
+   
   
     public function register($email, $name, $surname, $pass, $userName, $userType){
 

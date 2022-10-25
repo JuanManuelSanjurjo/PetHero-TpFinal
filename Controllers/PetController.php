@@ -65,7 +65,6 @@ class PetController{
 
     public function showMyPetList(){
         $petList=$this->PetDao->getAll();
-        var_dump($petList);
         if(isset($_SESSION["loggedUser"])){
             require_once(VIEWS_PATH."pet-list.php");
         }

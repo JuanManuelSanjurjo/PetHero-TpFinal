@@ -14,7 +14,7 @@
   </div>
 
   <div class="container">
-      <form action="<?php echo FRONT_ROOT."Home/showKeeperList"?>"> <!-- cambiar el CONTROLLER -->
+      <form action="<?php echo FRONT_ROOT."Keeper/showKeeperList"?>"> <!-- cambiar el CONTROLLER -->
           <button type="submmit" class="large-button">Show Keepers</button>
       </form>
   </div>
