@@ -8,13 +8,13 @@ use Models\User as User;
 class OwnerDAO{
 
     private $OwnerList = [];
-    private $fileName = ROOT."Data/Owner.json";
+    private $fileName = ROOT."Data/Owners.json";
 
 
     public function getByEmail($mail){
         $this->retrieveData();
 
-        $owners = array_filter($this->userList, function($owner) use($mail){
+        $owners = array_filter($this->OwnerList, function($owner) use($mail){
             return $owner->getMail() == $mail;
         });
         $owners = array_values($owners); //Reordering array indexes
@@ -178,8 +178,8 @@ class OwnerDAO{
     private function getNextId()
     {
         $id = 0;
-        if(sizeof($this->userList) != 0){
-            foreach($this->userList as $user)
+        if(sizeof($this->OwnerList) != 0){
+            foreach($this->OwnerList as $user)
             {
                 $id = ($user->getId() > $id) ? $user->getId() : $id;
 

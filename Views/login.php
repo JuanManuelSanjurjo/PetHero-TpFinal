@@ -4,7 +4,7 @@
                <h1>PET HERO</h1>
           </header>          
 
-          <form style="text-align: center;" action="<?php echo FRONT_ROOT."Home/login"?>" method="post">
+          <form style="text-align: center;" action="<?php echo FRONT_ROOT."Home/login"?>" method="get">
                <div class="imgcontainer">
                <img src=" <?php echo FRONT_ROOT.IMG_PATH."cheems.png"?>" alt="Avatar" class="avatar">
                </div>

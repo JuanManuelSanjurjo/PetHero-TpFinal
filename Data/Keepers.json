@@ -1,0 +1,67 @@
+[
+    {
+        "id": 2,
+        "mail": "melisa.labra@outlook.com",
+        "password": "Melisa123",
+        "userName": "Meli",
+        "name": "Melisa",
+        "surname": "Labra",
+        "userType": "keeper",
+        "compensation": "3500",
+        "petType": "Medium",
+        "availabilityList": [
+            "2022-10-27"
+        ]
+    },
+    {
+        "id": 4,
+        "mail": "cosme@gmail.com",
+        "password": "Cosme123",
+        "userName": "CosmeF",
+        "name": "Cosme",
+        "surname": "Fulanito",
+        "userType": "keeper",
+        "compensation": "2900",
+        "petType": "Medium",
+        "availabilityList": []
+    },
+    {
+        "id": 5,
+        "mail": "armando@yahoo.com.ar",
+        "password": "Armando123",
+        "userName": "Banquito",
+        "name": "Armando Esteban",
+        "surname": "Quito",
+        "userType": "keeper",
+        "compensation": "4100",
+        "petType": "Big",
+        "availabilityList": []
+    },
+    {
+        "id": 6,
+        "mail": "sancho@hotmail.com",
+        "password": "Sancho123",
+        "userName": "SanchoP",
+        "name": "Sancho",
+        "surname": "Pansa",
+        "userType": "keeper",
+        "compensation": "2500",
+        "petType": "Small",
+        "availabilityList": []
+    },
+    {
+        "id": 7,
+        "mail": "maria@hotmail.com",
+        "password": "Juanma123",
+        "userName": "juanma",
+        "name": "Juan",
+        "surname": "Manuel",
+        "userType": "keeper",
+        "compensation": "4000",
+        "petType": "Big",
+        "availabilityList": [
+            "2022-10-27",
+            "2022-10-22"
+        ]
+    }
+]

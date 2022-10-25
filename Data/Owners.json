@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "mail": "juanmanuelsanjurjo@hotmail.com",
+        "password": "Juanma123",
+        "userName": "Juanma",
+        "name": "Juan Manuel",
+        "surname": "Sanjurjo",
+        "userType": "owner",
+        "petList": []
+    },
+    {
+        "id": 3,
+        "mail": "mariano@hotmail.com",
+        "password": "Mariano123",
+        "userName": "MarianoF",
+        "name": "Mariano",
+        "surname": "Fernandez",
+        "userType": "owner",
+        "petList": []
+    }
+]

@@ -8,9 +8,8 @@ use Models\User as User;
 use Models\Reservation as Reservation;
 
 class KeeperDAO{
-
     private $keeperList = [];
-    private $fileName = ROOT."Data/Keeper.json";
+    private $fileName = ROOT."Data/Keepers.json";
 
     public function getByEmail($mail){
         $this->retrieveData();
@@ -51,27 +50,27 @@ class KeeperDAO{
 
         return $this->keeperList;
     }
-/*
+
     public function setPetType($size){
         $sessionUser = $_SESSION["loggedUser"];
         $sessionId = $sessionUser->getId();
 
         $this->retrieveData();
-        foreach($this->userList as $user){
+        foreach($this->keeperList as $user){
             if($user->getId() == $sessionId && $user instanceof Keeper)
                 $user->setPetType($size);
         }
         $this->saveData();
 
     }
-*/
+
 
     public function addAvilability ($dates){
         $sessionUser = $_SESSION["loggedUser"];
         $sessionId = $sessionUser->getId();
 
         $this->retrieveData();
-        foreach($this->userList as $user){
+        foreach($this->keeperList as $user){
             if($user->getId() == $sessionId && $user instanceof Keeper){
                 $array = $user->getAvailabilityList();
                 array_push($array,$dates);
@@ -87,7 +86,7 @@ class KeeperDAO{
         $sessionId = $sessionUser->getId();
 
         $this->retrieveData();
-        foreach($this->userList as $user){
+        foreach($this->keeperList as $user){
             if($user->getId() == $sessionId && $user instanceof Keeper)
                 $user->setCompensation($compensation);
         }
