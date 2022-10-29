@@ -1,5 +1,5 @@
 <?php
-namespace DAO;
+namespace DAOJSON;
 
 use DAO\UserDao as DAOUserDao;
 use Models\Keeper as Keeper;
