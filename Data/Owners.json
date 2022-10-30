@@ -18,5 +18,15 @@
         "surname": "Fernandez",
         "userType": "owner",
         "petList": []
+    },
+    {
+        "id": 4,
+        "mail": "marian@hotmail.com",
+        "password": "Mariano123",
+        "userName": "asdasd",
+        "name": "Mariano",
+        "surname": "Fer",
+        "userType": "owner",
+        "petList": []
     }
 ]
