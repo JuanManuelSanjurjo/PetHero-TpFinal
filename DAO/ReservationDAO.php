@@ -8,7 +8,7 @@ use Models\Reservation as Reservation;
 
 class ReservationDAO{
     private $reservationList = [];
-    private $fileName = ROOT."Data/Reservation.json";
+    private $fileName = ROOT."Data/Reservations.json";
 
 
     public function getByReservationNumber($reservationNumber){

@@ -3,8 +3,8 @@
 namespace Models;
 
 class TimeInterval{
-    private $start;
-    private $end;
+    public $start;
+    public $end;
 
       public function getEnd()
     {
@@ -29,6 +29,15 @@ class TimeInterval{
 
         return $this;
     }
+    
+
+/*
+    public function __sleep() {
+    }
+
+    public function __wakeup() {
+    }
+*/
 }
 
 

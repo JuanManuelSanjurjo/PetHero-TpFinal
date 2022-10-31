@@ -1,10 +1,10 @@
 <?php  include('header.php'); ?>
+<!--<?php  include('nav-bar.php'); ?>-->
+
 
   <div class="">
       <h1>   WELCOME TO <br> PET HERO </h1>
   </div>
-
-
 
   <!-- PARA USUARIO KEEPER   HAY QUE DIVIDIRLO -->  
   <div class="container">

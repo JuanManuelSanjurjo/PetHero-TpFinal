@@ -75,5 +75,16 @@
         "vaxPlanImg": "1_8_vaxplan.jpg",
         "video": "1_8_video.mkv",
         "observations": ""
+    },
+    {
+        "id": 9,
+        "idOwner": 1,
+        "name": "Pochita",
+        "photo": "1_9.jpg",
+        "breed": "dasasdasd",
+        "size": "Small",
+        "vaxPlanImg": "1_9_vaxplan.jpg",
+        "video": null,
+        "observations": ""
     }
 ]
