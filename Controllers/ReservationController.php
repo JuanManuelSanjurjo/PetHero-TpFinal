@@ -33,8 +33,13 @@ class ReservationController{
         require_once(VIEWS_PATH."reservation.php");
     }
 
-    public function showKeeperListToFiltrate ($typeOfPet,$dateStart,$dateEnd)
+    public function showKeeperListToFiltrate ($Pet,$dateStart,$dateEnd)
     {
+       
+        
+        
+        
+        
         $KeepersAvailable = array();
         $keeperList=$this->KeeperDao->getAll();
         $ReservationList= $this->ReservationDAO->getAll();

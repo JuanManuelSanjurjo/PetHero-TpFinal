@@ -23,7 +23,7 @@ class KeeperController{
     public function showKeeperList(){
         $keeperList = $this->KeeperDao->getAll();
         require_once(VIEWS_PATH."validate-session.php");
-        require_once(VIEWS_PATH."keeper-list.php");
+        require_once(VIEWS_PATH."filter-Keepers.php");
     }
 
 
