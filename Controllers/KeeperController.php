@@ -3,8 +3,11 @@
 namespace Controllers;
 
 use DAO\KeeperDAO;
+use DateInterval;
+use DateTime;
+use DateTimeZone;
 use Models\Keeper;
-use Models\TimeInterval;
+use Models\TimeInterval as TimeInterval;
 
 class KeeperController{
     private $KeeperDao;
@@ -39,10 +42,10 @@ class KeeperController{
     public function setPetType($size){
        $this->KeeperDao->setPetType($size);
        if(isset($_SESSION["loggedUser"])){
-        $this->showHomeView();
+            $this->showHomeView();
        }else{
-        $home = new HomeController(); // aca o en el contructor?
-        $home->Index();
+            $home = new HomeController(); // aca o en el contructor?
+            $home->Index();
        }
     }
 
@@ -52,21 +55,93 @@ class KeeperController{
     }
 
     public function addAvilability ($dateStart,$dateEnd){
-        var_dump($dateStart);
-        $date1=date_create($dateStart);
-        $date2=date_create($dateEnd);
-        
-        if(date_diff($date1,$date2) < 0){
+        $date = $this->checkDate($dateStart,$dateEnd);
+
+        if($date){
+            $this->KeeperDao->addAvilability($date);
+            $this->showHomeView("Dates uploaded succesfully");   
+        }
+    }
+
+    public function checkDate ($dateStart,$dateEnd){
+        $date1=date_create($dateStart)->format("Y-m-d");
+        $date2=date_create($dateEnd)->format("Y-m-d");
+        $today = date_create()->format("Y-m-d");
+
+        if($date1 > $date2 ){
             $this->showHomeView("End date cant be less than start date");   
+        }elseif($date1 < $today  || $date2 < $today){
+            $this->showHomeView("Cant set dates in the past");  
         }else{
             $date = new TimeInterval();
             $date->setStart($date1);
             $date->setEnd($date2);
-            var_dump($date);
-            
-            $this->KeeperDao->addAvilability($date);
+
+            return $date;
         }
+        return false;
     }
+/*
+    public function isInsideIntevals($date){
+        $keeper = $_SESSION["loggedUser"];
+        
+        foreach($keeper->getAvailabilityList() as $intervals){
+            if($date > $intervals->getStart() && $date < $intervals->getEnd() ){
+                $this->showHomeView("Cant set overlapping dates");  
+            }
+        }
+        return false;
+    }   
+*/  
+    public function dateIsInInterval(TimeInterval $interval , $date){
+        
+        if($date >= $interval->getStart() && $date <= $interval->getEnd() ){
+            return true;
+        }
+        return false;
+    }   
+
+
+    public function isInsideIntevals($dateStart,$dateEnd){
+        $keeper = $_SESSION["loggedUser"];
+
+        $newStart = new DateTime();
+        $newEnd = new DateTime();
+
+        
+        foreach($keeper->getAvailabilityList() as $intervals){
+            if($dateStart < $intervals->getStart() && $dateEnd < $intervals->getStart() ){
+                // COMIENZA ANTES Y TERMINA ANTES
+
+            }
+            if($dateStart > $intervals->getEnd() ){
+                   // COMIENZA DESPUES QUE EL FINAL
+                
+            }
+
+            if($dateStart > $intervals->getStart() && $dateStart < $intervals->getEnd() ){
+                // COMIENZA EN EL MEDIO
+                if($dateEnd < $intervals->getEnd()){
+                       // TERMINA EN EL MEDIO
+                }
+
+                if($dateEnd > $intervals->getEnd()){
+                       // TERMINA MAS ADELANTE
+
+                    //date_add($start,date_interval_create_from_date_string("1 days"));
+                }
+            }
+
+            $newInterval = new TimeInterval();
+            $newInterval->setStart($newStart);
+            $newInterval->setEnd($newEnd);
+
+          
+        }
+        return false;
+    }
+    
+
 
     public function showHomeView($message = ""){
         echo $message;
@@ -94,7 +169,6 @@ class KeeperController{
 
 
 
-    
 
 
 }

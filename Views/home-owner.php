@@ -8,7 +8,7 @@
 
 <!-- PARA USUARIO OWNER -->
   <div class="container">
-      <form action="<?php echo FRONT_ROOT."Pet/showMyPetList"?>">    <!-- cambiar el CONTROLLER -->
+      <form action="<?php echo FRONT_ROOT."Owner/showMyPetList"?>">    <!-- cambiar el CONTROLLER -->
           <button type="submmit" class="large-button">Pet list</button>
       </form>
   </div>

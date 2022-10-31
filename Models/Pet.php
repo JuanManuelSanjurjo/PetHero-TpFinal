@@ -3,16 +3,16 @@ namespace Models;
 
 
 class Pet{
-    private $id;
-    private $idOwner;
-    private $name;
-    private $photo;
-    private $breed;
-    private $size;
-    private $vaxPlanImg;
-    private $video;
-    private $observations;
-    private $petType;
+    public $id;
+    public $idOwner;
+    public $name;
+    public $photo;
+    public $breed;
+    public $size;
+    public $vaxPlanImg;
+    public $video;
+    public $observations;
+    public $petType;
     
     public function getId()
     {

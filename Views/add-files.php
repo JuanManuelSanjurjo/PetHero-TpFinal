@@ -1,7 +1,7 @@
 <?php require 'header.php'; ?>
 
 
-<form action="<?php echo FRONT_ROOT."Pet/uploadFile"?>" method="post" enctype="multipart/form-data">
+<form action="<?php echo FRONT_ROOT."Owner/uploadFile"?>" method="post" enctype="multipart/form-data">
   <div class="container">
     <h1>Register Pet</h1>
     <p class="p-text">Fill in this form to add a Pet</p>
@@ -25,7 +25,7 @@
 
 <div class="container">
     <br>  <!-- !!!!!PONER UNA CONDICION DE QUE SI SE VA PARA ATRAS BORRA EL PET SIN FOTOS!!!!!!-->
-    <form action="<?php echo FRONT_ROOT."Pet/cancelPetRegister"?>" method="post">
+    <form action="<?php echo FRONT_ROOT."Owner/cancelPetRegister"?>" method="post">
     <input type="hidden" name="idPet" value="<?php echo $pet->getId() ?>">
     <button type="submit" class="cancelbtn" >Cancel</button></a>
     </form>

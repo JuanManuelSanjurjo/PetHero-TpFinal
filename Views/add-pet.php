@@ -1,6 +1,6 @@
 <?php require 'header.php'; ?>
 
-<form action="<?php echo FRONT_ROOT."Pet/registerPet"?>" method="post" enctype="multipart/form-data">
+<form action="<?php echo FRONT_ROOT."Owner/registerPet"?>" method="post" enctype="multipart/form-data">
   <div class="container">
     <h1>Register Pet</h1>
     <p class="p-text">Fill in this form to add a Pet</p>

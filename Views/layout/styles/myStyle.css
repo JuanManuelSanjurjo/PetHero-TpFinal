@@ -14,6 +14,7 @@ body{
 
 .nav-bar{
   padding-left: 1%;
+  margin: auto;
   text-align: left;
   font-size: 50px;
   font-weight: bold;
@@ -85,7 +86,7 @@ tr:hover{
   /*border-collapse: collapse;*/
   table-layout: fixed;
   border-radius: 5px;
-  margin: auto;
+  margin: 0px;
   width: 99%;
   background-color: #BFACE0;
   text-align: center;
@@ -371,8 +372,3 @@ span.psw {
   }
 }
 */
-
-
-
-
-         

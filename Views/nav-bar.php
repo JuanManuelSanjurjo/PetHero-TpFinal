@@ -1,6 +1,9 @@
-<div class="nav-bar">
-  <div>Pet Hero</div>
-  <div><button class="profilebtn" >Profile</button></div>
-    
-    <nav id="mainav" class=""></nav>
-</div>
+
+<nav class="nav">
+  <div class="nav-bar">
+  Pet Hero
+  <button class="profilebtn" >Profile</button>      
+  </div>
+
+</nav>
+

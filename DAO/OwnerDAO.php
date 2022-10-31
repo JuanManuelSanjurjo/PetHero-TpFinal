@@ -4,6 +4,7 @@ namespace DAO;
 use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use Models\User as User;
+use Models\Pet as Pet;
 
 class OwnerDAO{
 
@@ -51,75 +52,46 @@ class OwnerDAO{
         return $this->OwnerList;
     }
 
-    /*
-    public function getKeepers(){
-        $this->retrieveData();
-        $keeperList = [];
-
-        foreach($this->userList as $user){
-            if($user->getUserType() == "keeper"){
-                array_push($keeperList,$user);
+    public function getPetById($id)
+    {
+        $sessionUser = $_SESSION["loggedUser"];
+        
+        foreach($sessionUser->getPetList() as $pet){
+            if($pet->getId() == $id ){
+                return $pet;
             }
         }
-        return $keeperList;
-    }
-
-    public function setPetType($size){
-        $sessionUser = $_SESSION["loggedUser"];
-        $sessionId = $sessionUser->getId();
-
-        $this->retrieveData();
-        foreach($this->userList as $user){
-            if($user->getId() == $sessionId && $user instanceof Keeper)
-                $user->setPetType($size);
-        }
-        $this->saveData();
 
     }
 
-    public function addAvilability ($dates){
+    public function registerPet(Pet $pet){
         $sessionUser = $_SESSION["loggedUser"];
-        $sessionId = $sessionUser->getId();
-
+     
         $this->retrieveData();
-        foreach($this->userList as $user){
-            if($user->getId() == $sessionId && $user instanceof Keeper){
-                $array = $user->getAvailabilityList();
-                array_push($array,$dates);
-                $user->setAvailabilityList($array);
+        $newList = $sessionUser->getPetList();
             
+        array_push($newList,$pet);
+
+        $sessionUser->setPetList($newList);
+
+        $this->saveData();
+    }
+
+    public function addFilesToPet(Pet $pet){
+        $this->retrieveData();
+        $sessionUser = $_SESSION["loggedUser"];
+
+        foreach($sessionUser->getPetList() as $pets){
+            if($pets->getId() == $pet->getId()){
+                $pets->setPhoto($pet->getPhoto());
+                $pets->setVaxPlanImg($pet->getVaxPlanImg());
+                $pets->setVideo($pet->getVideo());
             }
         }
         $this->saveData();
     }
 
-
-    public function setCompensation($compensation){
-        $sessionUser = $_SESSION["loggedUser"];
-        $sessionId = $sessionUser->getId();
-
-        $this->retrieveData();
-        foreach($this->userList as $user){
-            if($user->getId() == $sessionId && $user instanceof Keeper)
-                $user->setCompensation($compensation);
-        }
-        $this->saveData();
-
-    }
-*/
-/*
-    public function removeUser($id)
-        {            
-            $this->retrieveData();
-            
-            $this->userList = array_filter($this->userList, function($user) use($id){                
-                return $user->getId() != $id;
-            });
-            
-            $this->saveData();
-        }
-*/
-    
+ 
     public function retrieveData(){
 
         $this->OwnerList = [];
@@ -187,6 +159,37 @@ class OwnerDAO{
         }
         return $id+1;
     }
+
+    private function getNextPetId() // deberia ser privada
+    {
+        $sessionUser = $_SESSION["loggedUser"];
+        $id = 0;
+        foreach($sessionUser->getPetList() as $pet)
+        {
+            $id = ($pet->getId() > $id) ? $pet->getId() : $id;
+        }
+        return $id+1;
+    }
+
+
+    public function cancelPetRegister($id)
+        {            
+            $sessionUser = $_SESSION["loggedUser"];
+            
+            $this->retrieveData();
+
+            $list= $sessionUser->getPetList();
+
+            $list = array_filter($list, function($pet) use($id){                
+                return $pet->getId() != $id;
+            });
+            $sessionUser->setPetList($list);
+
+            $this->saveData();
+        }
+
+
+    
 
 
 }

@@ -35,7 +35,7 @@ class HomeController{
                 session_destroy(); 
                 $this->showRegisterView("Your password must include a minimum of 8 characters, one uppercase, one lowercase and one number to be valid"); 
             }else{
-                if($user instanceof Keeper){
+                if($userType = "keeper"){
                     $keeperController = new KeeperController();
                     $keeperController->register($email, $name, $surname, $pass, $userName, $userType);
                     $keeperController->showHomeView();

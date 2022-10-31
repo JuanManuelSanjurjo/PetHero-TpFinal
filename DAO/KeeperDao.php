@@ -6,7 +6,7 @@ use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use Models\User as User;
 use Models\Reservation as Reservation;
-use Models\TimeInterval;
+use Models\TimeInterval as TimeInterval;
 
 class KeeperDAO{
     private $keeperList = [];
@@ -65,22 +65,28 @@ class KeeperDAO{
 
     }
 
-
     public function addAvilability (TimeInterval $date){
         $sessionUser = $_SESSION["loggedUser"];
         $sessionId = $sessionUser->getId();
 
         $this->retrieveData();
         foreach($this->keeperList as $user){
-            if($user->getId() == $sessionId && $user instanceof Keeper){
-                $array = $user->getAvailabilityList();
-                array_push($array,$date);
-                $user->setAvailabilityList($array);
-            
+            if($user->getId() == $sessionId){
+               // $array = array();
+               // $array = $user->getAvailabilityList();
+                //array_push($array,$date);
+               // var_dump($date);
+                $user->addAviailability($date);
+               // var_dump($user->getAvailabilityList());
+                //$user->setAvailabilityList($array);
             }
         }
         $this->saveData();
+        //var_dump($this->getById($us->getId()));
     }
+    
+
+
 
     public function setCompensation($compensation){
         $sessionUser = $_SESSION["loggedUser"];
@@ -155,11 +161,12 @@ class KeeperDAO{
                 $valuesArray["userType"] = $keeper->getUserType();
                 $valuesArray["compensation"] = $keeper->getCompensation();
                 $valuesArray["petType"] = $keeper->getPetType();
-                $valuesArray["availabilityList"] = $keeper->getAvailabilityList();              
-              
+                $valuesArray["availabilityList"] = $keeper->getAvailabilityList(); 
+
                 array_push($arrayToEncode, $valuesArray);
             }
-
+            
+           // var_dump($arrayToEncode);
             $fileContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
 
             file_put_contents($this->fileName, $fileContent);
@@ -169,8 +176,8 @@ class KeeperDAO{
     private function getNextId()
     {
         $id = 0;
-        if(sizeof($this->userList) != 0){
-            foreach($this->userList as $user)
+        if(sizeof($this->keeperList) != 0){
+            foreach($this->keeperList as $user)
             {
                 $id = ($user->getId() > $id) ? $user->getId() : $id;
 

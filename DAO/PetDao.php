@@ -2,10 +2,11 @@
 namespace DAO;
 
 use Models\Pet as Pet;
+use Models\Owner as Owner;
 
 class PetDao{
-    private $petList = [];
-    private $fileName = ROOT."Data/Pets.json";
+    //private $petList = [];
+    //private $fileName = ROOT."Data/Pets.json";
 
     public function getById($id){
         $this->retrieveData();
@@ -33,12 +34,24 @@ class PetDao{
         $this->retrieveData();
         
         $pet->setId($this->getNextId());  
-        
-        array_push($this->petList, $pet);
+        $user = $_SESSION["loggedUser"];
+        $newList = $user->getAvailabilityList();
+        array_push($newList, $pet);
 
         $this->saveData();
     }
+/*
+    public function register(Pet $pet){
+        $this->retrieveData();
+        
+        $pet->setId($this->getNextId());  
+        $user = $_SESSION["loggedUser"];
+        $newList = $user->getAvailabilityList();
+        array_push($newList, $pet);
 
+        $this->saveData();
+    }
+*/
     public function addFilesToPet(Pet $pet){
         $this->retrieveData();
         

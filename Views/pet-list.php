@@ -15,8 +15,10 @@
           </tr>
         </thead>
         <tbody>
-          <?php    foreach($petList as $pet){  
-              if($_SESSION["loggedUser"]->getId()===$pet->getIdOwner()){                
+          <?php    
+          $list = $user->getPetList();
+          var_dump($list);
+          foreach( $list as $pet){  
               ?>
             <tr>
               <td class="first-td">  <?php echo $pet->getName()                    ?></td>
@@ -32,7 +34,7 @@
               </td>
                    <?php  };  ?>
             </tr>
-          <?php  }};  ?>
+          <?php  };  ?>
           
         </tbody>
       </table>
