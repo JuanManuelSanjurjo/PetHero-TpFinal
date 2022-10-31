@@ -160,7 +160,7 @@ class OwnerDAO{
         return $id+1;
     }
 
-    private function getNextPetId() // deberia ser privada
+    public function getNextPetId() // deberia ser privada
     {
         $sessionUser = $_SESSION["loggedUser"];
         $id = 0;

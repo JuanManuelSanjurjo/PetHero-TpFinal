@@ -20,7 +20,7 @@
   </div>
 
   <div class="container">
-      <form action="<?php echo FRONT_ROOT."Pet/showAddPet"?>"> <!-- cambiar el CONTROLLER -->
+      <form action="<?php echo FRONT_ROOT."Owner/showAddPet"?>"> <!-- cambiar el CONTROLLER -->
           <button type="submmit" class="large-button">Add Pet</button>
       </form>
   </div>

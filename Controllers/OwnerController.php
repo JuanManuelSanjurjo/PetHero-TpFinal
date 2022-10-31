@@ -33,6 +33,11 @@ class OwnerController{
              require_once(VIEWS_PATH."pet-list.php");
          }
      }
+
+     public function showAddPet(){
+        require_once(VIEWS_PATH."validate-session.php");
+        require_once(VIEWS_PATH."add-pet.php");  
+    }
   
     public function register($email, $name, $surname, $pass, $userName, $userType){
 
@@ -120,14 +125,13 @@ class OwnerController{
         }
 
         return $fileName;
-
     }
 
     public function uploadFile(){
         require_once(VIEWS_PATH."validate-session.php");
         $user = $_SESSION["loggedUser"];
-
-        $pet = $this->OwnerDao->getPetById($user->getNextPetId()-1);
+        $dao = $this->OwnerDao;
+        $pet = $dao->getPetById($dao->getNextPetId()-1);
 
         $size = (int) $_SERVER['CONTENT_LENGTH'];   
 
