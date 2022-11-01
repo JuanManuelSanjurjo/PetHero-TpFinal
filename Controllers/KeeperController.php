@@ -56,8 +56,9 @@ class KeeperController{
 
     public function addAvilability ($dateStart,$dateEnd){
         $date = $this->checkDate($dateStart,$dateEnd);
-
-        if($date){
+        $exist=$this->dateAlreadyExist($date);
+        
+        if($date && !$exist){
             $this->KeeperDao->addAvilability($date);
             $this->showHomeView("Dates uploaded succesfully");   
         }
@@ -100,48 +101,82 @@ class KeeperController{
         }
         return false;
     }   
+/*
 
+    public function isInsideIntevals(TimeInterval $interval){
 
-    public function isInsideIntevals($dateStart,$dateEnd){
         $keeper = $_SESSION["loggedUser"];
+
+        $dateStart=$interval->getStart();
+        $dateEnd=$interval->getEnd();
 
         $newStart = new DateTime();
         $newEnd = new DateTime();
 
+        $arrayList=array();
+
         
         foreach($keeper->getAvailabilityList() as $intervals){
+
             if($dateStart < $intervals->getStart() && $dateEnd < $intervals->getStart() ){
                 // COMIENZA ANTES Y TERMINA ANTES
+                $newStart=$dateStart;
+                $newEnd=$dateEnd;
 
-            }
-            if($dateStart > $intervals->getEnd() ){
+            }else if($dateStart > $intervals->getEnd() ){
                    // COMIENZA DESPUES QUE EL FINAL
-                
-            }
+                   $newStart=$dateStart;
+                   $newEnd=$dateEnd;                
+            }else if($dateStart > $intervals->getStart() && $dateStart < $intervals->getEnd() ){
 
-            if($dateStart > $intervals->getStart() && $dateStart < $intervals->getEnd() ){
                 // COMIENZA EN EL MEDIO
                 if($dateEnd < $intervals->getEnd()){
-                       // TERMINA EN EL MEDIO
-                }
-
-                if($dateEnd > $intervals->getEnd()){
+                       $this->showHomeView("The date already exist");
+                }else if($dateEnd > $intervals->getEnd()){
                        // TERMINA MAS ADELANTE
-
-                    //date_add($start,date_interval_create_from_date_string("1 days"));
+                        $newStart=date_add($intervals->getEnd(),date_interval_create_from_date_string("1 days"));
+                        $newEnd=$dateEnd;
                 }
+            }else if($dateStart < $intervals->getStart() && $dateEnd <= $intervals->getEnd() && $dateEnd > $interval->getStart()){
+                $newStart=$dateStart;
+                $newEnd=date_sub($intervals->getStart(),date_interval_create_from_date_string("1 days"));
+
+            }else if($dateStart < $intervals->getStart() && $dateEnd > $intervals->getEnd()){
+
+
             }
 
-            $newInterval = new TimeInterval();
-            $newInterval->setStart($newStart);
-            $newInterval->setEnd($newEnd);
+          
 
           
         }
+
+        $newInterval = new TimeInterval();
+        $newInterval->setStart($newStart);
+        $newInterval->setEnd($newEnd);
+
         return false;
     }
-    
 
+
+*/
+
+    public function dateAlreadyExist (TimeInterval $date){
+
+        $keeper=$_SESSION["loggedUser"];
+        $exist=false;
+        $List=$keeper->getAvailabilityList();
+        
+        foreach($List as $inter){
+            $dateStart=$inter["start"];
+            $dateEnd=$inter["end"];
+            if($date->getStart()==$dateStart && $date->getEnd()==$dateEnd){
+                $this->showHomeView("interval of time already exist");
+                $exist=true;
+            }
+        }
+        return $exist;
+    }
 
     public function showHomeView($message = ""){
         echo $message;
