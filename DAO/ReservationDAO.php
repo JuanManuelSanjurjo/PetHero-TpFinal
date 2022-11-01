@@ -6,203 +6,118 @@ use Models\Owner as Owner;
 use Models\User as User;
 use Models\Pet as Pet;
 use Models\Reservation as Reservation;
-use Models\TimeInterval;
+use DAO\Connection as Connection;
+use Exception;
 
-class ReservationDAO{
-    private $reservationList = [];
-    private $fileName = ROOT."Data/Reservations.json";
+class AvailabilityDAO{
+   
 
+    private $connection;
+    private $tableName= "Reservations";
 
-    public function getByReservationNumber($reservationNumber){
-        $this->retrieveData();
+    public function register(Reservation $reservation)
+    {
+        try{
+            $query = "INSERT INTO".$this->tableName."(reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation) VALUES (:reservationNumber, :owner, :keeper, :compensation, :dateStart, :dateEnd, :pet, :confirmation)";
 
-        $reservation = array_filter($this->reservationList, function($reservation) use($reservationNumber){
-            return $reservation->getByReservationNumber() == $reservationNumber;
-        });
-        $reservation = array_values($reservation); //Reordering array indexes
-        return (count($reservation) > 0) ? $reservation[0] : null;
+            $parameters["reservationNumber"]= $reservation->getReservationNumber();
+            $parameters["owner"]            = $reservation->getOwner();
+            $parameters["keeper"]           = $reservation->getKeeper();
+            $parameters["compensation"]     = $reservation->getCompensation();
+            $parameters["dateStart"]        = $reservation->getDateStart();
+            $parameters["dateEnd"]          = $reservation->getDateEnd();
+            $parameters["pet"]              = $reservation->getPet();
+            $parameters["confirmation"]     = $reservation->getConfirmation();
+            
+            $this->connection = Connection::GetInstance();
 
-    }
-
-    public function register(Reservation $reservation){
-
-        $this->retrieveData();
-
-        $reservation->setReservationNumber($this->getNextReservationNumber());  // SIGUE INDICANDO EN NULL EL ID      
-        
-        array_push($this->reservationList, $reservation);
-
-        $this->saveData();
+            $this->connection->ExecuteNonQuery($query,$parameters);
+        }catch(Exception $ex){
+            throw $ex;
+        } 
 
     }
 
     public function getAll()
     {
-        $this->retrieveData();
+        try{
+            
+            $reservationList = array();
+            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ".$this->tableName;
 
-        return $this->reservationList;
-    }
+            $this->connection = Connection::GetInstance();
 
-   
-    public function retrieveData(){
+            $result = $this->connection->Execute($query);
 
-        $this->reservationList = [];
-
-             if(file_exists($this->fileName))
-             {
-                $jsonToDecode = file_get_contents($this->fileName);
-                $contentArray = ($jsonToDecode) ? json_decode($jsonToDecode, true) : [];
-                
-                foreach($contentArray as $content)
-                {
-                    
-                    $reservation = new Reservation();
-                    $reservation->setReservationNumber($content["reservationNumber"]);
-                    $reservation->setOwner($this->setOwners($content));
-                    $reservation->setKeeper($this->setKeepers($content));
-                    $reservation->setCompensation($content["compensation"]);
-                    $reservation->setReservationPeriod($this->setTimeIntervals($content));
-                    $reservation->setPet($this->setPets($content));
-                    $reservation->setConfirmation($content["confirmation"]);
-                                  
-
-                    array_push($this->reservationList, $reservation);
-                }
-             }
-    
-    }
-
-
-    public function saveData(){
-
-        $arrayToEncode = [];
-
-            foreach($this->reservationList as $reservation)
+            foreach($result as $row)
             {
-                $valuesArray = [];
-                $valuesArray["reservationNumber"] = $reservation->getByReservationNumber();
-                $valuesArray["owner"] = $reservation->getOwner();
-                $valuesArray["keeper"] = $reservation->getKeeper();
-                $valuesArray["compensation"]= $reservation->getCompensation();
-                $valuesArray["reservationPeriod"] = $reservation->getReservationPeriod();
-                $valuesArray["pet"] = $reservation->getPet();
-                $valuesArray["confirmation"] = $reservation->getConfirmation();
-                              
-                array_push($arrayToEncode, $valuesArray);
+                $reservation = new Reservation();
+                $reservation->setReservationNumber($row["reservationNumber"]);
+                $reservation->setOwner($row["owner"]);
+                $reservation->setKeeper($row["keeper"]);
+                $reservation->setCompensation($row["compensation"]);
+                $reservation->setDateStart($row["dateStart"]);
+                $reservation->setDateEnd($row["dateEnd"]);
+                $reservation->setPet($row["pet"]);
+                $reservation->setConfirmation($row["confirmation"]);
+                
+                array_push($availabilityList,$reservation);
             }
 
-            $fileContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
+            return $reservationList;
+        }catch(Exception $ex){
+            throw $ex;
+        }
 
-            file_put_contents($this->fileName, $fileContent);
-    
     }
 
-    public function getNextReservationNumber()
-    {
-        $reservationNumber = 0;
-        if(sizeof($this->reservationList) != 0){
-            foreach($this->reservationList as $reservation)
-            {
-                $reservationNumber = ($reservation->getReservationNumber() > $reservation) ? $reservation->getReservationNumber() : $reservationNumber;
 
-            }   
+    public function Remove($id)
+    {
+        try{
+        $query= "DELETE FROM ".$this->tableName." WHERE (id = :id)";
+
+        $parameters["id"] = $id;
+
+        $this->connection = Connection::GetInstance();
+
+        $this->connection->ExecuteNonQuery($query,$parameters);
+        }catch(Exception $ex){
+            throw $ex;
         }
-        return $reservationNumber+1;
     }
 
     public function getReservationByKeeper($keeperID){
-        $this->retrieveData();
-
-        $FiltredList=array();
-
-        foreach($this->reservationList as $booked){
-            
-            if($booked->getKeeper()->getId()==$keeperID){
-
-                array_push($fileContent,$booked);
-
-            }
-
-        }
         
-        return $FiltredList;
+       try{
+
+       
+        $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ".$this->tableName."WHERE (keeper = :keeperID)";
+
+        $this->connection = Connection::GetInstance();
+
+        $result = $this->connection->Execute($query);
+
+        $reservation = new Reservation();
+        $reservation->setReservationNumber($result["reservationNumber"]);
+        $reservation->setOwner($result["owner"]);
+        $reservation->setKeeper($result["keeper"]);
+        $reservation->setCompensation($result["compensation"]);
+        $reservation->setDateStart($result["dateStart"]);
+        $reservation->setDateEnd($result["dateEnd"]);
+        $reservation->setPet($result["pet"]);
+        $reservation->setConfirmation($result["confirmation"]);
+              
+            
+        return $reservation;
+                
+       }catch(Exception $ex){
+            throw $ex;
+       }
     }
     
-
-
-
-    private function setOwners($content){
-        $newOwner= new Owner();
-
-        $newOwner->setId([$content["owner"]["id"]]);
-        $newOwner->setMail([$content["owner"]["mail"]]);
-        $newOwner->setPassword([$content["owner"]["password"]]);
-        $newOwner->setUserName([$content["owner"]["userName"]]);
-        $newOwner->setName([$content["owner"]["name"]]);
-        $newOwner->setSurname([$content["owner"]["surname"]]);
-        $newOwner->setUserType([$content["owner"]["userType"]]);
-        $newOwner->setPetList([$content["owner"]["petList"]]);
-
-
-
-        return $newOwner;
-    }
-
-    private function setKeepers($content){
-        $newKeeper= new Keeper();
-
-        $newKeeper->setId([$content["keeper"]["id"]]);
-        $newKeeper->setMail([$content["keeper"]["mail"]]);
-        $newKeeper->setPassword([$content["keeper"]["password"]]);
-        $newKeeper->setUserName([$content["keeper"]["userName"]]);
-        $newKeeper->setName([$content["keeper"]["name"]]);
-        $newKeeper->setSurname([$content["keeper"]["surname"]]);
-        $newKeeper->setUserType([$content["keeper"]["userType"]]);
-        $newKeeper->setCompensation([$content["keeper"]["compensation"]]);
-        $newKeeper->setPetType([$content["keeper"]["petType"]]);
-        $newKeeper->setAvailabilityList([$content["keeper"]["availabilityList"]]);
-
-
-        return $newKeeper;
-    }
-
-    private function setTimeIntervals($content){
-        $newTimeInterval= new TimeInterval();
-        
-        $newTimeInterval->setStart([$content["reservationPeriod"]["start"]]);
-        $newTimeInterval->setEnd([$content["reservationPeriod"]["end"]]);
-        
-
-
-        return $newTimeInterval;
-    }
-
-    private function setPets($content){
-       
-        $pet = new Pet();
-        $pet->setId($content["pet"]["id"]);
-        $pet->setIdOwner($content["pet"]["idOwner"]);
-        $pet->setName($content["pet"]["name"]);
-        $pet->setPhoto($content["pet"]["photo"]);
-        $pet->setBreed($content["pet"]["breed"]);
-        $pet->setSize($content["pet"]["size"]);
-        $pet->setVaxPlanImg($content["pet"]["vaxPlanImg"]);
-        $pet->setVideo($content["pet"]["video"]);
-        $pet->setObservations($content["pet"]["observations"]);
-        $pet->setPetType($content["pet"]["petType"]);
-
-
-        return $pet;
-    }
-
+  
+    
 }
-
-
-
-
-
-
-
-
 
 ?>
