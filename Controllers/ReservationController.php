@@ -2,7 +2,6 @@
 
 namespace Controllers;
 
-use DAO\OwnerDAO as DAOOwnerDAO;
 use DAOJSON\KeeperDAO as KeeperDAO;
 use DAOJSON\OwnerDAO as OwnerDAO;
 use DAOJSON\PetDao as PetDao;

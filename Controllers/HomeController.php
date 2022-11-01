@@ -1,20 +1,22 @@
 <?php
 namespace Controllers;
 
-use DAO\UserDao as UserDao;
+use DAOJSON\KeeperDAO as DAOJSONKeeperDAO;
+use DAOJSON\UserDaoJSON as UserDao;
 use Models\User as User;
 use Models\Keeper as Keeper;
 use Models\Owner as Owner;
-use DAO\OwnerDao as OwnerDao;
-use DAO\KeeperDAO as KeeperDao;
+use DAOJSON\OwnerDaoJSON as OwnerDao;
+use DAOJSON\KeeperDAOJSON as KeeperDao;
+use DAOJSON\OwnerDAO as DAOJSONOwnerDAO;
 
 class HomeController{
     private $OwnerDao;  
     private $KeeperDao;  
 
     function __construct(){
-        $this->OwnerDao = new OwnerDao();
-        $this->KeeperDao = new KeeperDao();
+        $this->OwnerDao = new DAOJSONOwnerDAO();
+        $this->KeeperDao = new DAOJSONKeeperDAO();
         
     }
 

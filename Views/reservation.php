@@ -1,6 +1,6 @@
 <?php  include('header.php'); ?>
 
-<form action="<?php echo FRONT_ROOT."Home/showKeeperList" ?>" method="get">
+<form action="<?php echo FRONT_ROOT."ReservationController" ?>" method="get">
       <h1>List of Keepers registered</h1>
         <table class="table">
           <thead>
