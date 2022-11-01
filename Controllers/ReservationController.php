@@ -29,16 +29,17 @@ class ReservationController{
 
     public function showKeeperList(){
         $keeperList=$this->KeeperDao->getAll();
+        $user = $_SESSION["loggedUser"];
+        $petList = $user->getPetList();
+        
         require_once(VIEWS_PATH."validate-session.php");
-        require_once(VIEWS_PATH."reservation.php");
+        require_once(VIEWS_PATH."filter-Keepers.php");
+        require_once(VIEWS_PATH."keeper-list.php");
     }
 
     public function showKeeperListToFiltrate ($Pet,$dateStart,$dateEnd)
     {
        
-        
-        
-        
         
         $KeepersAvailable = array();
         $keeperList=$this->KeeperDao->getAll();
@@ -77,8 +78,16 @@ class ReservationController{
 
     }
 
+   public function showAllReservation(){
+    $keeper = $_SESSION["loggedUser"];
+    $ReservationList = $this->ReservationDAO->getReservationByKeeper($keeper->getId());
 
-   
+    require_once(VIEWS_PATH."validate-session.php");
+    require_once(VIEWS_PATH."reservation-list.php");
+
+
+
+   }
 
 
 

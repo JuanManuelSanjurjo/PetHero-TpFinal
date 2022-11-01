@@ -104,7 +104,7 @@ class PetDao{
                     $pet->setVaxPlanImg($content["vaxPlanImg"]);
                     $pet->setVideo($content["video"]);
                     $pet->setObservations($content["observations"]);
-
+                    $pet->setPetType($content["petType"]);
                     array_push($this->petList, $pet);
                 }
              }
@@ -128,6 +128,7 @@ class PetDao{
                 $valuesArray["vaxPlanImg"] = $pet->getVaxPlanImg();
                 $valuesArray["video"] = $pet->getVideo();
                 $valuesArray["observations"] = $pet->getObservations();
+                $valuesArray["petType"] = $pet->getPetType();
 
                 array_push($arrayToEncode, $valuesArray);
             }

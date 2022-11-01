@@ -7,7 +7,30 @@
         "name": "Juan Manuel",
         "surname": "Sanjurjo",
         "userType": "owner",
-        "petList": []
+        "petList": [
+            {
+                "id": 1,
+                "idOwner": 1,
+                "name": "Cheems",
+                "photo": "1_1.jpg",
+                "breed": "cheems vaquero",
+                "size": "medium",
+                "vaxPlanImg": "1_1_vaxplan.jpg",
+                "video": "1_1_video.mkv",
+                "observations": ""
+            },
+            {
+                "id": 2,
+                "idOwner": 1,
+                "name": "Cheems Segundo",
+                "photo": "1_2.jpg",
+                "breed": "Cheems profe",
+                "size": "small",
+                "vaxPlanImg": "1_2_vaxplan.jpg",
+                "video": "1_2_video.mkv",
+                "observations": "No muerde pero te manda a hacer burpees"
+            }
+        ]
     },
     {
         "id": 3,
