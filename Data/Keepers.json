@@ -75,5 +75,17 @@
         "compensation": "4000",
         "petType": "Big",
         "availabilityList": []
+    },
+    {
+        "id": 8,
+        "mail": "carlos@hotmail.com",
+        "password": "Mariano123",
+        "userName": "asdasd",
+        "name": "asdas",
+        "surname": "asdas",
+        "userType": "keeper",
+        "compensation": null,
+        "petType": null,
+        "availabilityList": []
     }
 ]

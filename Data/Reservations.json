@@ -1,0 +1,49 @@
+[
+
+    {
+        "reservationNumber": 123,
+        "owner":{
+            "id": 3,
+            "mail": "mariano@hotmail.com",
+            "password": "Mariano123",
+            "userName": "MarianoF",
+            "name": "Mariano",
+            "surname": "Fernandez",
+            "userType": "owner",
+            "petList": []
+        },
+        "keeper":{
+            "id": 8,
+            "mail": "carlos@hotmail.com",
+            "password": "Mariano123",
+            "userName": "asdasd",
+            "name": "asdas",
+            "surname": "asdas",
+            "userType": "keeper",
+            "compensation": null,
+            "petType": null,
+            "availabilityList": []
+        },
+        "compensation": 200000,
+        "reservationPeriod": {
+            "start": "20-12-2022",
+            "end": "25-12-2022"
+        },
+        "pet": {
+            "id": 2,
+            "idOwner": 1,
+            "name": "Cheems Segundo",
+            "photo": "1_2.jpg",
+            "breed": "Cheems profe",
+            "size": "small",
+            "vaxPlanImg": "1_2_vaxplan.jpg",
+            "video": "1_2_video.mkv",
+            "observations": "No muerde pero te manda a hacer burpees",
+            "petType":"cat"
+        },
+        "confirmation": true
+    }
+    
+    
+    ]
+  

@@ -64,10 +64,7 @@ class ReservationController{
 
 
         }
-
-
-
-      
+    
 
 
 
@@ -77,6 +74,16 @@ class ReservationController{
 
     }
 
+
+    public function showAllReservation(){
+        $keeper=$_SESSION["loggedUser"];
+        require_once(VIEWS_PATH."validate-session.php");
+        $reservationList=$this->ReservationDAO->getReservationByKeeper($keeper->getId());
+        var_dump($reservationList);
+        require_once(VIEWS_PATH."reservation-list.php");
+
+    }
+        
 
    
 

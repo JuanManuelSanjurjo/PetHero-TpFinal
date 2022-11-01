@@ -18,6 +18,12 @@
       </form>
   </div>
 
+  <div class="container">
+    <p class="p-text">Show your reservations</p>
+      <form action="<?php echo FRONT_ROOT."Reservation/showAllReservation"?>" method="post">     
+      <button type="submmit" class="large-button">Show</button>  
+    </form>
+  </div>
 
   <div class="container">
     <p class="p-text">Set your compensation per day</p>

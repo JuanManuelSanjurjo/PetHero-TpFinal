@@ -4,7 +4,9 @@ namespace DAO;
 use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use Models\User as User;
+use Models\Pet as Pet;
 use Models\Reservation as Reservation;
+use Models\TimeInterval;
 
 class ReservationDAO{
     private $reservationList = [];
@@ -56,14 +58,15 @@ class ReservationDAO{
                     
                     $reservation = new Reservation();
                     $reservation->setReservationNumber($content["reservationNumber"]);
-                    $reservation->setOwner($content["owner"]);
-                    $reservation->setKeeper($content["keeper"]);
-                    $reservation->setReservationPeriod($content["reservationPeriod"]);
-                    $reservation->setPet($content["pet"]);
+                    $reservation->setOwner($this->setOwners($content));
+                    $reservation->setKeeper($this->setKeepers($content));
+                    $reservation->setCompensation($content["compensation"]);
+                    $reservation->setReservationPeriod($this->setTimeIntervals($content));
+                    $reservation->setPet($this->setPets($content));
                     $reservation->setConfirmation($content["confirmation"]);
                                   
 
-                    array_push($this->userList, $reservation);
+                    array_push($this->reservationList, $reservation);
                 }
              }
     
@@ -80,6 +83,7 @@ class ReservationDAO{
                 $valuesArray["reservationNumber"] = $reservation->getByReservationNumber();
                 $valuesArray["owner"] = $reservation->getOwner();
                 $valuesArray["keeper"] = $reservation->getKeeper();
+                $valuesArray["compensation"]= $reservation->getCompensation();
                 $valuesArray["reservationPeriod"] = $reservation->getReservationPeriod();
                 $valuesArray["pet"] = $reservation->getPet();
                 $valuesArray["confirmation"] = $reservation->getConfirmation();
@@ -93,7 +97,7 @@ class ReservationDAO{
     
     }
 
-    private function getNextReservationNumber()
+    public function getNextReservationNumber()
     {
         $reservationNumber = 0;
         if(sizeof($this->reservationList) != 0){
@@ -106,8 +110,94 @@ class ReservationDAO{
         return $reservationNumber+1;
     }
 
+    public function getReservationByKeeper($keeperID){
+        $this->retrieveData();
+
+        $FiltredList=array();
+
+        foreach($this->reservationList as $booked){
+            
+            if($booked->getKeeper()->getId()==$keeperID){
+
+                array_push($fileContent,$booked);
+
+            }
+
+        }
+        
+        return $FiltredList;
+    }
+    
+
+
+
+    private function setOwners($content){
+        $newOwner= new Owner();
+
+        $newOwner->setId([$content["owner"]["id"]]);
+        $newOwner->setMail([$content["owner"]["mail"]]);
+        $newOwner->setPassword([$content["owner"]["password"]]);
+        $newOwner->setUserName([$content["owner"]["userName"]]);
+        $newOwner->setName([$content["owner"]["name"]]);
+        $newOwner->setSurname([$content["owner"]["surname"]]);
+        $newOwner->setUserType([$content["owner"]["userType"]]);
+        $newOwner->setPetList([$content["owner"]["petList"]]);
+
+
+
+        return $newOwner;
+    }
+
+    private function setKeepers($content){
+        $newKeeper= new Keeper();
+
+        $newKeeper->setId([$content["keeper"]["id"]]);
+        $newKeeper->setMail([$content["keeper"]["mail"]]);
+        $newKeeper->setPassword([$content["keeper"]["password"]]);
+        $newKeeper->setUserName([$content["keeper"]["userName"]]);
+        $newKeeper->setName([$content["keeper"]["name"]]);
+        $newKeeper->setSurname([$content["keeper"]["surname"]]);
+        $newKeeper->setUserType([$content["keeper"]["userType"]]);
+        $newKeeper->setCompensation([$content["keeper"]["compensation"]]);
+        $newKeeper->setPetType([$content["keeper"]["petType"]]);
+        $newKeeper->setAvailabilityList([$content["keeper"]["availabilityList"]]);
+
+
+        return $newKeeper;
+    }
+
+    private function setTimeIntervals($content){
+        $newTimeInterval= new TimeInterval();
+        
+        $newTimeInterval->setStart([$content["reservationPeriod"]["start"]]);
+        $newTimeInterval->setEnd([$content["reservationPeriod"]["end"]]);
+        
+
+
+        return $newTimeInterval;
+    }
+
+    private function setPets($content){
+       
+        $pet = new Pet();
+        $pet->setId($content["pet"]["id"]);
+        $pet->setIdOwner($content["pet"]["idOwner"]);
+        $pet->setName($content["pet"]["name"]);
+        $pet->setPhoto($content["pet"]["photo"]);
+        $pet->setBreed($content["pet"]["breed"]);
+        $pet->setSize($content["pet"]["size"]);
+        $pet->setVaxPlanImg($content["pet"]["vaxPlanImg"]);
+        $pet->setVideo($content["pet"]["video"]);
+        $pet->setObservations($content["pet"]["observations"]);
+        $pet->setPetType($content["pet"]["petType"]);
+
+
+        return $pet;
+    }
 
 }
+
+
 
 
 
