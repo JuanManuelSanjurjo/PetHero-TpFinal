@@ -19,6 +19,9 @@ class HomeController{
     }
 
     public function register($email, $name, $surname, $pass, $repeatPass, $userName, $userType){
+        
+        var_dump($this->OwnerDao->GetAll());
+
         $user = $this->userExist($email);
 
         if(!$this->confirmPassword($pass, $repeatPass)){ 
@@ -86,7 +89,6 @@ class HomeController{
 
         $keeper = $keeperController->keeperExist($email);
         $owner = $ownerController->ownerExist($email);
-        
         if($keeper != null){
             return $keeper;
         }else if($owner != null){

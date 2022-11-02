@@ -8,11 +8,9 @@ use Models\Owner as Owner;
 
 class PetController{
     private $PetDao;  
-    private $OwnerDao;  
     
     function __construct(){
         $this->PetDao = new PetDao();
-        $this->OwnerDao = new OwnerDao();
     }
 
     private function checkImgFiles($file,$user,$pet,$type){

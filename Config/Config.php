@@ -10,7 +10,7 @@ define("IMG_PATH", VIEWS_PATH . "img/");
 
 
 define("DB_HOST", "localhost");
-define("DB_NAME", "TP-lab4");
+define("DB_NAME", "petherobd");
 define("DB_USER", "root");
 define("DB_PASS", "");
 

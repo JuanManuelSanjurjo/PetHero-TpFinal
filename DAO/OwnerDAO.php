@@ -4,148 +4,100 @@ namespace DAO;
 use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use Models\User as User;
-use Models\Pet as Pet;
+use FFI\Exception;
 
 class OwnerDAO{
 
-    private $OwnerList = [];
-    private $fileName = ROOT."Data/Owners.json";
+    private $connection;
+    private $tableName= "Owners";
 
-
-    public function getByEmail($mail){
-        $this->retrieveData();
-
-        $owners = array_filter($this->OwnerList, function($owner) use($mail){
-            return $owner->getMail() == $mail;
-        });
-        $owners = array_values($owners); //Reordering array indexes
-        return (count($owners) > 0) ? $owners[0] : null;
-
-    }
-
-    public function getById($id){
-        $this->retrieveData();
-
-        $owners = array_filter($this->OwnerList, function($owner) use($id){
-            return $owner->getId() == $id;
-        });
-        $owners = array_values($owners);
-        return (count($owners) > 0) ? $owners[0] : null;
-    }
-
-    public function register(Owner $owner){
-
-        $this->retrieveData();
-
-        $owner->setId($this->getNextId());  // SIGUE INDICANDO EN NULL EL ID      
-        
-        array_push($this->OwnerList, $owner);
-
-        $this->saveData();
-
-    }
-
-    public function getAll()
+    public function Add(Owner $owner)
     {
-        $this->retrieveData();
-
-        return $this->OwnerList;
-    }
-
-    public function getPetById($id)
-    {
-        $sessionUser = $_SESSION["loggedUser"];
-        
-        foreach($sessionUser->getPetList() as $pet){
-            if($pet->getId() == $id ){
-                return $pet;
-            }
-        }
-
-    }
-
-    public function registerPet(Pet $pet){
-        $sessionUser = $_SESSION["loggedUser"];
-     
-        $this->retrieveData();
-        $newList = $sessionUser->getPetList();
+        try{
+            $query = "INSERT INTO".$this->tableName."(id, mail, password, userName, name, surname, userType) VALUES (:id, :mail, :password, :userName, :name, :surname, :userType)";
+    
+            $parameters["id"]           = $owner->getId();
+            $parameters["mail"]         = $owner->getMail();
+            $parameters["password"]     = $owner->getPassword();
+            $parameters["userName"]     = $owner->getUserName();
+            $parameters["name"]         = $owner->getName();        
+            $parameters["surname"]      = $owner->getSurname();        
+            $parameters["userType"]     = $owner->getUserType();
             
-        array_push($newList,$pet);
+            $this->connection = Connection::GetInstance();
+    
+            $this->connection->ExecuteNonQuery($query,$parameters);
 
-        $sessionUser->setPetList($newList);
-
-        $this->saveData();
-    }
-
-    public function addFilesToPet(Pet $pet){
-        $this->retrieveData();
-        $sessionUser = $_SESSION["loggedUser"];
-
-        foreach($sessionUser->getPetList() as $pets){
-            if($pets->getId() == $pet->getId()){
-                $pets->setPhoto($pet->getPhoto());
-                $pets->setVaxPlanImg($pet->getVaxPlanImg());
-                $pets->setVideo($pet->getVideo());
-            }
+        }catch(Exception $e){
+            throw $e;
         }
-        $this->saveData();
     }
 
- 
-    public function retrieveData(){
+    public function GetAll()
+    {
+        $ownerList = array();
 
-        $this->OwnerList = [];
+        $query= "SELECT id, mail, password, userName, name, surname, userType FROM ".$this->tableName;
 
-             if(file_exists($this->fileName))
-             {
-                $jsonToDecode = file_get_contents($this->fileName);
-                $contentArray = ($jsonToDecode) ? json_decode($jsonToDecode, true) : [];
+        $this->connection = Connection::GetInstance();
+        
+        $result = $this->connection->Execute($query);
+
+        foreach($result as $row)
+        {
+            $keeper = new Keeper();
+            $keeper->setId($row["id"]);
+            $keeper->setMail ($row["mail"]);
+            $keeper->setPassword ($row["password"]);
+            $keeper->setUserName ($row["userName"]);
+            $keeper->setName ($row["name"]);
+            $keeper->setSurname ($row["surname"]);
+            $keeper->setUserType ($row["userType"]);
+
+            array_push($ownerList,$keeper);
+        }
+
+        return $ownerList;
+
+    }
+
+
+    public function Remove($id)
+    {
+        $query= "DELETE FROM ".$this->tableName." WHERE (id = :id)";
+
+        $parameters["id"] = $id;
+
+        $this->connection = Connection::GetInstance();
+
+        $this->connection->ExecuteNonQuery($query,$parameters);
+    }
+
+    public function GetByEmail($mail)
+    {
+            try{
+                $user = null;
+
+                $query = "SELECT id, mail, password, userName, name, surname, userType, compensation, petType FROM ".$this->tableName."WHERE (mail = :mail)";
                 
-                foreach($contentArray as $content)
-                {               
+                $this->connection = Connection::GetInstance();
 
-                    $owner = new Owner();
-                    $owner->setId($content["id"]);
-                    $owner->setMail($content["mail"]);
-                    $owner->setPassword($content["password"]);
-                    $owner->setUserName($content["userName"]);
-                    $owner->setName($content["name"]);
-                    $owner->setSurname($content["surname"]);
-                    $owner->setUserType($content["userType"]);
-                    $owner->setPetList($content["petList"]);                    
+                $results = $this->connection->Execute($query);
 
-                    array_push($this->OwnerList, $owner);
+                foreach($results as $row)
+                {
+                    $keeper = new Owner();
+                    
+
                 }
-             }
-    
+                return $keeper;
+        }catch(Exception $ex){
+            throw $ex;
+        }
     }
 
 
-    public function saveData(){
 
-        $arrayToEncode = [];
-
-            foreach($this->OwnerList as $owner)
-            {
-                $valuesArray = [];
-                $valuesArray["id"] = $owner->getId();
-                $valuesArray["mail"] = $owner->getMail();
-                $valuesArray["password"] = $owner->getPassword();
-                $valuesArray["userName"] = $owner->getUserName();
-                $valuesArray["name"] = $owner->getname();
-                $valuesArray["surname"] = $owner->getSurname();
-                $valuesArray["userType"] = $owner->getUserType();             
-                $valuesArray["petList"] = $owner->getPetList();
-
-                array_push($arrayToEncode, $valuesArray);
-            }        
-            
-
-            $fileContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-
-            file_put_contents($this->fileName, $fileContent);
-    
-    }
 
     private function getNextId()
     {
@@ -159,37 +111,6 @@ class OwnerDAO{
         }
         return $id+1;
     }
-
-    public function getNextPetId() // deberia ser privada
-    {
-        $sessionUser = $_SESSION["loggedUser"];
-        $id = 0;
-        foreach($sessionUser->getPetList() as $pet)
-        {
-            $id = ($pet->getId() > $id) ? $pet->getId() : $id;
-        }
-        return $id+1;
-    }
-
-
-    public function cancelPetRegister($id)
-        {            
-            $sessionUser = $_SESSION["loggedUser"];
-            
-            $this->retrieveData();
-
-            $list= $sessionUser->getPetList();
-
-            $list = array_filter($list, function($pet) use($id){                
-                return $pet->getId() != $id;
-            });
-            $sessionUser->setPetList($list);
-
-            $this->saveData();
-        }
-
-
-    
 
 
 }

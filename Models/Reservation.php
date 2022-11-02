@@ -11,9 +11,11 @@ class Reservation{
     private $owner;
     private $keeper;
     private $compensation;
-    private $reservationPeriod; //TimeInterval
+    private $dateStart; 
+    private $dateEnd; 
     private $pet;    
     private $confirmation;  //se setea null y se cambia a true or false
+
 
     /**
      * Get the value of owner
@@ -55,26 +57,7 @@ class Reservation{
         return $this;
     }
 
-    /**
-     * Get the value of reservationPeriod
-     */ 
-    public function getReservationPeriod()
-    {
-        return $this->reservationPeriod;
-    }
-
-    /**
-     * Set the value of reservationPeriod
-     *
-     * @return  self
-     */ 
-    public function setReservationPeriod(TimeInterval $reservationPeriod)
-    {
-        $this->reservationPeriod = $reservationPeriod;
-
-        return $this;
-    }
-
+   
     /**
      * Get the value of pet
      */ 
@@ -140,10 +123,10 @@ class Reservation{
      */ 
     public function getCompensation()
     {
-        $totalDays = date_diff($this->reservationPeriod->getStart(),$this->reservationPeriod->getEnd());
-        $totalDays = $totalDays->format("%d");
-        $this->compensation = $totalDays * $this->keeper->getCompensation();
-
+        $totalDays=date_diff($this->reservationPeriod->getStart(),$this->reservationPeriod->getEnd()); 
+        $totalDays=$totalDays->format("%d");
+        $this->compensation=$totalDays * $this->keeper->getCompensation();
+        
         return $this->compensation;
     }
 
@@ -155,6 +138,49 @@ class Reservation{
     public function setCompensation($compensation)
     {
         $this->compensation = $compensation;
+
+        return $this;
+    }
+
+    
+
+
+    /**
+     * Get the value of dateStart
+     */ 
+    public function getDateStart()
+    {
+        return $this->dateStart;
+    }
+
+    /**
+     * Set the value of dateStart
+     *
+     * @return  self
+     */ 
+    public function setDateStart($dateStart)
+    {
+        $this->dateStart = $dateStart;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of dateEnd
+     */ 
+    public function getDateEnd()
+    {
+        return $this->dateEnd;
+    }
+
+    /**
+     * Set the value of dateEnd
+     *
+     * @return  self
+     */ 
+    public function setDateEnd($dateEnd)
+    {
+        $this->dateEnd = $dateEnd;
 
         return $this;
     }

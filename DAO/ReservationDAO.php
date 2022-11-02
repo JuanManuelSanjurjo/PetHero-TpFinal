@@ -8,7 +8,7 @@ use Models\Reservation as Reservation;
 
 class ReservationDAO{
     private $reservationList = [];
-    private $fileName = ROOT."Data/Reservations.json";
+    private $fileName = ROOT."Data/Reservation.json";
 
 
     public function getByReservationNumber($reservationNumber){
@@ -58,13 +58,12 @@ class ReservationDAO{
                     $reservation->setReservationNumber($content["reservationNumber"]);
                     $reservation->setOwner($content["owner"]);
                     $reservation->setKeeper($content["keeper"]);
-                    $reservation->setCompensation($content["compensation"]);
                     $reservation->setReservationPeriod($content["reservationPeriod"]);
                     $reservation->setPet($content["pet"]);
                     $reservation->setConfirmation($content["confirmation"]);
                                   
 
-                    array_push($this->reservationList, $reservation);
+                    array_push($this->userList, $reservation);
                 }
              }
     
@@ -81,7 +80,6 @@ class ReservationDAO{
                 $valuesArray["reservationNumber"] = $reservation->getByReservationNumber();
                 $valuesArray["owner"] = $reservation->getOwner();
                 $valuesArray["keeper"] = $reservation->getKeeper();
-                $valuesArray["compensation"] = $reservation->getCompensation();
                 $valuesArray["reservationPeriod"] = $reservation->getReservationPeriod();
                 $valuesArray["pet"] = $reservation->getPet();
                 $valuesArray["confirmation"] = $reservation->getConfirmation();
@@ -95,7 +93,7 @@ class ReservationDAO{
     
     }
 
-    public function getNextReservationNumber()
+    private function getNextReservationNumber()
     {
         $reservationNumber = 0;
         if(sizeof($this->reservationList) != 0){
@@ -108,27 +106,10 @@ class ReservationDAO{
         return $reservationNumber+1;
     }
 
-    public function getReservationByKeeper($keeperID){
-        $this->retrieveData();
-
-        $FiltredList=array();
-
-        foreach($this->reservationList as $booked){
-            
-            if($booked->getKeeper()->getId()== $keeperID){
-
-                array_push($fileContent,$booked);
-
-            }
-
-        }
-        
-        return $FiltredList;
-    }
-
-
 
 }
+
+
 
 
 

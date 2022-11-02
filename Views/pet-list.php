@@ -1,6 +1,6 @@
 <?php  include('header.php'); ?>
 
-<form action="<?php echo FRONT_ROOT."Pet/showMyPetList" ?>" method="GET">
+<form action="<?php echo FRONT_ROOT."Owner/showMyPetList" ?>" method="GET">
     <h1>Your Pets</h1>
       <table class="table">
         <thead>
@@ -17,8 +17,6 @@
         </thead>
         <tbody>
           <?php    
-          $list = $user->getPetList();
-          var_dump($list);
           foreach( $list as $pet){  
               ?>
             <tr>

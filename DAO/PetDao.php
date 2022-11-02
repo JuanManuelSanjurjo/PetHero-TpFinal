@@ -3,15 +3,20 @@ namespace DAO;
 
 use Models\Pet as Pet;
 use Models\Owner as Owner;
+use DAO\OwnerDAO as OwnerDao;
 
 class PetDao{
-    //private $petList = [];
-    //private $fileName = ROOT."Data/Pets.json";
+    private $OwnerDao;  
+    
+    function __construct(){
+        $this->OwnerDao = new OwnerDao();
+    }
 
     public function getById($id){
-        $this->retrieveData();
+        //$this->retrieveData();
+        $list = $this->getAll();
 
-        $pets = array_filter($this->petList, function($pet) use($id){
+        $pets = array_filter( $list, function($pet) use($id){
             return $pet->getId() == $id;
         });
         $pets = array_values($pets); //Reordering array indexes
@@ -20,9 +25,10 @@ class PetDao{
     }
 
     public function getByOwnerId($id){
-        $this->retrieveData();
+        //$this->retrieveData();
+        $list = $this->getAll();
         $pet=null;
-        foreach($this->petList as $pets){
+        foreach($list as $pets){
             if($pets->getIdOwner() == $id){
                 $pet=$pets;
             }
@@ -31,45 +37,38 @@ class PetDao{
     }
 
     public function register(Pet $pet){
-        $this->retrieveData();
+        //$this->retrieveData();
+        $this->OwnerDao->retrieveData();
         
         $pet->setId($this->getNextId());  
-        $user = $_SESSION["loggedUser"];
-        $newList = $user->getAvailabilityList();
-        array_push($newList, $pet);
-
-        $this->saveData();
-    }
-/*
-    public function register(Pet $pet){
-        $this->retrieveData();
         
-        $pet->setId($this->getNextId());  
-        $user = $_SESSION["loggedUser"];
-        $newList = $user->getAvailabilityList();
-        array_push($newList, $pet);
-
-        $this->saveData();
+        //$this->OwnerDao->registerPet($pet);
+        //$this->saveData();
     }
-*/
+
     public function addFilesToPet(Pet $pet){
-        $this->retrieveData();
-        
-        foreach($this->petList as $pets){
+       // $this->retrieveData();
+       $list = $this->getAll();
+
+        foreach($list  as $pets){
             if($pets->getId() == $pet->getId()){
                 $pets->setPhoto($pet->getPhoto());
                 $pets->setVaxPlanImg($pet->getVaxPlanImg());
                 $pets->setVideo($pet->getVideo());
             }
         }
-        $this->saveData();
+        //$this->saveData();
     }
 
     public function getAll()
     {
-        $this->retrieveData();
+       // $this->retrieveData();
 
-        return $this->petList;
+       $owner = $_SESSION["loggedUser"];
+
+       $list = $owner->getPetList();
+
+        return $list;
     }
 //borra pet, no FILES
     public function cancelPetRegister($id)
@@ -85,7 +84,9 @@ class PetDao{
 
     public function retrieveData(){
 
-        $this->petList = [];
+        $owner = $_SESSION["loggedUser"];
+
+        $list = $owner->getPetList();
 
              if(file_exists($this->fileName))
              {
@@ -113,6 +114,8 @@ class PetDao{
 
 
     public function saveData(){
+
+
 
         $arrayToEncode = [];
 
@@ -143,7 +146,10 @@ class PetDao{
     private function getNextId() // deberia ser privada
     {
         $id = 0;
-        foreach($this->petList as $pet)
+        $user = $_SESSION["loggedUser"];
+        $list = $user->getPetList();
+
+        foreach($list as $pet)
         {
             $id = ($pet->getId() > $id) ? $pet->getId() : $id;
         }
