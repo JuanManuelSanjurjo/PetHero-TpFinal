@@ -4,43 +4,39 @@ namespace DAO;
 use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use Models\User as User;
-use FFI\Exception;
+use DAO\Connection as Connection;
+use Exception;
 
 class OwnerDAO{
 
     private $connection;
-    private $tableName= "Owners";
+    private $tableName= "owners";
 
-    public function Add(Owner $owner)
+    public function register(Owner $owner)
     {
-        try{
-            $query = "INSERT INTO".$this->tableName."(id, mail, password, userName, name, surname, userType) VALUES (:id, :mail, :password, :userName, :name, :surname, :userType)";
-    
-            $parameters["id"]           = $owner->getId();
-            $parameters["mail"]         = $owner->getMail();
-            $parameters["password"]     = $owner->getPassword();
-            $parameters["userName"]     = $owner->getUserName();
-            $parameters["name"]         = $owner->getName();        
-            $parameters["surname"]      = $owner->getSurname();        
-            $parameters["userType"]     = $owner->getUserType();
-            
-            $this->connection = Connection::GetInstance();
-    
-            $this->connection->ExecuteNonQuery($query,$parameters);
+        $query = "INSERT INTO ".$this->tableName."(id, mail, password, userName, name, surname, userType) VALUES (:id, :mail, :password, :userName, :name, :surname, :userType)";
 
-        }catch(Exception $e){
-            throw $e;
-        }
+        $parameters["id"]           = $owner->getId();
+        $parameters["mail"]         = $owner->getMail();
+        $parameters["password"]     = $owner->getPassword();
+        $parameters["userName"]     = $owner->getUserName();
+        $parameters["name"]         = $owner->getName();        
+        $parameters["surname"]      = $owner->getSurname();        
+        $parameters["userType"]     = $owner->getUserType();
+        
+        $this->connection = Connection::GetInstance();
+
+        $this->connection->ExecuteNonQuery($query,$parameters);
     }
 
-    public function GetAll()
+    public function getAll()
     {
         $ownerList = array();
 
         $query= "SELECT id, mail, password, userName, name, surname, userType FROM ".$this->tableName;
 
         $this->connection = Connection::GetInstance();
-        
+
         $result = $this->connection->Execute($query);
 
         foreach($result as $row)
@@ -73,32 +69,7 @@ class OwnerDAO{
         $this->connection->ExecuteNonQuery($query,$parameters);
     }
 
-    public function GetByEmail($mail)
-    {
-            try{
-                $user = null;
-
-                $query = "SELECT id, mail, password, userName, name, surname, userType, compensation, petType FROM ".$this->tableName."WHERE (mail = :mail)";
-                
-                $this->connection = Connection::GetInstance();
-
-                $results = $this->connection->Execute($query);
-
-                foreach($results as $row)
-                {
-                    $keeper = new Owner();
-                    
-
-                }
-                return $keeper;
-        }catch(Exception $ex){
-            throw $ex;
-        }
-    }
-
-
-
-
+/*
     private function getNextId()
     {
         $id = 0;
@@ -111,6 +82,42 @@ class OwnerDAO{
         }
         return $id+1;
     }
+
+*/
+
+
+    public function getByEmail($mail)
+    {
+        try{
+            $owner = null;
+
+            $query = "SELECT id, mail, password, userName, name, surname, userType FROM ".$this->tableName." WHERE (mail = :mail)";
+
+            $parameters["mail"] = $mail;
+            
+            $this->connection = Connection::GetInstance();
+            $results = $this->connection->Execute($query,$parameters);
+                        
+            foreach($results as $row){
+
+
+                $owner = new Owner();
+                $owner->setId($results["id"]);
+                $owner->setMail ($results["mail"]);
+                $owner->setPassword ($results["password"]);
+                $owner->setUserName ($results["userName"]);
+                $owner->setName ($results["name"]);
+                $owner->setSurname ($results["surname"]);
+                $owner->setUserType ($results["userType"]);
+
+            }
+            return $owner;
+
+        }
+        catch(Exception $ex){
+            throw $ex;
+        }
+    }  
 
 
 }

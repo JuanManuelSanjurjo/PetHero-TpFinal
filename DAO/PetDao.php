@@ -1,162 +1,122 @@
 <?php
 namespace DAO;
 
+use Exception;
 use Models\Pet as Pet;
 use Models\Owner as Owner;
-use DAO\OwnerDAO as OwnerDao;
 
 class PetDao{
-    private $OwnerDao;  
-    
-    function __construct(){
-        $this->OwnerDao = new OwnerDao();
+
+    private $connection;
+    private $tableName= "pet";
+
+    public function register(Pet $pet)
+    {
+        try{
+            $query = "INSERT INTO".$this->tableName."(id, idOwner, name, photo, breed, size, vaxPlanImg, video, observation, petType) VALUES (:id, :idOwner, :name, :photo, :breed, :size, :vaxPlanImg, :video, :observation, :petType)";
+
+            $parameters["id"]           = $pet->getId();
+            $parameters["idOwner"]      = $pet->getIdOwner();
+            $parameters["name"]         = $pet->getName();
+            $parameters["photo"]        = $pet->getPhoto();
+            $parameters["breed"]        = $pet->getBreed();        
+            $parameters["size"]         = $pet->getSize();        
+            $parameters["vaxPlanImg"]   = $pet->getVaxPlanImg();        
+            $parameters["video"]        = $pet->getVideo();
+            $parameters["observation"]  = $pet->getObservations();        
+            $parameters["petType"]      = $pet->getPetType();
+            
+            $this->connection = Connection::GetInstance();
+
+            $this->connection->ExecuteNonQuery($query,$parameters);
+        }catch(Exception $ex){
+            throw $ex;
+        } 
+
     }
 
-    public function getById($id){
-        //$this->retrieveData();
-        $list = $this->getAll();
+    public function getAll()
+    {
+        try{
+            
+            $petList = array();
+            $query= "SELECT id, idOwner, name, photo, breed, size, vaxPlanImg, video, observation, petType FROM ".$this->tableName;
 
-        $pets = array_filter( $list, function($pet) use($id){
-            return $pet->getId() == $id;
-        });
-        $pets = array_values($pets); //Reordering array indexes
-        return (count($pets) > 0) ? $pets[0] : null;
+            $this->connection = Connection::GetInstance();
 
-    }
+            $result = $this->connection->Execute($query);
 
-    public function getByOwnerId($id){
-        //$this->retrieveData();
-        $list = $this->getAll();
-        $pet=null;
-        foreach($list as $pets){
-            if($pets->getIdOwner() == $id){
-                $pet=$pets;
+            foreach($result as $row)
+            {
+                $pet = new Pet();
+                $pet->setId($row["id"]);
+                $pet->setIdOwner ($row["idOwner"]);
+                $pet->setName ($row["name"]);
+                $pet->setPhoto ($row["photo"]);
+                $pet->setBreed ($row["breed"]);
+                $pet->setSize ($row["size"]);
+                $pet->setVaxPlanImg ($row["vaxPlanImg"]);
+                $pet->setVideo ($row["video"]);
+                $pet->setObservations ($row["observation"]);
+                $pet->setPetType ($row["petType"]);
+
+                array_push($keepersList,$pet);
             }
+
+            return $petList;
+        }catch(Exception $ex){
+            throw $ex;
         }
-       return $pet;
+
     }
 
-    public function register(Pet $pet){
-        //$this->retrieveData();
-        $this->OwnerDao->retrieveData();
-        
-        $pet->setId($this->getNextId());  
-        
-        //$this->OwnerDao->registerPet($pet);
-        //$this->saveData();
+
+    public function Remove($id)
+    {
+        try{
+        $query= "DELETE FROM ".$this->tableName." WHERE (id = :id)";
+
+        $parameters["id"] = $id;
+
+        $this->connection = Connection::GetInstance();
+
+        $this->connection->ExecuteNonQuery($query,$parameters);
+        }catch(Exception $ex){
+            throw $ex;
+        }
     }
 
     public function addFilesToPet(Pet $pet){
-       // $this->retrieveData();
-       $list = $this->getAll();
-
-        foreach($list  as $pets){
+        /*
+        $this->retrieveData();
+        
+        foreach($this->petList as $pets){
             if($pets->getId() == $pet->getId()){
                 $pets->setPhoto($pet->getPhoto());
                 $pets->setVaxPlanImg($pet->getVaxPlanImg());
                 $pets->setVideo($pet->getVideo());
             }
         }
-        //$this->saveData();
+        $this->saveData();
+        */
     }
 
-    public function getAll()
-    {
-       // $this->retrieveData();
-
-       $owner = $_SESSION["loggedUser"];
-
-       $list = $owner->getPetList();
-
-        return $list;
-    }
-//borra pet, no FILES
     public function cancelPetRegister($id)
-        {            
-            $this->retrieveData();
+    {            
+       /* $this->retrieveData();
             
-            $this->petList = array_filter($this->petList, function($pet) use($id){                
-                return $pet->getId() != $id;
-            });
+        $this->petList = array_filter($this->petList, function($pet) use($id){                
+            return $pet->getId() != $id;
+        });
             
-            $this->saveData();
-        }
+        $this->saveData();
+        */
 
-    public function retrieveData(){
+        //tiene que borrar el registro
 
-        $owner = $_SESSION["loggedUser"];
+    }
 
-        $list = $owner->getPetList();
-
-             if(file_exists($this->fileName))
-             {
-                $jsonToDecode = file_get_contents($this->fileName);
-                $contentArray = ($jsonToDecode) ? json_decode($jsonToDecode, true) : [];
-                
-                foreach($contentArray as $content)
-                {
-                    $pet = new Pet();
-                    $pet->setId($content["id"]);
-                    $pet->setIdOwner($content["idOwner"]);
-                    $pet->setName($content["name"]);
-                    $pet->setPhoto($content["photo"]);
-                    $pet->setBreed($content["breed"]);
-                    $pet->setSize($content["size"]);
-                    $pet->setVaxPlanImg($content["vaxPlanImg"]);
-                    $pet->setVideo($content["video"]);
-                    $pet->setObservations($content["observations"]);
-                    $pet->setPetType($content["petType"]);
-                    array_push($this->petList, $pet);
-                }
-             }
     
-    }
-
-
-    public function saveData(){
-
-
-
-        $arrayToEncode = [];
-
-            foreach($this->petList as $pet)
-            {
-                $valuesArray = [];
-                $valuesArray["id"] = $pet->getId();
-                $valuesArray["idOwner"] = $pet->getIdOwner();
-                $valuesArray["name"] = $pet->getName();
-                $valuesArray["photo"] = $pet->getPhoto();
-                $valuesArray["breed"] = $pet->getBreed();
-                $valuesArray["size"] = $pet->getSize();
-                $valuesArray["vaxPlanImg"] = $pet->getVaxPlanImg();
-                $valuesArray["video"] = $pet->getVideo();
-                $valuesArray["observations"] = $pet->getObservations();
-                $valuesArray["petType"] = $pet->getPetType();
-
-                array_push($arrayToEncode, $valuesArray);
-            }
-
-            $fileContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-
-            file_put_contents($this->fileName, $fileContent);
-    
-    }
-
-
-    private function getNextId() // deberia ser privada
-    {
-        $id = 0;
-        $user = $_SESSION["loggedUser"];
-        $list = $user->getPetList();
-
-        foreach($list as $pet)
-        {
-            $id = ($pet->getId() > $id) ? $pet->getId() : $id;
-        }
-        return $id+1;
-    }
-
-
 
 
 

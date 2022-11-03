@@ -5,24 +5,24 @@ use DAO\UserDao as UserDao;
 use Models\User as User;
 use Models\Keeper as Keeper;
 use Models\Owner as Owner;
-use DAO\OwnerDao as OwnerDao;
+use DAO\OwnerDAO as OwnerDAO;
 use DAO\KeeperDAO as KeeperDao;
 
 class HomeController{
-    private $OwnerDao;  
+    private $OwnerDAO;  
     private $KeeperDao;  
 
     function __construct(){
-        $this->OwnerDao = new OwnerDao();
+        $this->OwnerDAO = new OwnerDAO();
         $this->KeeperDao = new KeeperDao();
         
     }
 
     public function register($email, $name, $surname, $pass, $repeatPass, $userName, $userType){
         
-        var_dump($this->OwnerDao->GetAll());
-
         $user = $this->userExist($email);
+        
+        var_dump($user);
 
         if(!$this->confirmPassword($pass, $repeatPass)){ 
             $this->showRegisterView("Passwords dont match, try again"); 
@@ -82,13 +82,14 @@ class HomeController{
 
     public function userExist($email){
        // $keeper = $this->KeeperDao->getByEmail($email);
-       // $owner = $this->OwnerDao->getByEmail($email);
+       // $owner = $this->OwnerDAO->getByEmail($email);
 
         $keeperController = new KeeperController();
         $ownerController = new OwnerController();
 
         $keeper = $keeperController->keeperExist($email);
         $owner = $ownerController->ownerExist($email);
+
         if($keeper != null){
             return $keeper;
         }else if($owner != null){

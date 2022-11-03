@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2022 a las 16:38:07
+-- Tiempo de generación: 02-11-2022 a las 23:28:46
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -35,9 +35,16 @@ CREATE TABLE `keepers` (
   `name` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `surname` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `userType` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `compensation` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `compensation` int(50) NOT NULL,
   `petType` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `keepers`
+--
+
+INSERT INTO `keepers` (`id`, `mail`, `password`, `userName`, `name`, `surname`, `userType`, `compensation`, `petType`) VALUES
+(33, 'cccccccccccccccc', 'cccccccccccccccc', 'cccccccccccccccc', 'cccccccccccccccc', 'cccccccccccccccc', 'cccccccccccccccc', 2000, 'cccccccccccccccc');
 
 -- --------------------------------------------------------
 
@@ -54,6 +61,13 @@ CREATE TABLE `owners` (
   `surname` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `userType` varchar(20) COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `owners`
+--
+
+INSERT INTO `owners` (`id`, `mail`, `password`, `userName`, `name`, `surname`, `userType`) VALUES
+(1, 'asdas@asdasdasdasd.com', 'asd', 'asd', 'aaasssdd', 'aassdd', 'owner');
 
 -- --------------------------------------------------------
 
@@ -100,7 +114,8 @@ CREATE TABLE `reservation` (
 CREATE TABLE `timeinterval` (
   `id` int(11) NOT NULL,
   `start` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `end` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL
+  `end` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `idKeeper` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 --
@@ -117,26 +132,30 @@ ALTER TABLE `keepers`
 -- Indices de la tabla `owners`
 --
 ALTER TABLE `owners`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `mail` (`mail`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `pet`
 --
 ALTER TABLE `pet`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_idOwner` (`idOwner`);
 
 --
 -- Indices de la tabla `reservation`
 --
 ALTER TABLE `reservation`
-  ADD PRIMARY KEY (`reservationNumber`);
+  ADD PRIMARY KEY (`reservationNumber`),
+  ADD KEY `fk_idKeeper` (`keeper`),
+  ADD KEY `fk_idPet` (`pet`),
+  ADD KEY `fk:idOwner` (`owner`);
 
 --
 -- Indices de la tabla `timeinterval`
 --
 ALTER TABLE `timeinterval`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_idKeeperDate` (`idKeeper`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -146,13 +165,13 @@ ALTER TABLE `timeinterval`
 -- AUTO_INCREMENT de la tabla `keepers`
 --
 ALTER TABLE `keepers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `owners`
 --
 ALTER TABLE `owners`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `pet`
@@ -171,6 +190,30 @@ ALTER TABLE `reservation`
 --
 ALTER TABLE `timeinterval`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `pet`
+--
+ALTER TABLE `pet`
+  ADD CONSTRAINT `fk_idOwner` FOREIGN KEY (`idOwner`) REFERENCES `owners` (`id`);
+
+--
+-- Filtros para la tabla `reservation`
+--
+ALTER TABLE `reservation`
+  ADD CONSTRAINT `fk:idOwner` FOREIGN KEY (`owner`) REFERENCES `owners` (`id`),
+  ADD CONSTRAINT `fk_idKeeper` FOREIGN KEY (`keeper`) REFERENCES `keepers` (`id`),
+  ADD CONSTRAINT `fk_idPet` FOREIGN KEY (`pet`) REFERENCES `pet` (`id`);
+
+--
+-- Filtros para la tabla `timeinterval`
+--
+ALTER TABLE `timeinterval`
+  ADD CONSTRAINT `fk_idKeeperDate` FOREIGN KEY (`idKeeper`) REFERENCES `keepers` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

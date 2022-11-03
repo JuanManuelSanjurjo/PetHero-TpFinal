@@ -2,20 +2,19 @@
 
 namespace Controllers;
 
-use DAO\OwnerDAO;
 use Models\Owner;
+use DAO\OwnerDAO as OwnerDAO;
 use Models\Pet as Pet;
 
 class OwnerController{
-    private $OwnerDao;
+    private $OwnerDAO;
 
     function __construct(){
-        $this->OwnerDao = new OwnerDAO();
+        $this->OwnerDAO = new OwnerDAO();
     }
 
     public function ownerExist($email){
-        $owner = $this->OwnerDao->getByEmail($email);
-        
+        $owner = $this->OwnerDAO->getByEmail($email);
         return $owner;
     }
 
@@ -53,7 +52,7 @@ class OwnerController{
                 
         $_SESSION["loggedUser"]= $user; 
         
-        $this->OwnerDao->register($user);
+        $this->OwnerDAO->register($user);
 
         
     }

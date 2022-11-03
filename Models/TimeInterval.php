@@ -3,10 +3,10 @@
 namespace Models;
 
 class TimeInterval{
-    public $id;
-    public $idKeeper;
+    public $id; // ???
     public $start;
     public $end;
+    public $idKeeper;
 
       public function getEnd()
     {
@@ -57,6 +57,26 @@ class TimeInterval{
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idKeeper
+     */ 
+    public function getIdKeeper()
+    {
+        return $this->idKeeper;
+    }
+
+    /**
+     * Set the value of idKeeper
+     *
+     * @return  self
+     */ 
+    public function setIdKeeper($idKeeper)
+    {
+        $this->idKeeper = $idKeeper;
 
         return $this;
     }

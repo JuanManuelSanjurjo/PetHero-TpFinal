@@ -39,13 +39,14 @@
                 $this->Prepare($query);
                 
                 $this->BindParameters($parameters, $queryType);
-                
+
                 $this->pdoStatement->execute();
 
                 return $this->pdoStatement->fetchAll();
             }
             catch(Exception $ex)
             {
+                
                 throw $ex;
             }
         }
@@ -57,7 +58,6 @@
                 $this->Prepare($query);
                 
                 $this->BindParameters($parameters, $queryType);
-
                 $this->pdoStatement->execute();
 
                 return $this->pdoStatement->rowCount();
