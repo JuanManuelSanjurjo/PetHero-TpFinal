@@ -7,7 +7,80 @@
         "name": "Juan Manuel",
         "surname": "Sanjurjo",
         "userType": "owner",
-        "petList": []
+        "petList": [
+            {
+                "id": 1,
+                "idOwner": 1,
+                "name": "Cheems",
+                "photo": "1_1.jpg",
+                "breed": "cheems vaquero",
+                "size": "medium",
+                "vaxPlanImg": "1_1_vaxplan.jpg",
+                "video": "1_1_video.mkv",
+                "observations": "",
+                "petType": null
+            },
+            {
+                "id": 2,
+                "idOwner": 1,
+                "name": "Cheems Segundo",
+                "photo": "1_2.jpg",
+                "breed": "Cheems profe",
+                "size": "small",
+                "vaxPlanImg": "1_2_vaxplan.jpg",
+                "video": "1_2_video.mkv",
+                "observations": "No muerde pero te manda a hacer burpees",
+                "petType": null
+            },
+            {
+                "id": 3,
+                "idOwner": 1,
+                "name": "gato",
+                "photo": null,
+                "breed": "gato",
+                "size": "Small",
+                "vaxPlanImg": null,
+                "video": null,
+                "observations": "",
+                "petType": null
+            },
+            {
+                "id": 4,
+                "idOwner": 1,
+                "name": "gato",
+                "photo": null,
+                "breed": "gato",
+                "size": "Small",
+                "vaxPlanImg": null,
+                "video": null,
+                "observations": "",
+                "petType": null
+            },
+            {
+                "id": 5,
+                "idOwner": 1,
+                "name": "gato",
+                "photo": null,
+                "breed": "gato",
+                "size": "Small",
+                "vaxPlanImg": null,
+                "video": null,
+                "observations": "",
+                "petType": null
+            },
+            {
+                "id": 6,
+                "idOwner": 1,
+                "name": "cat",
+                "photo": null,
+                "breed": "cat",
+                "size": "Small",
+                "vaxPlanImg": null,
+                "video": null,
+                "observations": "",
+                "petType": null
+            }
+        ]
     },
     {
         "id": 3,
@@ -16,6 +89,16 @@
         "userName": "MarianoF",
         "name": "Mariano",
         "surname": "Fernandez",
+        "userType": "owner",
+        "petList": []
+    },
+    {
+        "id": 4,
+        "mail": "marian@hotmail.com",
+        "password": "Mariano123",
+        "userName": "asdasd",
+        "name": "Mariano",
+        "surname": "Fer",
         "userType": "owner",
         "petList": []
     }

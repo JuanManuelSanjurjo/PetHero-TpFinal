@@ -4,115 +4,120 @@ namespace DAO;
 use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use Models\User as User;
+use Models\Pet as Pet;
 use Models\Reservation as Reservation;
+use DAO\Connection as Connection;
+use Exception;
 
 class ReservationDAO{
-    private $reservationList = [];
-    private $fileName = ROOT."Data/Reservation.json";
+   
 
+    private $connection;
+    private $tableName= "reservation";
 
-    public function getByReservationNumber($reservationNumber){
-        $this->retrieveData();
+    public function register(Reservation $reservation)
+    {
+        try{
+            $query = "INSERT INTO".$this->tableName."(reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation) VALUES (:reservationNumber, :owner, :keeper, :compensation, :dateStart, :dateEnd, :pet, :confirmation)";
 
-        $reservation = array_filter($this->reservationList, function($reservation) use($reservationNumber){
-            return $reservation->getByReservationNumber() == $reservationNumber;
-        });
-        $reservation = array_values($reservation); //Reordering array indexes
-        return (count($reservation) > 0) ? $reservation[0] : null;
+            $parameters["reservationNumber"]= $reservation->getReservationNumber();
+            $parameters["owner"]            = $reservation->getOwner();
+            $parameters["keeper"]           = $reservation->getKeeper();
+            $parameters["compensation"]     = $reservation->getCompensation();
+            $parameters["dateStart"]        = $reservation->getDateStart();
+            $parameters["dateEnd"]          = $reservation->getDateEnd();
+            $parameters["pet"]              = $reservation->getPet();
+            $parameters["confirmation"]     = $reservation->getConfirmation();
+            
+            $this->connection = Connection::GetInstance();
 
-    }
-
-    public function register(Reservation $reservation){
-
-        $this->retrieveData();
-
-        $reservation->setReservationNumber($this->getNextReservationNumber());  // SIGUE INDICANDO EN NULL EL ID      
-        
-        array_push($this->reservationList, $reservation);
-
-        $this->saveData();
+            $this->connection->ExecuteNonQuery($query,$parameters);
+        }catch(Exception $ex){
+            throw $ex;
+        } 
 
     }
 
     public function getAll()
     {
-        $this->retrieveData();
+        try{
+            
+            $reservationList = array();
+            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ".$this->tableName;
 
-        return $this->reservationList;
-    }
+            $this->connection = Connection::GetInstance();
 
-   
-    public function retrieveData(){
+            $result = $this->connection->Execute($query);
 
-        $this->reservationList = [];
-
-             if(file_exists($this->fileName))
-             {
-                $jsonToDecode = file_get_contents($this->fileName);
-                $contentArray = ($jsonToDecode) ? json_decode($jsonToDecode, true) : [];
-                
-                foreach($contentArray as $content)
-                {
-                    
-                    $reservation = new Reservation();
-                    $reservation->setReservationNumber($content["reservationNumber"]);
-                    $reservation->setOwner($content["owner"]);
-                    $reservation->setKeeper($content["keeper"]);
-                    $reservation->setReservationPeriod($content["reservationPeriod"]);
-                    $reservation->setPet($content["pet"]);
-                    $reservation->setConfirmation($content["confirmation"]);
-                                  
-
-                    array_push($this->userList, $reservation);
-                }
-             }
-    
-    }
-
-
-    public function saveData(){
-
-        $arrayToEncode = [];
-
-            foreach($this->reservationList as $reservation)
+            foreach($result as $row)
             {
-                $valuesArray = [];
-                $valuesArray["reservationNumber"] = $reservation->getByReservationNumber();
-                $valuesArray["owner"] = $reservation->getOwner();
-                $valuesArray["keeper"] = $reservation->getKeeper();
-                $valuesArray["reservationPeriod"] = $reservation->getReservationPeriod();
-                $valuesArray["pet"] = $reservation->getPet();
-                $valuesArray["confirmation"] = $reservation->getConfirmation();
-                              
-                array_push($arrayToEncode, $valuesArray);
+                $reservation = new Reservation();
+                $reservation->setReservationNumber($row["reservationNumber"]);
+                $reservation->setOwner($row["owner"]);
+                $reservation->setKeeper($row["keeper"]);
+                $reservation->setCompensation($row["compensation"]);
+                $reservation->setDateStart($row["dateStart"]);
+                $reservation->setDateEnd($row["dateEnd"]);
+                $reservation->setPet($row["pet"]);
+                $reservation->setConfirmation($row["confirmation"]);
+                
+                array_push($availabilityList,$reservation);
             }
 
-            $fileContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-
-            file_put_contents($this->fileName, $fileContent);
-    
-    }
-
-    private function getNextReservationNumber()
-    {
-        $reservationNumber = 0;
-        if(sizeof($this->reservationList) != 0){
-            foreach($this->reservationList as $reservation)
-            {
-                $reservationNumber = ($reservation->getReservationNumber() > $reservation) ? $reservation->getReservationNumber() : $reservationNumber;
-
-            }   
+            return $reservationList;
+        }catch(Exception $ex){
+            throw $ex;
         }
-        return $reservationNumber+1;
+
     }
 
 
+    public function Remove($id)
+    {
+        try{
+        $query= "DELETE FROM ".$this->tableName." WHERE (id = :id)";
+
+        $parameters["id"] = $id;
+
+        $this->connection = Connection::GetInstance();
+
+        $this->connection->ExecuteNonQuery($query,$parameters);
+        }catch(Exception $ex){
+            throw $ex;
+        }
+    }
+
+    public function getReservationByKeeper($keeperID){
+        
+       try{
+
+       
+        $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ".$this->tableName."WHERE (keeper = :keeperID)";
+
+        $this->connection = Connection::GetInstance();
+
+        $result = $this->connection->Execute($query);
+
+        $reservation = new Reservation();
+        $reservation->setReservationNumber($result["reservationNumber"]);
+        $reservation->setOwner($result["owner"]);
+        $reservation->setKeeper($result["keeper"]);
+        $reservation->setCompensation($result["compensation"]);
+        $reservation->setDateStart($result["dateStart"]);
+        $reservation->setDateEnd($result["dateEnd"]);
+        $reservation->setPet($result["pet"]);
+        $reservation->setConfirmation($result["confirmation"]);
+              
+            
+        return $reservation;
+                
+       }catch(Exception $ex){
+            throw $ex;
+       }
+    }
+    
+  
+    
 }
-
-
-
-
-
-
 
 ?>

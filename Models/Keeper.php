@@ -1,10 +1,11 @@
 <?php
 namespace Models ;
+use Models\TimeInterval as TimeInterval;
 
 class Keeper extends User{
     private $compensation;
     private $petType;
-    private $availabilityList = [];  // OBJETO periodoDeReservas (inicio/fin)
+    private $availabilityList = array() ;  // OBJETO periodoDeReservas (inicio/fin)
 
     public function getCompensation()
     {
@@ -41,13 +42,13 @@ class Keeper extends User{
 
         return $this;
     }
+
+    public function addAviailability (TimeInterval $date){
+
+        array_push($this->availabilityList,$date);
+
+    }
 }
-
-
-
-
-
-
 
 
 

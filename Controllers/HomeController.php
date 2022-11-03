@@ -1,26 +1,25 @@
 <?php
 namespace Controllers;
 
-use DAOJSON\KeeperDAO as DAOJSONKeeperDAO;
-use DAOJSON\UserDaoJSON as UserDao;
+use DAO\UserDao as UserDao;
 use Models\User as User;
 use Models\Keeper as Keeper;
 use Models\Owner as Owner;
-use DAOJSON\OwnerDaoJSON as OwnerDao;
-use DAOJSON\KeeperDAOJSON as KeeperDao;
-use DAOJSON\OwnerDAO as DAOJSONOwnerDAO;
+use DAO\OwnerDAO as OwnerDAO;
+use DAO\KeeperDAO as KeeperDao;
 
 class HomeController{
-    private $OwnerDao;  
+    private $OwnerDAO;  
     private $KeeperDao;  
 
     function __construct(){
-        $this->OwnerDao = new DAOJSONOwnerDAO();
-        $this->KeeperDao = new DAOJSONKeeperDAO();
+        $this->OwnerDAO = new OwnerDAO();
+        $this->KeeperDao = new KeeperDao();
         
     }
 
     public function register($email, $name, $surname, $pass, $repeatPass, $userName, $userType){
+
         $user = $this->userExist($email);
 
         if(!$this->confirmPassword($pass, $repeatPass)){ 
@@ -37,14 +36,14 @@ class HomeController{
                 session_destroy(); 
                 $this->showRegisterView("Your password must include a minimum of 8 characters, one uppercase, one lowercase and one number to be valid"); 
             }else{
-                if($user instanceof Keeper){
+                if($userType == "keeper"){
                     $keeperController = new KeeperController();
                     $keeperController->register($email, $name, $surname, $pass, $userName, $userType);
-                    $keeperController->showHomeView();
+                    $keeperController->showHomeView("User registered succesfully");
                 }else{
                     $OwnerController = new OwnerController();
                     $OwnerController->register($email, $name, $surname, $pass, $userName, $userType);
-                    $OwnerController->showHomeView();  
+                    $OwnerController->showHomeView("User registered succesfully");  
                 }
                 
             }
@@ -75,20 +74,22 @@ class HomeController{
 
     public function Index($message = "")
     {
-        echo $message; 
+        if($message){
+            HomeController::showMessage($message);
+        }
         require_once(VIEWS_PATH."login.php");
     }        
 
     public function userExist($email){
        // $keeper = $this->KeeperDao->getByEmail($email);
-       // $owner = $this->OwnerDao->getByEmail($email);
+       // $owner = $this->OwnerDAO->getByEmail($email);
 
         $keeperController = new KeeperController();
         $ownerController = new OwnerController();
 
         $keeper = $keeperController->keeperExist($email);
         $owner = $ownerController->ownerExist($email);
-        
+
         if($keeper != null){
             return $keeper;
         }else if($owner != null){
@@ -99,7 +100,7 @@ class HomeController{
     }
 
     public function login($email,$pass){
-        //$user = $this->UserDao->getByEmail($email);
+
         $user = $this->userExist($email);
 
         if($user!=null && $user->getPassword() == $pass){
@@ -122,12 +123,22 @@ class HomeController{
 
     public function logout(){
         session_destroy();
-        $this->Index("Deslogueado exitoso");
+        $this->Index("Logged out, thank you for using Pet Hero");
     }
    
     public function showRegisterView($message = ""){
-        echo $message; // no se si funciona asi o hay que pasar el mensaje de otra manera
+
+        if($message){
+            HomeController::showMessage($message);
+        }
         require_once(VIEWS_PATH."register.php");
+    }
+
+    public static function showMessage($message){
+        echo "<div class='message'>  <p>";
+            echo $message;
+            "</p>";       
+        echo   "</div>";
     }
 
 }   

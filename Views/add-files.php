@@ -25,7 +25,7 @@
 
 <div class="container">
     <br>  <!-- !!!!!PONER UNA CONDICION DE QUE SI SE VA PARA ATRAS BORRA EL PET SIN FOTOS!!!!!!-->
-    <form action="<?php echo FRONT_ROOT."Pet/cancelPetRegister"?>" method="post">
+    <form action="<?php echo FRONT_ROOT."Owner/cancelPetRegister"?>" method="post">
     <input type="hidden" name="idPet" value="<?php echo $pet->getId() ?>">
     <button type="submit" class="cancelbtn" >Cancel</button></a>
     </form>

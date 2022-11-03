@@ -13,8 +13,8 @@ class Owner extends User{
 
     public function setPetList($petList)
     {
-        $this->petList = $petList;
 
+        $this->petList = $petList;
         return $this;
     }
 }

@@ -1,8 +1,11 @@
 <?php  include('header.php'); ?>
+<!-- <?php  include('nav-bar.php'); ?> -->
 
-<form action="<?php echo FRONT_ROOT."ReservationController" ?>" method="get">
-      <h1>List of Keepers registered</h1>
-        <table class="table">
+
+
+<?php include("filter-Keepers.php"); ?>
+
+    <form action="<?php echo FRONT_ROOT."Reservation/showKeeperList" ?>" method="get">
           <thead>
             <tr>
               <th style="width: 15%;">Username</th>
@@ -20,7 +23,6 @@
                 <td>  <?php echo $keeper->getName() .' '. $keeper->getSurname();  ?></td>
                 <td>  <?php echo '$' . $keeper->getCompensation() . ' /day';   ?></td>
                 <td>  <?php echo $keeper->getPetType();              ?></td>
-                <td>  <?php foreach($keeper->getAvailabilityList() as $date){echo $date .'<br>';} ?></td>
               </tr>
             <?php  };  ?>
 
@@ -32,6 +34,30 @@
     <br>
     <a  href="<?php echo FRONT_ROOT.'Owner/showHomeView'?>"><button class="medium-button">go back</button></a>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <?php    include('footer.php'); ?>
