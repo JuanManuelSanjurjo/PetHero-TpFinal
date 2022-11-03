@@ -19,10 +19,8 @@ class HomeController{
     }
 
     public function register($email, $name, $surname, $pass, $repeatPass, $userName, $userType){
-        
+
         $user = $this->userExist($email);
-        
-        var_dump($user);
 
         if(!$this->confirmPassword($pass, $repeatPass)){ 
             $this->showRegisterView("Passwords dont match, try again"); 
@@ -38,7 +36,7 @@ class HomeController{
                 session_destroy(); 
                 $this->showRegisterView("Your password must include a minimum of 8 characters, one uppercase, one lowercase and one number to be valid"); 
             }else{
-                if($userType = "keeper"){
+                if($userType == "keeper"){
                     $keeperController = new KeeperController();
                     $keeperController->register($email, $name, $surname, $pass, $userName, $userType);
                     $keeperController->showHomeView();
@@ -100,7 +98,7 @@ class HomeController{
     }
 
     public function login($email,$pass){
-        //$user = $this->UserDao->getByEmail($email);
+
         $user = $this->userExist($email);
 
         if($user!=null && $user->getPassword() == $pass){
@@ -127,8 +125,20 @@ class HomeController{
     }
    
     public function showRegisterView($message = ""){
-        echo $message; // no se si funciona asi o hay que pasar el mensaje de otra manera
+        var_dump($this->OwnerDAO->getAll());
+        echo "------------------------------\n";
+
+        if($message != ""){
+           $this->showMessage($message);
+       }
         require_once(VIEWS_PATH."register.php");
+    }
+
+    public static function showMessage($message){
+        echo "<div class='message'>  <p>";
+            echo $message;
+            "</p>";       
+        echo   "</div>";
     }
 
 }   

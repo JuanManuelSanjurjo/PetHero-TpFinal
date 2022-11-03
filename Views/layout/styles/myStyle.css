@@ -12,6 +12,17 @@ body{
   flex-direction: column;
 }
 
+.message{
+  max-width: 100%;
+  background: linear-gradient( #8230b1, #742d9c); 
+  color: #edebee;
+  font-size: 20px;
+  padding-left: 1% ; 
+  border-radius:  5px;
+  border: 2px solid #46016e;
+  box-shadow: 3px 3px 5px #46016e;
+}
+
 .nav-bar{
   background: linear-gradient( #fdc36b, #e08b3b); 
   width: 100%;  

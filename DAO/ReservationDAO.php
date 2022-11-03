@@ -9,7 +9,7 @@ use Models\Reservation as Reservation;
 use DAO\Connection as Connection;
 use Exception;
 
-class AvailabilityDAO{
+class ReservationDAO{
    
 
     private $connection;

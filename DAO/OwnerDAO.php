@@ -1,9 +1,7 @@
 <?php
 namespace DAO;
 
-use Models\Keeper as Keeper;
 use Models\Owner as Owner;
-use Models\User as User;
 use DAO\Connection as Connection;
 use Exception;
 
@@ -41,7 +39,7 @@ class OwnerDAO{
 
         foreach($result as $row)
         {
-            $keeper = new Keeper();
+            $keeper = new Owner();
             $keeper->setId($row["id"]);
             $keeper->setMail ($row["mail"]);
             $keeper->setPassword ($row["password"]);
