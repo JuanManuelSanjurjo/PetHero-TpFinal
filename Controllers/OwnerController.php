@@ -19,7 +19,10 @@ class OwnerController{
     }
 
     public function showHomeView($message = ""){
-        echo $message;
+        
+        if($message){
+            HomeController::showMessage($message);
+        }
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."home-owner.php");
     }
@@ -54,6 +57,7 @@ class OwnerController{
         
         $this->OwnerDAO->register($user);
 
+        $this->showHomeView();
         
     }
     

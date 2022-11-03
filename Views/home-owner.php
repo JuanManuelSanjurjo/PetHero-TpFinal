@@ -27,7 +27,7 @@
 
   
   <div class="container">
-      <form action="<?php echo FRONT_ROOT."Reservation/showKeeperList"?>"> <!-- cambiar el CONTROLLER -->
+      <form action="<?php echo FRONT_ROOT."Keeper/showFilteredKeepers"?>"> <!-- cambiar el CONTROLLER -->
           <button type="submmit" class="large-button">Make Reservation</button>
       </form>
   </div>

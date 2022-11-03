@@ -19,7 +19,7 @@ body{
   font-size: 20px;
   padding-left: 1% ; 
   border-radius:  5px;
-  border: 2px solid #46016e;
+
   box-shadow: 3px 3px 5px #46016e;
 }
 
@@ -29,6 +29,7 @@ body{
   height: 5%; 
   padding: 10px; 
   display:inline-block;   
+  box-shadow: 2px 2px 5px #46016e;
 }
 
 .footer{

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2022 a las 23:28:46
+-- Tiempo de generación: 03-11-2022 a las 17:04:39
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -35,8 +35,8 @@ CREATE TABLE `keepers` (
   `name` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `surname` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `userType` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `compensation` int(50) NOT NULL,
-  `petType` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL
+  `compensation` int(50) DEFAULT NULL,
+  `petType` varchar(50) COLLATE utf8mb4_spanish2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 --
@@ -44,7 +44,10 @@ CREATE TABLE `keepers` (
 --
 
 INSERT INTO `keepers` (`id`, `mail`, `password`, `userName`, `name`, `surname`, `userType`, `compensation`, `petType`) VALUES
-(33, 'cccccccccccccccc', 'cccccccccccccccc', 'cccccccccccccccc', 'cccccccccccccccc', 'cccccccccccccccc', 'cccccccccccccccc', 2000, 'cccccccccccccccc');
+(251, 'jose@hotmail.com', 'Jose1234', 'asd', 'jose', 'jose', 'keeper', NULL, NULL),
+(255, 'maria@maria.com', 'Juanma123', 'asd', 'maria', 'maria', 'keeper', NULL, 'big'),
+(256, 'melisa.labra@outlook.com', 'Melisa123', 'asd', 'Melisa', 'Labra', 'keeper', NULL, NULL),
+(261, 'mama@mama.com', 'Juanma123', 'asdasd', 'mama', 'masda', 'keeper', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -67,7 +70,8 @@ CREATE TABLE `owners` (
 --
 
 INSERT INTO `owners` (`id`, `mail`, `password`, `userName`, `name`, `surname`, `userType`) VALUES
-(1, 'asdas@asdasdasdasd.com', 'asd', 'asd', 'aaasssdd', 'aassdd', 'owner');
+(5, 'juanmanuelsanjurjo@hotmail.com', 'Juanma123', 'Juanma', 'Juan Manuel', 'Sanjurjo', 'owner'),
+(8, 'mariano@hotmail.com', 'Mariano123', 'Mariano', 'Mariano', 'Fernandez', 'owner');
 
 -- --------------------------------------------------------
 
@@ -79,11 +83,11 @@ CREATE TABLE `pet` (
   `id` int(11) NOT NULL,
   `idOwner` int(11) NOT NULL,
   `name` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `photo` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `photo` varchar(50) COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
   `breed` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `size` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `vaxPlanImg` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `video` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `vaxPlanImg` varchar(50) COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
+  `video` varchar(50) COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
   `observations` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `petType` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
@@ -102,7 +106,7 @@ CREATE TABLE `reservation` (
   `dateStart` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `dateEnd` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `pet` int(11) NOT NULL,
-  `confirmation` tinyint(1) NOT NULL
+  `confirmation` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -165,13 +169,13 @@ ALTER TABLE `timeinterval`
 -- AUTO_INCREMENT de la tabla `keepers`
 --
 ALTER TABLE `keepers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=263;
 
 --
 -- AUTO_INCREMENT de la tabla `owners`
 --
 ALTER TABLE `owners`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `pet`

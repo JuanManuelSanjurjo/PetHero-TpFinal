@@ -100,13 +100,13 @@ class OwnerDAO{
 
 
                 $owner = new Owner();
-                $owner->setId($results["id"]);
-                $owner->setMail ($results["mail"]);
-                $owner->setPassword ($results["password"]);
-                $owner->setUserName ($results["userName"]);
-                $owner->setName ($results["name"]);
-                $owner->setSurname ($results["surname"]);
-                $owner->setUserType ($results["userType"]);
+                $owner->setId($row["id"]);
+                $owner->setMail ($row["mail"]);
+                $owner->setPassword ($row["password"]);
+                $owner->setUserName ($row["userName"]);
+                $owner->setName ($row["name"]);
+                $owner->setSurname ($row["surname"]);
+                $owner->setUserType ($row["userType"]);
 
             }
             return $owner;

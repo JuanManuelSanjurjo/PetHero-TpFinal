@@ -39,11 +39,11 @@ class HomeController{
                 if($userType == "keeper"){
                     $keeperController = new KeeperController();
                     $keeperController->register($email, $name, $surname, $pass, $userName, $userType);
-                    $keeperController->showHomeView();
+                    $keeperController->showHomeView("User registered succesfully");
                 }else{
                     $OwnerController = new OwnerController();
                     $OwnerController->register($email, $name, $surname, $pass, $userName, $userType);
-                    $OwnerController->showHomeView();  
+                    $OwnerController->showHomeView("User registered succesfully");  
                 }
                 
             }
@@ -74,7 +74,9 @@ class HomeController{
 
     public function Index($message = "")
     {
-        echo $message; 
+        if($message){
+            HomeController::showMessage($message);
+        }
         require_once(VIEWS_PATH."login.php");
     }        
 
@@ -121,16 +123,14 @@ class HomeController{
 
     public function logout(){
         session_destroy();
-        $this->Index("Deslogueado exitoso");
+        $this->Index("Logged out, thank you for using Pet Hero");
     }
    
     public function showRegisterView($message = ""){
-        var_dump($this->OwnerDAO->getAll());
-        echo "------------------------------\n";
 
-        if($message != ""){
-           $this->showMessage($message);
-       }
+        if($message){
+            HomeController::showMessage($message);
+        }
         require_once(VIEWS_PATH."register.php");
     }
 
