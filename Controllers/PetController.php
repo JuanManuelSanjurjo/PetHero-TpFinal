@@ -16,9 +16,9 @@ class PetController{
     private function checkImgFiles($file,$user,$pet,$type){
         $fileExtExplode = explode('.',$file['name']);
         $fileExt = strtolower(end( $fileExtExplode));
-        
+
         if($type !='video'){
-            if($type == 'vaxImg'){
+            if($type == 'vaxImg'){                  
                 $fileName = $user->getId() . '_' . $pet->getId() .'_vaxplan.' . $fileExt;
             }elseif($type == 'profile'){
                 $fileName = $user->getId() . '_' . $pet->getId() . '.' . $fileExt;
@@ -30,7 +30,7 @@ class PetController{
             $size = 50000000;
 
         }else{
-            $fileName = $user->getId() . '_' . $pet->getId() .'_video.' . $fileExt;
+            $fileName = $user->getId() . '_' . $pet->getByOwnerId() .'_video.' . $fileExt;
             $fileDestination = ROOT.VIEWS_PATH."user-videos/" . $fileName ;
             $allowed = array('mkv','mov','mp4','264','mpg4','avi');
 
@@ -43,17 +43,17 @@ class PetController{
                     move_uploaded_file($file['tmp_name'],$fileDestination);
                     echo '<script>alert("your file:  ' . $file['name'] . ', was uploaded succesfully")</script>';
                 } else{
-                    echo '<script>alert("The file is too big")</script>';
+                    echo "The file is too big";
                     $this->cancelPetRegister($pet->getId());
                     unlink($fileDestination);
                 }
             }else{
-                echo '<script>alert("There was an error uploading your file")</script>';
+                echo "There was an error uploading your file";
                 $this->cancelPetRegister($pet->getId());
                 unlink($fileDestination);
             }
         }else{
-            echo '<script>alert("there was an error uploading files, try again")</script>';
+            echo "there was an error uploading files, try again";
             $this->cancelPetRegister($pet->getId());
             unlink($fileDestination);
         }
@@ -94,8 +94,9 @@ class PetController{
         require_once(VIEWS_PATH."validate-session.php");
         $user = $_SESSION["loggedUser"];
 
-        $pet = $this->PetDao->getByOwnerId($user->getId());
-
+        $petList = $user->getPetList();
+        $pet =  array_pop($petList);
+       // $pet = $this->PetDao->getByOwnerId($user->getId());
         $size = (int) $_SERVER['CONTENT_LENGTH'];   
 
         if(isset($_POST)  )  {
@@ -122,6 +123,9 @@ class PetController{
 
             
         $this->PetDao->addFilesToPet($pet);
+        /// ACA HAY QUE HACER UN UPDATE EN LA TABLA
+        /// ACA HAY QUE HACER UN UPDATE EN LA TABLA
+        /// ACA HAY QUE HACER UN UPDATE EN LA TABLA
         require_once(VIEWS_PATH."home-owner.php");
     }
 
@@ -189,20 +193,16 @@ class PetController{
 
         $pet = new Pet();
 
+        $pet->setPetType($petType);
         $pet->setIdOwner($user->getId());
         $pet->setName($name);
-        //$pet->setPhoto($photo);
         $pet->setBreed($breed);
         $pet->setSize($size);
-        //$pet->setVaxPlanImg($vaxPlanImg);
         $pet->setObservations($observations);
 
         $this->PetDao->register($pet);
-        //$this->PetDao->register($pet);
-
+                
         require_once(VIEWS_PATH."add-files.php");
-
-        //require_once(VIEWS_PATH."home-owner.php");
     }
 
     public function cancelPetRegister($idPet){
@@ -246,9 +246,10 @@ class PetController{
     }
 
     public function showMyPetList(){
-       // $petList=$this->PetDao->getAll();
-       $user = $_SESSION["loggedUser"];
-        if(isset($_SESSION["loggedUser"])){
+        $user = $_SESSION["loggedUser"];
+        $petList= $user->getPetList();
+        var_dump($user);
+        if(isset($user)){
             require_once(VIEWS_PATH."pet-list.php");
         }
     }

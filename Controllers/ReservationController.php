@@ -21,11 +21,17 @@ class ReservationController{
     private $PetDAO;
 
 
+    
+
     function __construct(){
         $this->OwnerDao = new OwnerDAO();
         $this->KeeperDao = new KeeperDao();
         $this->ReservationDAO = new ReservationDAO();
         $this->PetDAO = new PetDao();              
+    }
+
+    public function makeReservation(){
+        
     }
 
     public function showKeeperList(){

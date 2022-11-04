@@ -109,6 +109,54 @@ class OwnerDAO{
                 $owner->setUserType ($row["userType"]);
 
             }
+
+            if($owner){
+                $PetDAO = new PetDao();
+                $petList = $PetDAO->getPetListById($owner->getId()); // hay que hacer esta
+                $owner->setPetList($petList);
+            }
+
+            return $owner;
+
+        }
+        catch(Exception $ex){
+            throw $ex;
+        }
+    }  
+
+
+    public function getById($id)
+    {
+        try{
+            $owner = null;
+
+            $query = "SELECT id, mail, password, userName, name, surname, userType FROM ".$this->tableName." WHERE (id = :id)";
+
+            $parameters["id"] = $id;
+            
+            $this->connection = Connection::GetInstance();
+            $results = $this->connection->Execute($query,$parameters);
+                        
+            foreach($results as $row){
+
+
+                $owner = new Owner();
+                $owner->setId($row["id"]);
+                $owner->setMail ($row["mail"]);
+                $owner->setPassword ($row["password"]);
+                $owner->setUserName ($row["userName"]);
+                $owner->setName ($row["name"]);
+                $owner->setSurname ($row["surname"]);
+                $owner->setUserType ($row["userType"]);
+
+            }
+
+            if($owner){
+                $PetDAO = new PetDao();
+                $petList = $PetDAO->getPetListById($owner->getId()); // hay que hacer esta
+                $owner->setPetList($petList);
+            }
+
             return $owner;
 
         }

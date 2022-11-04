@@ -6,8 +6,9 @@ use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use Models\User as User;
 use Models\Reservation as Reservation;
-use Models\TimeInterval;
+use Models\TimeInterval as TimeInterval;
 use DAO\Connection as Connection;
+use DAO\AvailabilityDAO as AvailabilityDAO;
 use Exception;
 
 class KeeperDAO{
@@ -39,6 +40,11 @@ class KeeperDAO{
 
     }
 
+    public function addAvilability(TimeInterval $date){
+        $AvailabilityDAO = new AvailabilityDAO();
+        $AvailabilityDAO->addAvilability($date);
+    }
+
     public function getAll()
     {
         try{
@@ -62,15 +68,71 @@ class KeeperDAO{
                 $keeper->setUserType ($row["userType"]);
                 $keeper->setCompensation ($row["compensation"]);
                 $keeper->setPetType ($row["petType"]);
+                
 
                 array_push($keepersList,$keeper);
             }
 
+            foreach($keepersList as $keeper){
+                $AvailabilityDAO = new AvailabilityDAO();
+                $availabilityList = $AvailabilityDAO->getById($keeper->getId());
+                $keeper->setAvailabilityList($availabilityList);
+            }
+
+            
+
             return $keepersList;
+
+
         }catch(Exception $ex){
             throw $ex;
         }
 
+    }
+
+
+    public function getFilteredList($pet, $dateStart, $dateEnd){
+        $filteredKeeperList = array();
+        $finalList = [];
+        
+        foreach($this->getAll() as $keeper){
+            $availabilities = $keeper->getAvailabilityList();
+            foreach($availabilities as $interval){
+                if($dateStart >= $interval->getStart() && $dateEnd <= $interval->getEnd()){
+                    array_push($filteredKeeperList,$keeper);
+
+                }
+            }
+        }
+
+        $reservationDAO = new ReservationDAO();
+        $reservationList =  $reservationDAO->getAll();
+
+        foreach($filteredKeeperList as $keeper){
+
+
+            foreach($reservationList as $reservation){
+
+                if($keeper->getId() == $reservation->getKeeper()){
+
+                    if($dateEnd >= $reservation->getDateStart() && $dateEnd <= $reservation->gateDateEnd() ){
+                        if($reservation->getPet()->getPetType() == $pet->getPetType()){
+                            array_push($finalList,$keeper);
+                        }
+                    }elseif($dateStart >= $reservation->getDateStart() && $dateEnd <= $reservation->gateDateEnd()){
+                        if($reservation->getPet()->getPetType() == $pet->getPetType()){
+                            array_push($finalList,$keeper);
+                        }
+                    }elseif($dateStart >= $reservation->getDateStart()  && $dateStart <= $reservation->gateDateEnd() ){
+                        if($reservation->getPet()->getPetType() == $pet->getPetType()){
+                            array_push($finalList,$keeper);
+                        }
+                    }
+                }
+            }
+        }   
+    
+        return $finalList;
     }
 
 
@@ -102,7 +164,7 @@ class KeeperDAO{
             
             $this->connection = Connection::GetInstance();
             $results = $this->connection->Execute($query,$parameters);
-             
+                         
             foreach($results as $row){
             
                 $keeper = new Keeper();
@@ -117,8 +179,14 @@ class KeeperDAO{
                 $keeper->setPetType ($row["petType"]);
             
             }
+            if($keeper){
+                $AvailabilityDAO = new AvailabilityDAO();
+                $availabilityList = $AvailabilityDAO->getById($keeper->getId());
+                $keeper->setAvailabilityList($availabilityList);
+
+            }
+            
             return $keeper;
-           
         }
         catch(Exception $ex){
             throw $ex;

@@ -39,11 +39,11 @@ class HomeController{
                 if($userType == "keeper"){
                     $keeperController = new KeeperController();
                     $keeperController->register($email, $name, $surname, $pass, $userName, $userType);
-                    $keeperController->showHomeView("User registered succesfully");
+                    $this->logout("User registered succesfully");
                 }else{
                     $OwnerController = new OwnerController();
                     $OwnerController->register($email, $name, $surname, $pass, $userName, $userType);
-                    $OwnerController->showHomeView("User registered succesfully");  
+                    $this->logout("User registered succesfully");
                 }
                 
             }
@@ -102,7 +102,6 @@ class HomeController{
     public function login($email,$pass){
 
         $user = $this->userExist($email);
-
         if($user!=null && $user->getPassword() == $pass){
             $_SESSION["loggedUser"]= $user; 
             
@@ -114,20 +113,18 @@ class HomeController{
                 $OwnerC->showHomeView();
             }
         }else{
-            //echo '<script>alert("Credentials dont match, try again")</script>';
             session_destroy(); 
             $this->Index("Credentials dont match, try again");
         }
     }
 
 
-    public function logout(){
+    public function logout($message = "Logged out, thank you for using Pet Hero"){
         session_destroy();
-        $this->Index("Logged out, thank you for using Pet Hero");
+        $this->Index($message);
     }
    
     public function showRegisterView($message = ""){
-
         if($message){
             HomeController::showMessage($message);
         }

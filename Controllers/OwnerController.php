@@ -29,12 +29,10 @@ class OwnerController{
 
 
     public function showMyPetList(){
-
         $user = $_SESSION["loggedUser"];
         $list = $user->getPetList();
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."pet-list.php");
-
      }
 
      public function showAddPet(){
@@ -57,9 +55,9 @@ class OwnerController{
         
         $this->OwnerDAO->register($user);
 
-        $this->showHomeView();
-        
     }
+
+    
     
 
     
