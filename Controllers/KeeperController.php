@@ -29,8 +29,8 @@ class KeeperController{
         require_once(VIEWS_PATH."keeper-list.php");
     }
 
-    public function showFilteredKeepers(){        // filtro tambien por RESERVATION
-        $keeperList = $this->KeeperDao->getAll(); // hacer filtro en DAO O CONTROLLER
+    public function showFilteredKeepers($pet, $dateStart, $dateEnd){        // filtro tambien por RESERVATION
+        //$keeperList = $this->KeeperDao->getFilteredList($pet, $dateStart, $dateEnd); // hacer filtro en DAO O CONTROLLER
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."filter-Keepers.php");
     }
@@ -80,9 +80,11 @@ class KeeperController{
         }elseif($date1 < $today  || $date2 < $today){
             $this->showHomeView("Cant set dates in the past");  
         }else{
+            $user = $_SESSION["loggedUser"];
             $date = new TimeInterval();
             $date->setStart($date1);
             $date->setEnd($date2);
+            $date->setIdKeeper($user->getId());
 
             return $date;
         }
@@ -107,8 +109,8 @@ class KeeperController{
         }
         return false;
     }   
-/*
 
+/*
     public function isInsideIntevals(TimeInterval $interval){
 
         $keeper = $_SESSION["loggedUser"];
@@ -163,9 +165,9 @@ class KeeperController{
 
         return false;
     }
-
-
 */
+
+
 
     public function dateAlreadyExist (TimeInterval $date){
 

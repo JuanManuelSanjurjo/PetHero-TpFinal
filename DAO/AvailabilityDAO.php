@@ -10,10 +10,10 @@ class AvailabilityDAO{
     private $connection;
     private $tableName= "timeinterval";
 
-    public function register(TimeInterval $timeInterval)
+    public function addAvilability(TimeInterval $timeInterval)
     {
         try{
-            $query = "INSERT INTO".$this->tableName."(id, start, end, idKeeper) VALUES (:id, :start, :end, :idKeeper)";
+            $query = "INSERT INTO ".$this->tableName." (id, start, end, idKeeper) VALUES (:id, :start, :end, :idKeeper)";
 
             $parameters["id"]           = $timeInterval->getId();
             $parameters["start"]        = $timeInterval->getStart();
@@ -74,32 +74,34 @@ class AvailabilityDAO{
             throw $ex;
         }
     }
-    /*
 
-    public function getByEmail($mail)
+
+    public function getById($idKeeper)
     {
         try{
             
-            $query = "SELECT id, mail, password, userName, name, surname, userType, compensation, petType FROM ".$this->tableName."WHERE (mail = :mail)";
+            $availabilityList = array();
+
+            $query = "SELECT id, start, end, idKeeper FROM ". $this->tableName . " WHERE (idKeeper = :idKeeper)";
+            
+            $parameters["idKeeper"] = $idKeeper;
             
             $this->connection = Connection::GetInstance();
-            $results = $this->connection->Execute($query);
+            $results = $this->connection->Execute($query,$parameters);
+            foreach($results as $row){
             
-            
-            $keeper = new Keeper();
-            $keeper->setId($results["id"]);
-            $keeper->setMail ($results["mail"]);
-            $keeper->setPassword ($results["password"]);
-            $keeper->setUserName ($results["userName"]);
-            $keeper->setName ($results["name"]);
-            $keeper->setSurname ($results["surname"]);
-            $keeper->setUserType ($results["userType"]);
-            $keeper->setCompensation ($results["compensation"]);
-            $keeper->setPetType ($results["petType"]);
+                $timeInterval = new TimeInterval();
 
-              
+                $timeInterval->setId($row["id"]);
+                $timeInterval->setStart ($row["start"]);
+                $timeInterval->setEnd ($row["end"]);
+                $timeInterval->setIdKeeper ($row["idKeeper"]);
+                
+                array_push($availabilityList,$timeInterval);
             
-            return $keeper;
+            }
+            return $availabilityList;
+           
         }
         catch(Exception $ex){
             throw $ex;
@@ -116,7 +118,7 @@ class AvailabilityDAO{
        
     }
     
-    */
+ 
     
 }
 

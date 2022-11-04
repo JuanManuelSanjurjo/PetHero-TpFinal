@@ -57,7 +57,7 @@ class OwnerController{
         
         $this->OwnerDAO->register($user);
 
-        $this->showHomeView();
+        //$this->showHomeView();
         
     }
     
