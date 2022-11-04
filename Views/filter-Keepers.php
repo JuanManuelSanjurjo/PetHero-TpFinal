@@ -25,6 +25,7 @@
               <th style="width: 30%;">Name</th>
               <th style="width: 30%;">Compensation</th>
               <th style="width: 15%;">Pets Accepted</th>
+              <th style="width: 15%;">Book</th>
             </tr>
           </thead>
           <tbody>
@@ -35,6 +36,11 @@
                 <td>  <?php echo $keeper->getName() .' '. $keeper->getSurname();  ?></td>
                 <td>  <?php echo '$' . $keeper->getCompensation() . ' /day';   ?></td>
                 <td>  <?php echo $keeper->getPetType()." dogs or cats";              ?></td>             
+                <td>          
+                    <form action="<?php echo FRONT_ROOT."Reservation/makeReservation"?>"> <!-- cambiar el CONTROLLER -->
+                    <button type="submmit" value="confirm" class="large-button">Book keeper</button>
+                    </form>
+                </td>
               </tr>
             <?php  };  ?>
 

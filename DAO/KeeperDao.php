@@ -179,10 +179,12 @@ class KeeperDAO{
                 $keeper->setPetType ($row["petType"]);
             
             }
+            if($keeper){
+                $AvailabilityDAO = new AvailabilityDAO();
+                $availabilityList = $AvailabilityDAO->getById($keeper->getId());
+                $keeper->setAvailabilityList($availabilityList);
 
-            $AvailabilityDAO = new AvailabilityDAO();
-            $availabilityList = $AvailabilityDAO->getById($keeper->getId());
-            $keeper->setAvailabilityList($availabilityList);
+            }
             
             return $keeper;
         }

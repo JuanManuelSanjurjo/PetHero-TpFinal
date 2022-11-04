@@ -13,7 +13,7 @@ class PetDao{
     public function register(Pet $pet)
     {
         try{
-            $query = "INSERT INTO".$this->tableName."(id, idOwner, name, photo, breed, size, vaxPlanImg, video, observation, petType) VALUES (:id, :idOwner, :name, :photo, :breed, :size, :vaxPlanImg, :video, :observation, :petType)";
+            $query = "INSERT INTO ".$this->tableName." (id, idOwner, name, photo, breed, size, vaxPlanImg, video, observations, petType) VALUES (:id, :idOwner, :name, :photo, :breed, :size, :vaxPlanImg, :video, :observations, :petType)";
 
             $parameters["id"]           = $pet->getId();
             $parameters["idOwner"]      = $pet->getIdOwner();
@@ -23,12 +23,17 @@ class PetDao{
             $parameters["size"]         = $pet->getSize();        
             $parameters["vaxPlanImg"]   = $pet->getVaxPlanImg();        
             $parameters["video"]        = $pet->getVideo();
-            $parameters["observation"]  = $pet->getObservations();        
+            $parameters["observations"]  = $pet->getObservations();        
             $parameters["petType"]      = $pet->getPetType();
             
             $this->connection = Connection::GetInstance();
 
             $this->connection->ExecuteNonQuery($query,$parameters);
+///// ES NUEVO; RENUEVA EL LOGGED USER
+            $ownerDao = new OwnerDAO();
+            $_SESSION["loggedUser"] = $ownerDao->getById($pet->getIdOwner());
+///// ES NUEVO; RENUEVA EL LOGGED USER 
+
         }catch(Exception $ex){
             throw $ex;
         } 
@@ -57,7 +62,7 @@ class PetDao{
                 $pet->setSize ($row["size"]);
                 $pet->setVaxPlanImg ($row["vaxPlanImg"]);
                 $pet->setVideo ($row["video"]);
-                $pet->setObservations ($row["observation"]);
+                $pet->setObservations ($row["observations"]);
                 $pet->setPetType ($row["petType"]);
 
                 array_push($keepersList,$pet);
@@ -86,7 +91,89 @@ class PetDao{
         }
     }
 
+    public function getPetListByUserId ($id){
+        // HAY QUE HACER
+    }
+
+    
+    public function getByOwnerId($idOwner)
+    {
+        try{
+            $pet = null;
+            
+            $query = "SELECT id, idOwner, name, photo, breed, size, vaxPlanImg, video, observations, petType FROM ".$this->tableName." WHERE (idOwner = :idOwner)";
+
+            $parameters["idOwner"] = $idOwner;
+            
+            $this->connection = Connection::GetInstance();
+            $results = $this->connection->Execute($query,$parameters);
+                        
+            foreach($results as $row){
+
+
+                $pet = new Pet();
+                $pet->setId($row["id"]);
+                $pet->setIdOwner($row["idOwner"]);
+                $pet->setName($row["name"]);
+                $pet->setPhoto($row["photo"]);
+                $pet->setBreed($row["breed"]);
+                $pet->setSize($row["size"]);
+                $pet->setVaxPlanImg($row["vaxPlanImg"]);
+                $pet->setVideo($row["video"]);
+                $pet->setObservations($row["observations"]);
+
+            }
+            return $pet;
+
+        }
+        catch(Exception $ex){
+            throw $ex;
+        }
+    }  
+    public function getPetListById($idOwner)
+    {
+        try{
+            
+            $petList = [];
+            
+            $query = "SELECT id, idOwner, name, photo, breed, size, vaxPlanImg, video, observations, petType FROM ".$this->tableName." WHERE (idOwner = :idOwner)";
+
+            $parameters["idOwner"] = $idOwner;
+            
+            $this->connection = Connection::GetInstance();
+            $results = $this->connection->Execute($query,$parameters);
+                        
+            foreach($results as $row){
+                
+                $pet = new Pet();
+                $pet->setId($row["id"]);
+                $pet->setIdOwner($row["idOwner"]);
+                $pet->setName($row["name"]);
+                $pet->setPhoto($row["photo"]);
+                $pet->setBreed($row["breed"]);
+                $pet->setSize($row["size"]);
+                $pet->setVaxPlanImg($row["vaxPlanImg"]);
+                $pet->setVideo($row["video"]);
+                $pet->setObservations($row["observations"]);
+
+                array_push($petList,$pet);
+            }
+            return $petList;
+
+        }
+        catch(Exception $ex){
+            throw $ex;
+        }
+    }  
+
+
+
+
+
     public function addFilesToPet(Pet $pet){
+      // ACA VA UN UPDATE DE LA TABLA DONDE ESTA EL PET
+      //  Y UPDATEAR LA LISTA EN SESSION DEL USUARIO
+
         /*
         $this->retrieveData();
         

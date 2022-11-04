@@ -88,6 +88,7 @@ class AvailabilityDAO{
             
             $this->connection = Connection::GetInstance();
             $results = $this->connection->Execute($query,$parameters);
+            
             foreach($results as $row){
             
                 $timeInterval = new TimeInterval();

@@ -29,8 +29,9 @@ class KeeperController{
         require_once(VIEWS_PATH."keeper-list.php");
     }
 
-    public function showFilteredKeepers($pet, $dateStart, $dateEnd){        // filtro tambien por RESERVATION
+    public function showFilteredKeepers(){        // filtro tambien por RESERVATION
         //$keeperList = $this->KeeperDao->getFilteredList($pet, $dateStart, $dateEnd); // hacer filtro en DAO O CONTROLLER
+        $keeperList = $this->KeeperDao->getAll(); // hacer filtro en DAO O CONTROLLER
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."filter-Keepers.php");
     }

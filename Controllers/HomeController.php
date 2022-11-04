@@ -102,7 +102,6 @@ class HomeController{
     public function login($email,$pass){
 
         $user = $this->userExist($email);
-
         if($user!=null && $user->getPassword() == $pass){
             $_SESSION["loggedUser"]= $user; 
             
@@ -114,7 +113,6 @@ class HomeController{
                 $OwnerC->showHomeView();
             }
         }else{
-            //echo '<script>alert("Credentials dont match, try again")</script>';
             session_destroy(); 
             $this->Index("Credentials dont match, try again");
         }
