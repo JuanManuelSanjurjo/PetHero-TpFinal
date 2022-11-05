@@ -7,6 +7,7 @@ use DateInterval;
 use DateTime;
 use DateTimeZone;
 use Models\Keeper;
+use Models\Owner as Owner;
 use Models\TimeInterval as TimeInterval;
 
 class KeeperController{
@@ -25,13 +26,17 @@ class KeeperController{
 
     public function showKeeperList(){
         $keeperList = $this->KeeperDao->getAll();
+        $owner = $_SESSION["loggedUser"];
+        $petList = $owner->getPetList();
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."keeper-list.php");
     }
-
-    public function showFilteredKeepers(){        // filtro tambien por RESERVATION
+/// RPOBABLEMENTE ESTO DEBA ESTAR OWNER Y DESDE EL DAO LLAMAR AL DAO DE KEEPERS
+    public function showFilteredKeepers($pet,$dateStart,$dateEnd){        // filtro tambien por RESERVATION
         //$keeperList = $this->KeeperDao->getFilteredList($pet, $dateStart, $dateEnd); // hacer filtro en DAO O CONTROLLER
         $keeperList = $this->KeeperDao->getAll(); // hacer filtro en DAO O CONTROLLER
+        $owner = $_SESSION["loggedUser"];
+        $petList = $owner->getPetList();
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."filter-Keepers.php");
     }
@@ -47,9 +52,13 @@ class KeeperController{
     }
 
     public function setPetType($size){
-       $this->KeeperDao->setPetType($size);
+       $keeper = $_SESSION["loggedUser"];
+       $keeperId = $keeper->getId();
+       $this->KeeperDao->setPetType($size, $keeperId);
+       $_SESSION["loggedUser"] = $this->KeeperDao->getById($keeperId);
+
        if(isset($_SESSION["loggedUser"])){
-            $this->showHomeView();
+            $this->showHomeView("Preferences set");
        }else{
             $home = new HomeController(); // aca o en el contructor?
             $home->Index();
@@ -57,8 +66,12 @@ class KeeperController{
     }
 
     public function setCompensation($compensation){
-        $this->KeeperDao->setCompensation($compensation);
-        $this->showHomeView();
+        $keeper = $_SESSION["loggedUser"];
+        $keeperId = $keeper->getId();
+        $this->KeeperDao->setCompensation($compensation, $keeperId);
+        $_SESSION["loggedUser"] = $this->KeeperDao->getById($keeperId);
+
+        $this->showHomeView("Compensation set");
     }
 
     public function addAvilability ($dateStart,$dateEnd){  // va a otra tabla de DISPONIBILIDADES
@@ -67,6 +80,8 @@ class KeeperController{
         
         if($date && !$exist){
             $this->KeeperDao->addAvilability($date);
+            $keeper = $_SESSION["loggedUser"];
+            $_SESSION["loggedUser"] = $this->KeeperDao->getById($keeper->getId());
             $this->showHomeView("Dates uploaded succesfully");   
         }
     }
@@ -177,8 +192,8 @@ class KeeperController{
         $List=$keeper->getAvailabilityList();
         
         foreach($List as $inter){
-            $dateStart=$inter["start"];
-            $dateEnd=$inter["end"];
+            $dateStart= $inter->getStart();
+            $dateEnd=  $inter->getEnd();
             if($date->getStart()==$dateStart && $date->getEnd()==$dateEnd){
                 $this->showHomeView("interval of time already exist");
                 $exist=true;
@@ -188,10 +203,13 @@ class KeeperController{
     }
 
     public function showHomeView($message = ""){
-        echo $message;
+        if($message){
+            HomeController::showMessage($message);
+        }
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."home-keeper.php");
     }
+
 
     public function register($email, $name, $surname, $pass, $userName, $userType){
 
@@ -203,6 +221,8 @@ class KeeperController{
         $user->setName($name);
         $user->setSurname($surname);
         $user->setUserType($userType);
+        $user->setPetType("small");
+        
                 
         $_SESSION["loggedUser"]= $user; 
         

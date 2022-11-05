@@ -112,8 +112,8 @@ class KeeperDAO{
                 if($keeper->getId() == $reservation->getKeeper()->getId()){
 
                     if(($dateStart==$reservation->getDateStart() && $dateEnd == $reservation->getDateEnd()) )
-                        if($reservation->getPet()->getPetType()!= $pet->getPetType() && $reservation->getPet()->getSize()!= $pet->getSize()) 
-                            unset(filteredKeeperList[array_search($keeper)]);                   
+                        if($reservation->getPet()->getPetType()!= $pet->getPetType() && $reservation->getPet()->getSize()!= $pet->getSize()); 
+                            unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);  // CAMBIADO PQ DABA EROR; REVISAR                  
 
                 }
             }
@@ -179,110 +179,8 @@ class KeeperDAO{
             throw $ex;
         }
     }  
-
     
-    public function getById($id)
-    {
-        try{
-            
-            $keeper = null;
-
-            $query = "SELECT id, mail, password, userName, name, surname, userType, compensation, petType FROM ". $this->tableName . " WHERE (id = :id)";
-            
-            $parameters["id"] = $id;
-            
-            $this->connection = Connection::GetInstance();
-            $results = $this->connection->Execute($query,$parameters);
-                         
-            foreach($results as $row){
-            
-                $keeper = new Keeper();
-                $keeper->setId($row["id"]);
-                $keeper->setMail ($row["mail"]);
-                $keeper->setPassword ($row["password"]);
-                $keeper->setUserName ($row["userName"]);
-                $keeper->setName ($row["name"]);
-                $keeper->setSurname ($row["surname"]);
-                $keeper->setUserType ($row["userType"]);
-                $keeper->setCompensation ($row["compensation"]);
-                $keeper->setPetType ($row["petType"]);
-            
-            }
-            if($keeper){
-                $AvailabilityDAO = new AvailabilityDAO();
-                $availabilityList = $AvailabilityDAO->getById($keeper->getId());
-                $keeper->setAvailabilityList($availabilityList);
-
-            }
-            
-            return $keeper;
-        }
-        catch(Exception $ex){
-            throw $ex;
-        }
-    } 
-
-/*
-    public function getByEmail($mail)
-        {
-
-            $keeper = null;
-
-            $query = "SELECT id, mail, password, userName, name, surname, userType, compensation, petType FROM ".$this->tableName." WHERE (mail = :mail)";
-            
-            $parameters["mail"] = $mail;
-
-            $this->connection = Connection::GetInstance();
-
-            $results = $this->connection->Execute($query, $parameters);
-            
-            foreach($results as $row)
-            {
-                $keeper = new Keeper();
-                $keeper->setId($results["id"]);
-                $keeper->setMail ($results["mail"]);
-                $keeper->setPassword ($results["password"]);
-                $keeper->setUserName ($results["userName"]);
-                $keeper->setName ($results["name"]);
-                $keeper->setSurname ($results["surname"]);
-                $keeper->setUserType ($results["userType"]);
-                $keeper->setCompensation ($results["compensation"]);
-                $keeper->setPetType ($results["petType"]);
-            }
-
-            return $keeper;
-        }
-*/
-///la pienso yo
-    public function getFilteredList($pet, $dateStart, $dateEnd){
-       $reservation = new ReservationDAO();
-       $reservationList=$reservation->getAll();
-    
-       $finalKeepersList=array();
-       foreach($reservationList as $row){
-            if($dateStart == $row->getDateStart() && $dateEnd == $row->getDateEnd())
-            {
-                if($row->getPet->getPetType() == $pet->getPetType()){
-
-                    array_push($filteredKeeperList,$row->getKeeper());
-                    
-                }
-
-
-
-            }
-       }
-
-
-
-
-
-
-
-
-    }
-
-    public function getById($id)
+       public function getById($id)
     {
         try{
             
@@ -323,14 +221,36 @@ class KeeperDAO{
         }
     }
 
+    public function setCompensation($compensation, $id){
 
+        try{  
+            $query= "UPDATE ".$this->tableName." SET compensation = :compensation WHERE (id = ". $id .")";
+                  
+            $parameters["compensation"] = $compensation;
 
+            $this->connection = Connection::GetInstance();
+            $this->connection->ExecuteNonQuery($query,$parameters);
 
-    public function setCompensation($compensation){
+        }
+        catch(Exception $ex){
+            throw $ex;
+        }
        
     }
 
-    public function setPetType($size){
+    public function setPetType($petType, $id){
+        try{  
+            $query= "UPDATE ".$this->tableName." SET petType = :petType WHERE (id = ". $id .")";
+                  
+            $parameters["petType"] = $petType;
+
+            $this->connection = Connection::GetInstance();
+            $this->connection->ExecuteNonQuery($query,$parameters);
+
+        }
+        catch(Exception $ex){
+            throw $ex;
+        }
        
     }
 

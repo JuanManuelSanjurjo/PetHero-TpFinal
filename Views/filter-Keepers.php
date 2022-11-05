@@ -2,11 +2,11 @@
 <!-- <?php  include('nav-bar.php'); ?> -->
 
 <div class="container">
-  <form action="<?php echo FRONT_ROOT."Reservation/showKeeperListToFiltrate"?>" method="post" style="background: linear-gradient( #fdc36b, #e08b3b);"> 
+  <form action="<?php echo FRONT_ROOT."Keeper/showFilteredKeepers"?>" method="post" style="background: linear-gradient( #fdc36b, #e08b3b);"> 
   <p class="p-text">Select your pet</p>
   <select class="dog-select" style="width: 15%"   name="pet" id="role" required>
     <?php foreach($petList as $pet){ ?>
-      <option value=" <?php $pet ?>" > <?php echo $pet["name"]?> </option> <!-- echo $pet["id"] -->
+      <option value=" <?php $pet ?>" > <?php echo $pet->getName()?> </option> <!-- echo $pet["id"] -->
       <?php  }  ?>
     </select>
     <p class="p-text">Select start of period</p>
@@ -34,8 +34,12 @@
               <tr>
                 <td class="first-td">  <?php echo $keeper->getUsername();     ?></td>
                 <td>  <?php echo $keeper->getName() .' '. $keeper->getSurname();  ?></td>
-                <td>  <?php echo '$' . $keeper->getCompensation() . ' /day';   ?></td>
-                <td>  <?php echo $keeper->getPetType()." dogs or cats";              ?></td>             
+                <td>  <?php if($keeper->getCompensation()==null){
+                            echo "not updated";
+                            }else{
+                              echo '$' . $keeper->getCompensation() . ' / day';  
+                            }
+                 ?></td>                <td>  <?php echo $keeper->getPetType()." dogs or cats";              ?></td>             
                 <td>          
                     <form action="<?php echo FRONT_ROOT."Reservation/makeReservation"?>"> <!-- cambiar el CONTROLLER -->
                     <button type="submmit" value="confirm" class="large-button">Book keeper</button>

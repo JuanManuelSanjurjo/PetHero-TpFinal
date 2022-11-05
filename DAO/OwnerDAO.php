@@ -2,6 +2,7 @@
 namespace DAO;
 
 use Models\Owner as Owner;
+use Models\Pet as Pet;
 use DAO\Connection as Connection;
 use Exception;
 
@@ -58,13 +59,18 @@ class OwnerDAO{
 
     public function Remove($id)
     {
-        $query= "DELETE FROM ".$this->tableName." WHERE (id = :id)";
+        try{
 
-        $parameters["id"] = $id;
-
-        $this->connection = Connection::GetInstance();
-
-        $this->connection->ExecuteNonQuery($query,$parameters);
+            $query= "DELETE FROM ".$this->tableName." WHERE (id = :id)";
+    
+            $parameters["id"] = $id;
+    
+            $this->connection = Connection::GetInstance();
+    
+            $this->connection->ExecuteNonQuery($query,$parameters);
+        }catch(Exception $ex){
+            throw $ex;
+        }
     }
 
 
@@ -147,6 +153,22 @@ class OwnerDAO{
             throw $ex;
         }
     }  
+
+
+    public function removePet($petId)
+    {
+
+        $PetDAO = new PetDao();
+        $PetDAO->cancelPetRegister($petId);
+
+
+        
+    }
+
+
+
+
+
 
 
 }

@@ -57,6 +57,17 @@ class OwnerController{
 
     }
 
+    public function removePet($petId){
+    var_dump($petId);
+        $this->OwnerDAO->removePet($petId);
+
+/////  RENUEVA EL LOGGED USER
+        $ownerDao = new OwnerDAO();
+        $user = $_SESSION["loggedUser"];
+        $_SESSION["loggedUser"] = $ownerDao->getById($user->getId());
+
+    }
+
     
     
 

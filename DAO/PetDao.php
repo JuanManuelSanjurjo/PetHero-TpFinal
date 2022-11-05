@@ -30,10 +30,7 @@ class PetDao{
             $this->connection = Connection::GetInstance();
 
             $this->connection->ExecuteNonQuery($query,$parameters);
-///// ES NUEVO; RENUEVA EL LOGGED USER
-            $ownerDao = new OwnerDAO();
-            $_SESSION["loggedUser"] = $ownerDao->getById($pet->getIdOwner());
-///// ES NUEVO; RENUEVA EL LOGGED USER 
+
 
         }catch(Exception $ex){
             throw $ex;
@@ -199,7 +196,7 @@ class PetDao{
 
         }
         catch(Exception $ex){
-            throw $ex;
+           return throw $ex;
         }
     }  
 
@@ -219,14 +216,13 @@ class PetDao{
         $parameters["vaxPlanImg"]   = $pet->getVaxPlanImg();        
         $parameters["video"]        = $pet->getVideo();
             
-        var_dump($query);
-        var_dump($parameters);
         $this->connection = Connection::GetInstance();
         $this->connection->ExecuteNonQuery($query,$parameters);
 
+        // TRATAR DE MAndarlo a controladora
         $ownerDao = new OwnerDAO();
         $_SESSION["loggedUser"] = $ownerDao->getById($pet->getIdOwner());
-       
+             
         }
         catch(Exception $ex){
             throw $ex;

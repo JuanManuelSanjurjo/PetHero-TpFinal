@@ -41,19 +41,23 @@ class PetController{
             if($file['error'] == 0){
                 if($file['size'] < $size ){   //20mb
                     move_uploaded_file($file['tmp_name'],$fileDestination);
-                    echo '<script>alert("your file:  ' . $file['name'] . ', was uploaded succesfully")</script>';
+                    HomeController::showMessage("your file:  ". $file['name'] . ", was uploaded succesfully");
+                   // echo '<script>alert("your file:  ' . $file['name'] . ', was uploaded succesfully")</script>';
                 } else{
-                    echo "The file is too big";
+                    HomeController::showMessage("The file is too big");
+                    //echo "The file is too big";
                     $this->cancelPetRegister($pet->getId());
                     unlink($fileDestination);
                 }
             }else{
-                echo "There was an error uploading your file";
+                HomeController::showMessage("There was an error uploading your file");
+                //echo "There was an error uploading your file";
                 $this->cancelPetRegister($pet->getId());
                 unlink($fileDestination);
             }
         }else{
-            echo "there was an error uploading files, try again";
+            HomeController::showMessage("There was an error uploading files, try again");
+            //echo "There was an error uploading files, try again";
             $this->cancelPetRegister($pet->getId());
             unlink($fileDestination);
         }
@@ -97,7 +101,7 @@ class PetController{
         $petList = $user->getPetList();
         $pet =  array_pop($petList);
        // $pet = $this->PetDao->getByOwnerId($user->getId());
-        $size = (int) $_SERVER['CONTENT_LENGTH'];   
+       // $size = (int) $_SERVER['CONTENT_LENGTH'];   
 
         if(isset($_POST)  )  {
 
@@ -144,18 +148,24 @@ class PetController{
         $pet->setObservations($observations);
 
         $this->PetDao->register($pet);
+
+/////  RENUEVA EL LOGGED USER
+        $ownerDao = new OwnerDAO();
+        $_SESSION["loggedUser"] = $ownerDao->getById($pet->getIdOwner());
                 
         require_once(VIEWS_PATH."add-files.php");
     }
 
     public function cancelPetRegister($idPet){
-        $this->PetDao->cancelPetRegister($idPet);
+        if(!$this->PetDao->cancelPetRegister($idPet)){
+            
+        }
         require_once(VIEWS_PATH."home-owner.php");
     }
 
     public function Index($message = "")
     {
-        echo $message; 
+        HomeController::showMessage($message); 
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."login.php");
     }        
@@ -191,7 +201,6 @@ class PetController{
     public function showMyPetList(){
         $user = $_SESSION["loggedUser"];
         $petList= $user->getPetList();
-        var_dump($user);
         if(isset($user)){
             require_once(VIEWS_PATH."pet-list.php");
         }
