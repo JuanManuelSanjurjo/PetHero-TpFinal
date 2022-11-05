@@ -4,6 +4,7 @@ namespace DAO;
 use Exception;
 use Models\Pet as Pet;
 use Models\Owner as Owner;
+use DAO\OwnerDAO as OwnerDAO;
 
 class PetDao{
 
@@ -166,26 +167,28 @@ class PetDao{
         }
     }  
 
-
-
-
-
     public function addFilesToPet(Pet $pet){
-      // ACA VA UN UPDATE DE LA TABLA DONDE ESTA EL PET
-      //  Y UPDATEAR LA LISTA EN SESSION DEL USUARIO
+     
+      try{  
 
-        /*
-        $this->retrieveData();
+        $id= $pet->getId();
+
+        $query= "UPDATE ".$this->tableName." SET photo = :photo, vaxPlanImg = :vaxPlanImg, video = :video WHERE (id = :id)";
         
-        foreach($this->petList as $pets){
-            if($pets->getId() == $pet->getId()){
-                $pets->setPhoto($pet->getPhoto());
-                $pets->setVaxPlanImg($pet->getVaxPlanImg());
-                $pets->setVideo($pet->getVideo());
-            }
+        $parameters["photo"]        = $pet->getPhoto();
+        $parameters["vaxPlanImg"]   = $pet->getVaxPlanImg();        
+        $parameters["video"]        = $pet->getVideo();
+            
+        $this->connection = Connection::GetInstance();
+        $this->connection->ExecuteNonQuery($query,$parameters);
+
+        $ownerDao = new OwnerDAO();
+        $_SESSION["loggedUser"] = $ownerDao->getById($pet->getIdOwner());
+       
         }
-        $this->saveData();
-        */
+        catch(Exception $ex){
+            throw $ex;
+        }
     }
 
     public function cancelPetRegister($id)

@@ -20,9 +20,7 @@ class ReservationController{
     private $ReservationDAO;
     private $PetDAO;
 
-
     
-
     function __construct(){
         $this->OwnerDao = new OwnerDAO();
         $this->KeeperDao = new KeeperDao();

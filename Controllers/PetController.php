@@ -30,7 +30,7 @@ class PetController{
             $size = 50000000;
 
         }else{
-            $fileName = $user->getId() . '_' . $pet->getByOwnerId() .'_video.' . $fileExt;
+            $fileName = $user->getId() . '_' . $pet->getId() .'_video.' . $fileExt;
             $fileDestination = ROOT.VIEWS_PATH."user-videos/" . $fileName ;
             $allowed = array('mkv','mov','mp4','264','mpg4','avi');
 

@@ -161,7 +161,7 @@ class KeeperDAO{
             $query = "SELECT id, mail, password, userName, name, surname, userType, compensation, petType FROM ". $this->tableName . " WHERE (mail = :mail)";
             
             $parameters["mail"] = $mail;
-            
+         
             $this->connection = Connection::GetInstance();
             $results = $this->connection->Execute($query,$parameters);
                          
