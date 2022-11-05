@@ -56,8 +56,8 @@
             try
             {
                 $this->Prepare($query);
-                
                 $this->BindParameters($parameters, $queryType);
+                var_dump($parameters);
                 $this->pdoStatement->execute();
 
                 return $this->pdoStatement->rowCount();

@@ -7,6 +7,11 @@ use Models\User as User;
 use Models\Pet as Pet;
 use Models\Reservation as Reservation;
 use DAO\Connection as Connection;
+use DAO\OwnerDAO as OwnerDAO;
+use DAO\KeeperDao as KeeperDao;
+use DAO\PetDao as PetDao;
+
+
 use Exception;
 
 class ReservationDAO{
@@ -61,7 +66,21 @@ class ReservationDAO{
                 $reservation->setPet($row["pet"]);
                 $reservation->setConfirmation($row["confirmation"]);
                 
-                array_push($availabilityList,$reservation);
+                array_push($reservationList,$reservation);
+            }
+
+            foreach($reservationList as $row){
+                $ownerDAO= new OwnerDAO();\
+                $owner=$ownerDAO->getById($row->getOwner());
+                $row->setOwner($owner);
+
+                $keeperDAO= new keeperDao();\
+                $keeper=$keeperDAO->getById($row->getKeeper()); ///Hacerla en el keeper
+                $row->setKeeper($keeper);
+
+                $petDao= new PetDao();
+                $pet=$petDao->getById($row->getPet());
+                $row->setPet($pet);
             }
 
             return $reservationList;
@@ -114,6 +133,9 @@ class ReservationDAO{
        }catch(Exception $ex){
             throw $ex;
        }
+
+
+       
     }
     
   

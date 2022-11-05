@@ -67,22 +67,6 @@ class OwnerDAO{
         $this->connection->ExecuteNonQuery($query,$parameters);
     }
 
-/*
-    private function getNextId()
-    {
-        $id = 0;
-        if(sizeof($this->OwnerList) != 0){
-            foreach($this->OwnerList as $user)
-            {
-                $id = ($user->getId() > $id) ? $user->getId() : $id;
-
-            }   
-        }
-        return $id+1;
-    }
-
-*/
-
 
     public function getByEmail($mail)
     {
