@@ -9,6 +9,7 @@ use Models\Reservation as Reservation;
 use Models\TimeInterval as TimeInterval;
 use DAO\Connection as Connection;
 use DAO\AvailabilityDAO as AvailabilityDAO;
+use DAO\ReservationDAO as ReservationDAO;
 use Exception;
 
 class KeeperDAO{
@@ -79,10 +80,7 @@ class KeeperDAO{
                 $keeper->setAvailabilityList($availabilityList);
             }
 
-            
-
             return $keepersList;
-
 
         }catch(Exception $ex){
             throw $ex;
@@ -90,7 +88,7 @@ class KeeperDAO{
 
     }
 
-
+/*
     public function getFilteredList($pet, $dateStart, $dateEnd){
         $filteredKeeperList = array();
         $finalList = [];
@@ -134,7 +132,7 @@ class KeeperDAO{
     
         return $finalList;
     }
-
+*/
 
     public function Remove($id)
     {
@@ -224,6 +222,34 @@ class KeeperDAO{
             return $keeper;
         }
 */
+///la pienso yo
+    public function getFilteredList($pet, $dateStart, $dateEnd){
+       $reservation = new ReservationDAO();
+       $reservationList=$reservation->getAll();
+    
+       $finalKeepersList=array();
+       foreach($reservationList as $row){
+            if($dateStart == $row->getDateStart() && $dateEnd == $row->getDateEnd())
+            {
+                if($row->getPet->getPetType() == $pet->getPetType()){
+
+                    array_push($filteredKeeperList,$row->getKeeper());
+                    
+                }
+
+
+
+            }
+       }
+
+
+
+
+
+
+
+
+    }
 
 
 

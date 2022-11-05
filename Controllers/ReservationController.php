@@ -30,7 +30,10 @@ class ReservationController{
         $this->PetDAO = new PetDao();              
     }
 
-    public function makeReservation(){
+    public function makeReservation("parametros"){
+
+        $this->ReservationDAO->makeReservation("parametros");
+        ///resolver vista y pase de parametros a funcion
         
     }
 

@@ -4,6 +4,7 @@ namespace DAO;
 use Exception;
 use Models\Pet as Pet;
 use Models\Owner as Owner;
+use DAO\OwnerDAO as OwnerDAO;
 
 class PetDao{
 
@@ -76,11 +77,11 @@ class PetDao{
     }
 
 
-    public function Remove($id)
+    public function cancelPetRegister($id)
     {
         try{
         $query= "DELETE FROM ".$this->tableName." WHERE (id = :id)";
-
+ 
         $parameters["id"] = $id;
 
         $this->connection = Connection::GetInstance();
@@ -91,11 +92,44 @@ class PetDao{
         }
     }
 
-    public function getPetListByUserId ($id){
-        // HAY QUE HACER
+    public function getPetListByUserId ($idOwner){
+
+        try{
+            $petList = array();
+            
+            $query = "SELECT id, idOwner, name, photo, breed, size, vaxPlanImg, video, observations, petType FROM ".$this->tableName." WHERE (idOwner = :idOwner)";
+
+            $parameters["idOwner"] = $idOwner;
+            
+            $this->connection = Connection::GetInstance();
+            $results = $this->connection->Execute($query,$parameters);
+                        
+            foreach($results as $row){
+
+
+                $pet = new Pet();
+                $pet->setId($row["id"]);
+                $pet->setIdOwner($row["idOwner"]);
+                $pet->setName($row["name"]);
+                $pet->setPhoto($row["photo"]);
+                $pet->setBreed($row["breed"]);
+                $pet->setSize($row["size"]);
+                $pet->setVaxPlanImg($row["vaxPlanImg"]);
+                $pet->setVideo($row["video"]);
+                $pet->setObservations($row["observations"]);
+
+                array_push($petList,$pet);
+
+            }
+            return $petList;
+
+        }
+        catch(Exception $ex){
+            throw $ex;
+        }
     }
 
-    
+    /*
     public function getByOwnerId($idOwner)
     {
         try{
@@ -129,7 +163,10 @@ class PetDao{
         catch(Exception $ex){
             throw $ex;
         }
-    }  
+    } 
+
+    */
+
     public function getPetListById($idOwner)
     {
         try{
@@ -171,37 +208,30 @@ class PetDao{
 
 
     public function addFilesToPet(Pet $pet){
-      // ACA VA UN UPDATE DE LA TABLA DONDE ESTA EL PET
-      //  Y UPDATEAR LA LISTA EN SESSION DEL USUARIO
+     
+      try{  
 
-        /*
-        $this->retrieveData();
-        
-        foreach($this->petList as $pets){
-            if($pets->getId() == $pet->getId()){
-                $pets->setPhoto($pet->getPhoto());
-                $pets->setVaxPlanImg($pet->getVaxPlanImg());
-                $pets->setVideo($pet->getVideo());
-            }
+        $id= $pet->getId();
+
+        $query= "UPDATE ".$this->tableName." SET photo = :photo, vaxPlanImg = :vaxPlanImg, video = :video WHERE (id = :id)";
+              
+        $parameters["photo"]        = $pet->getPhoto();
+        $parameters["vaxPlanImg"]   = $pet->getVaxPlanImg();        
+        $parameters["video"]        = $pet->getVideo();
+            
+        $this->connection = Connection::GetInstance();
+        $this->connection->ExecuteNonQuery($query,$parameters);
+
+        $ownerDao = new OwnerDAO();
+        $_SESSION["loggedUser"] = $ownerDao->getById($pet->getIdOwner());
+       
         }
-        $this->saveData();
-        */
+        catch(Exception $ex){
+            throw $ex;
+        }
     }
 
-    public function cancelPetRegister($id)
-    {            
-       /* $this->retrieveData();
-            
-        $this->petList = array_filter($this->petList, function($pet) use($id){                
-            return $pet->getId() != $id;
-        });
-            
-        $this->saveData();
-        */
 
-        //tiene que borrar el registro
-
-    }
 
     
 
