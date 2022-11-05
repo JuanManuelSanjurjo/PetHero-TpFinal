@@ -108,12 +108,12 @@ class KeeperDAO{
         foreach($filteredKeeperList as $keeper){
 
             foreach($reservationList as $reservation){
-
                 
                 if($keeper->getId() == $reservation->getKeeper()->getId()){
 
-                    if(($dateStart==$reservation->getDateStart() && $dateEnd == $reservation->getDateEnd()) && $reservation->getPet()->getPetType()!= $pet->getPetType())
-                        unset(filteredKeeperList[array_search($keeper)]);                   
+                    if(($dateStart==$reservation->getDateStart() && $dateEnd == $reservation->getDateEnd()) )
+                        if($reservation->getPet()->getPetType()!= $pet->getPetType() && $reservation->getPet()->getSize()== $pet->getSize()) 
+                            unset(filteredKeeperList[array_search($keeper)]);                   
 
                 }
             }
