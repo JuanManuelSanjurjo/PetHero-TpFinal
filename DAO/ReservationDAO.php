@@ -16,9 +16,8 @@ use Exception;
 
 class ReservationDAO{
    
-
     private $connection;
-    private $tableName= "reservation";
+    private $tableName = "reservation";
 
     public function register(Reservation $reservation)
     {
@@ -70,16 +69,16 @@ class ReservationDAO{
             }
 
             foreach($reservationList as $row){
-                $ownerDAO= new OwnerDAO();\
+                $ownerDAO = new OwnerDAO();
                 $owner=$ownerDAO->getById($row->getOwner());
                 $row->setOwner($owner);
 
-                $keeperDAO= new keeperDao();\
-                $keeper=$keeperDAO->getById($row->getKeeper()); ///Hacerla en el keeper
+                $keeperDAO= new keeperDao();
+                $keeper = $keeperDAO->getById($row->getKeeper()); ///Hacerla en el keeper
                 $row->setKeeper($keeper);
 
-                $petDao= new PetDao();
-                $pet=$petDao->getById($row->getPet());
+                $petDao = new PetDao();
+                $pet = $petDao->getById($row->getPet());
                 $row->setPet($pet);
             }
 
@@ -111,22 +110,40 @@ class ReservationDAO{
        try{
 
        
-        $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ".$this->tableName."WHERE (keeper = :keeperID)";
+        $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ".$this->tableName." WHERE (keeper = :keeperID)";
 
         $this->connection = Connection::GetInstance();
 
         $result = $this->connection->Execute($query);
 
-        $reservation = new Reservation();
-        $reservation->setReservationNumber($result["reservationNumber"]);
-        $reservation->setOwner($result["owner"]);
-        $reservation->setKeeper($result["keeper"]);
-        $reservation->setCompensation($result["compensation"]);
-        $reservation->setDateStart($result["dateStart"]);
-        $reservation->setDateEnd($result["dateEnd"]);
-        $reservation->setPet($result["pet"]);
-        $reservation->setConfirmation($result["confirmation"]);
+        foreach($result as $row)
+        {
+            $reservation = new Reservation();
+            $reservation->setReservationNumber($row["reservationNumber"]);
+            $reservation->setOwner($row["owner"]);
+            $reservation->setKeeper($row["keeper"]);
+            $reservation->setCompensation($row["compensation"]);
+            $reservation->setDateStart($row["dateStart"]);
+            $reservation->setDateEnd($row["dateEnd"]);
+            $reservation->setPet($row["pet"]);
+            $reservation->setConfirmation($row["confirmation"]);
+            
+            array_push($reservationList,$reservation);
+        }
               
+        foreach($reservationList as $row){
+            $ownerDAO = new OwnerDAO();
+            $owner=$ownerDAO->getById($row->getOwner());
+            $row->setOwner($owner);
+
+            $keeperDAO= new keeperDao();
+            $keeper = $keeperDAO->getById($row->getKeeper()); ///Hacerla en el keeper
+            $row->setKeeper($keeper);
+
+            $petDao = new PetDao();
+            $pet = $petDao->getById($row->getPet());
+            $row->setPet($pet);
+        }
             
         return $reservation;
                 
@@ -137,8 +154,68 @@ class ReservationDAO{
 
        
     }
+
     
-  
+    public function getAllReservationsById($keeperID){
+        
+        try{
+            
+            $reservationList = array();
+            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ". $this->tableName ." WHERE (keeper =" . 256 .");";
+            
+           // $parameters["keeper"] = $keeperID;
+           
+            $this->connection = Connection::GetInstance();
+            $result = $this->connection->Execute($query);
+            
+            foreach($result as $row)
+            {
+                $reservation = new Reservation();
+                $reservation->setReservationNumber($row["reservationNumber"]);
+                $reservation->setOwner($row["owner"]);
+                $reservation->setKeeper($row["keeper"]);
+                $reservation->setCompensation($row["compensation"]);
+                $reservation->setDateStart($row["dateStart"]);
+                $reservation->setDateEnd($row["dateEnd"]);
+                $reservation->setPet($row["pet"]);
+                $reservation->setConfirmation($row["confirmation"]);
+                
+                array_push($reservationList,$reservation);
+            }
+            
+            foreach($reservationList as $row){
+                $ownerDAO = new OwnerDAO();
+                $owner = $ownerDAO->getById($row->getOwner());
+                $row->setOwner($owner);
+                
+                $keeperDAO= new keeperDao();
+                $keeper = $keeperDAO->getById($row->getKeeper()); ///Hacerla en el keeper
+                $row->setKeeper($keeper);
+
+                $petDao = new PetDao();
+                $pet = $petDao->getById($row->getPet());
+                $row->setPet($pet);
+            }
+            
+            return $reservationList;
+        }catch(Exception $ex){
+            throw $ex;
+        }
+        
+        
+    }
+    
+        public function setConfirmation ($reservationId, $onfirmation){
+    
+        }
+
+        public function makeReservation (){
+    
+        }
+    
+
+        
+    
     
 }
 

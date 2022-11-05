@@ -213,12 +213,14 @@ class PetDao{
 
         $id= $pet->getId();
 
-        $query= "UPDATE ".$this->tableName." SET photo = :photo, vaxPlanImg = :vaxPlanImg, video = :video WHERE (id = :id)";
+        $query= "UPDATE ".$this->tableName." SET photo = :photo, vaxPlanImg = :vaxPlanImg, video = :video WHERE (id = ". $id .")";
               
         $parameters["photo"]        = $pet->getPhoto();
         $parameters["vaxPlanImg"]   = $pet->getVaxPlanImg();        
         $parameters["video"]        = $pet->getVideo();
             
+        var_dump($query);
+        var_dump($parameters);
         $this->connection = Connection::GetInstance();
         $this->connection->ExecuteNonQuery($query,$parameters);
 
@@ -230,6 +232,42 @@ class PetDao{
             throw $ex;
         }
     }
+
+    public function getById($id)
+    {
+        try{
+            $pet = null;
+
+            $query = "SELECT id, idOwner, name, photo, breed, size, vaxPlanImg, video, observations, petType FROM ".$this->tableName." WHERE (id = :id)";
+
+            $parameters["id"] = $id;
+            
+            $this->connection = Connection::GetInstance();
+            $results = $this->connection->Execute($query,$parameters);
+                        
+            foreach($results as $row){
+
+
+                $pet = new Pet();
+                $pet->setId($row["id"]);
+                $pet->setIdOwner($row["idOwner"]);
+                $pet->setName($row["name"]);
+                $pet->setPhoto($row["photo"]);
+                $pet->setBreed($row["breed"]);
+                $pet->setSize($row["size"]);
+                $pet->setVaxPlanImg($row["vaxPlanImg"]);
+                $pet->setVideo($row["video"]);
+                $pet->setObservations($row["observations"]);
+
+            }
+
+            return $pet;
+
+        }
+        catch(Exception $ex){
+            throw $ex;
+        }
+    }  
 
 
 

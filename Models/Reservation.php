@@ -3,7 +3,7 @@ namespace Models;
 
 use Models\Owner as Owner;
 use Models\Keeper as Keeper;
-use Models\ReservationPeriod as ReservationPeriod;
+use Models\TimeInterval as TimeInterval;
 
 class Reservation{
 
@@ -123,10 +123,13 @@ class Reservation{
      */ 
     public function getCompensation()
     {
-        $totalDays=date_diff($this->reservationPeriod->getStart(),$this->reservationPeriod->getEnd()); 
+        $date1=date_create($this->dateStart);
+        $date2=date_create($this->dateEnd);
+
+        $totalDays=date_diff($date1,$date2); 
         $totalDays=$totalDays->format("%d");
-        $this->compensation=$totalDays * $this->keeper->getCompensation();
-        
+
+        $this->compensation= (int) $totalDays * $this->keeper->getCompensation();
         return $this->compensation;
     }
 

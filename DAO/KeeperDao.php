@@ -251,6 +251,47 @@ class KeeperDAO{
 
     }
 
+    public function getById($id)
+    {
+        try{
+            
+            $keeper = null;
+
+            $query = "SELECT id, mail, password, userName, name, surname, userType, compensation, petType FROM ". $this->tableName . " WHERE (id = :id)";
+            
+            $parameters["id"] = $id;
+            
+            $this->connection = Connection::GetInstance();
+            $results = $this->connection->Execute($query,$parameters);
+                         
+            foreach($results as $row){
+            
+                $keeper = new Keeper();
+                $keeper->setId($row["id"]);
+                $keeper->setMail ($row["mail"]);
+                $keeper->setPassword ($row["password"]);
+                $keeper->setUserName ($row["userName"]);
+                $keeper->setName ($row["name"]);
+                $keeper->setSurname ($row["surname"]);
+                $keeper->setUserType ($row["userType"]);
+                $keeper->setCompensation ($row["compensation"]);
+                $keeper->setPetType ($row["petType"]);
+            
+            }
+            if($keeper){
+                $AvailabilityDAO = new AvailabilityDAO();
+                $availabilityList = $AvailabilityDAO->getById($keeper->getId());
+                $keeper->setAvailabilityList($availabilityList);
+
+            }
+            
+            return $keeper;
+        }
+        catch(Exception $ex){
+            throw $ex;
+        }
+    }
+
 
 
 

@@ -20,7 +20,7 @@
 
   <div class="container">
     <p class="p-text">Show reservations</p>
-      <form action="<?php echo FRONT_ROOT."Reservation/showAllReservation"?>" method="post"> 
+      <form action="<?php echo FRONT_ROOT."Reservation/showAllReservations"?>" method="post"> 
       <button type="submmit" class="large-button">Show</button>  
     </form>
   </div>

@@ -140,7 +140,6 @@ class OwnerDAO{
                 $petList = $PetDAO->getPetListById($owner->getId()); // hay que hacer esta
                 $owner->setPetList($petList);
             }
-
             return $owner;
 
         }

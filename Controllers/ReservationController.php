@@ -25,15 +25,22 @@ class ReservationController{
         $this->OwnerDao = new OwnerDAO();
         $this->KeeperDao = new KeeperDao();
         $this->ReservationDAO = new ReservationDAO();
-        $this->PetDAO = new PetDao();              
+        $this->PetDAO = new PetDao();             
     }
 
-    public function makeReservation("parametros"){
+    public function makeReservation(){ // PONER PARAMETROS
 
-        $this->ReservationDAO->makeReservation("parametros");
+        $this->ReservationDAO->makeReservation();
         ///resolver vista y pase de parametros a funcion
         
     }
+
+    public function setConfirmation($reservationId, $confirmation){
+
+        $this->ReservationDAO->setConfirmation($reservationId, $confirmation);
+        // hay que hacer esta en el DAO
+    }
+
 
     public function showKeeperList(){
         $keeperList=$this->KeeperDao->getAll();
@@ -68,49 +75,18 @@ class ReservationController{
         {
             
 
-
-
-
-
         }
-
-
-
-      
-
-
-
-
-
 
 
     }
 
-   public function showAllReservation(){
-    $keeper = $_SESSION["loggedUser"];
-    $ReservationList = $this->ReservationDAO->getReservationByKeeper($keeper->getId());
 
-    require_once(VIEWS_PATH."validate-session.php");
-    require_once(VIEWS_PATH."reservation-list.php");
-
-
-
+   public function showAllReservations(){
+        $user = $_SESSION["loggedUser"];
+        $ReservationList = $this->ReservationDAO->getAllReservationsById($user->getId());             
+        require_once(VIEWS_PATH."validate-session.php");
+        require_once(VIEWS_PATH."reservation-list.php");             
    }
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
