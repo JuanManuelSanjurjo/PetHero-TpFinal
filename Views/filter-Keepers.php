@@ -47,6 +47,8 @@
                <td>  <?php echo $keeper->getPetType()." dogs or cats";   ?></td>             
                <td>      
                     <input type="hidden" name="pet" value="<?php echo $pet->getId(); ?>">
+                    <input type="hidden" name="owner" value="<?php echo $owner->getId(); ?>">
+                    <input type="hidden" name="keeper" value="<?php echo $keeper->getId(); ?>">
                     <input type="hidden" name="dateStart" value="<?php echo $dateStart; ?>">
                     <input type="hidden" name="dateEnd" value="<?php echo $dateStart; ?>">
                     <button type="submmit" value="confirm" class="large-button">Book keeper</button>

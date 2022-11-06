@@ -28,9 +28,17 @@ class ReservationController{
         $this->PetDAO = new PetDao();             
     }
 
-    public function makeReservation(){ // PONER PARAMETROS
+    public function makeReservation($pet, $owner, $keeper, $dateStart, $dateEnd){ // PONER PARAMETROS
+        $reservation = new Reservation();
 
-        $this->ReservationDAO->makeReservation();
+        $reservation->setPet($pet);
+        $reservation->setOwner($owner);
+        $reservation->setKeeper($keeper);
+        $reservation->setDateStart($dateStart);
+        $reservation->setDateEnd($dateEnd);
+        $reservation->setCompensation($reservation->getCompensation());
+
+        $this->ReservationDAO->makeReservation($reservation);
         ///resolver vista y pase de parametros a funcion
         
     }
