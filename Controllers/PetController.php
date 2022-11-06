@@ -94,7 +94,7 @@ class PetController{
         return $fileName;
     }
 */
-    public function uploadFile(){
+    public function uploadFile($photo, $vaxPlanImg, $video){
         require_once(VIEWS_PATH."validate-session.php");
         $user = $_SESSION["loggedUser"];
 
@@ -105,11 +105,11 @@ class PetController{
 
         if(isset($_POST)  )  {
 
-                $photo = $_FILES['photo'];
+                //$photo = $_FILES['photo'];
                     
                 $photoName = $this->checkImgFiles($photo,$user,$pet,'profile');
     
-                $vaxPlanImg = $_FILES['vaxPlanImg'];
+               // $vaxPlanImg = $_FILES['vaxPlanImg'];
     
                 $vaxImgName = $this->checkImgFiles($vaxPlanImg,$user,$pet,'vaxImg');
     
@@ -117,15 +117,14 @@ class PetController{
                 $pet->setVaxPlanImg($vaxImgName);
                 
                 if($_FILES['video']['size'] != 0){
-                    $video = $_FILES['video'];
+                    //$video = $_FILES['video'];
     
                     $videoFileName =  $this->checkImgFiles($video,$user,$pet,'video');
                     $pet->setVideo($videoFileName); 
                 }
                 
             }
-
-            
+     
         $this->PetDao->addFilesToPet($pet);
         /// ACA HAY QUE HACER UN UPDATE EN LA TABLA
         /// ACA HAY QUE HACER UN UPDATE EN LA TABLA

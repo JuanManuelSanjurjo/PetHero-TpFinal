@@ -17,13 +17,14 @@
   </form>
 </div>
 
-<h1>List of Keepers</h1>
+<h1>List of availaable keepers</h1>
 <table class="table">
           <thead>
             <tr>
               <th style="width: 15%;">Username</th>
               <th style="width: 30%;">Name</th>
               <th style="width: 30%;">Compensation</th>
+              <th style="width: 30%;">Total</th>
               <th style="width: 15%;">Pets Accepted</th>
               <th style="width: 15%;">Book</th>
             </tr>
@@ -39,8 +40,11 @@
                             }else{
                               echo '$' . $keeper->getCompensation() . ' / day';  
                             }
-                 ?></td>                <td>  <?php echo $keeper->getPetType()." dogs or cats";              ?></td>             
-                <td>          
+                 ?>
+               </td>                
+               <td>  <?php echo "$ ". (int) $diff->format("%d%") * $keeper->getCompensation() ;    ?> </td>
+               <td>  <?php echo $keeper->getPetType()." dogs or cats";   ?></td>             
+               <td>          
                     <form action="<?php echo FRONT_ROOT."Reservation/makeReservation"?>"> <!-- cambiar el CONTROLLER -->
                     <button type="submmit" value="confirm" class="large-button">Book keeper</button>
                     </form>

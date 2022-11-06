@@ -34,11 +34,26 @@ class KeeperController{
 /// RPOBABLEMENTE ESTO DEBA ESTAR OWNER Y DESDE EL DAO LLAMAR AL DAO DE KEEPERS
     public function showFilteredKeepers($pet,$dateStart,$dateEnd){        // filtro tambien por RESERVATION
         //$keeperList = $this->KeeperDao->getFilteredList($pet, $dateStart, $dateEnd); // hacer filtro en DAO O CONTROLLER
+        $date1=date_create($dateStart);
+        $date2=date_create($dateEnd);
+        $today = date_create();
+        $diff = $today;
+        
+        if($date1 > $date2 ){
+            HomeController::showMessage("End date cant be less than start date");   
+        }elseif($date1 < $today  || $date2 < $today){
+           HomeController::showMessage("Cant set dates in the past");
+        }else{
+
+            $diff=date_diff($date1,$date2);
+        }
+        
         $keeperList = $this->KeeperDao->getAll(); // hacer filtro en DAO O CONTROLLER
         $owner = $_SESSION["loggedUser"];
         $petList = $owner->getPetList();
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."filter-Keepers.php");
+        
     }
 
 
@@ -182,8 +197,6 @@ class KeeperController{
         return false;
     }
 */
-
-
 
     public function dateAlreadyExist (TimeInterval $date){
 

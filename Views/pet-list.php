@@ -34,8 +34,9 @@
                   <td>
                   <form action="<?php echo FRONT_ROOT."Owner/removePet"?>" > <!-- cambiar el CONTROLLER -->
                     <input type="hidden" name="petId" value="<?php echo $pet->getId(); ?>">   
-                    <button type="submmit" class="large-button">Delete Pet</button>
+                    <button type="submmit" class="large-button">Remove Pet</button>
                   </form>
+                  
               </td>
             </tr>
           <?php  };  ?>
@@ -43,9 +44,14 @@
         </tbody>
       </table>
 
+ 
 
-  <div class="container">
+  <div class="container" >
     <br>
+    <form action="<?php echo FRONT_ROOT."Owner/showPetModify"?>" > <!-- cambiar el CONTROLLER -->
+      <input type="hidden" name="petId" value="<?php echo $pet->getId(); ?>">   
+      <button type="submmit" class="medium-button">Modify Pets</button>
+    </form>
     <a  href="<?php echo FRONT_ROOT.'Owner/showHomeView'?>"><button class="medium-button">go back</button></a>
   </div>
 
