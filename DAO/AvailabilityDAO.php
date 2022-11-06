@@ -1,6 +1,7 @@
 <?php
 namespace DAO;
 
+use Controllers\HomeController;
 use Models\TimeInterval;
 use DAO\Connection as Connection;
 use Exception;
@@ -60,17 +61,18 @@ class AvailabilityDAO{
     }
 
 
+
     public function Remove($id)
     {
         try{
-        $query= "DELETE FROM ".$this->tableName." WHERE (id = :id)";
-
-        $parameters["id"] = $id;
+        $query= "DELETE FROM ".$this->tableName." WHERE (id = " . $id .")";
 
         $this->connection = Connection::GetInstance();
 
-        $this->connection->ExecuteNonQuery($query,$parameters);
+        $this->connection->ExecuteNonQuery($query);
+        return true;
         }catch(Exception $ex){
+            return false;
             throw $ex;
         }
     }
@@ -109,16 +111,7 @@ class AvailabilityDAO{
         }
     }  
 
-
-
-    public function setCompensation($compensation){
-       
-    }
-
-    public function setPetType($size){
-       
-    }
-    
+  
  
     
 }

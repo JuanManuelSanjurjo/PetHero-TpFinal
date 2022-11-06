@@ -1,6 +1,7 @@
 <?php
 namespace Controllers;
 
+use Controllers\KeeperController as KeeperController;
 use DAO\UserDao as UserDao;
 use Models\User as User;
 use Models\Keeper as Keeper;
@@ -32,8 +33,8 @@ class ReservationController{
         var_dump($pet);
         var_dump($owner);
         var_dump($keeper);
-       // var_dump($dateStart);
-       // var_dump($dateEnd);
+        var_dump($dateStart);
+        var_dump($dateEnd);
         
         $reservation = new Reservation();
         $newPet = new Pet();
@@ -56,9 +57,15 @@ class ReservationController{
         
     }
 
-    public function setConfirmation($reservationId, $confirmation){
-
-        $this->ReservationDAO->setConfirmation($reservationId, $confirmation);
+    public function setConfirmation($confirmation, $reservationId){
+        if($confirmation == "confirm"){
+            $this->ReservationDAO->setConfirmation($reservationId, true);
+        }else{
+            $this->ReservationDAO->setConfirmation($reservationId, false);
+        }
+        HomeController::showMessage("Status updated");
+        $this->showAllReservations();
+      
         // hay que hacer esta en el DAO
     }
 
@@ -104,7 +111,8 @@ class ReservationController{
 
    public function showAllReservations(){
         $user = $_SESSION["loggedUser"];
-        $ReservationList = $this->ReservationDAO->getAllReservationsById($user->getId());             
+        $ReservationList = $this->ReservationDAO->getAllReservationsById($user->getId());
+                     
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."reservation-list.php");             
    }

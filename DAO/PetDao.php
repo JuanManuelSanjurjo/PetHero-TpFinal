@@ -1,6 +1,7 @@
 <?php
 namespace DAO;
 
+use Controllers\HomeController;
 use Exception;
 use Models\Pet as Pet;
 use Models\Owner as Owner;
@@ -85,7 +86,8 @@ class PetDao{
 
         $this->connection->ExecuteNonQuery($query,$parameters);
         }catch(Exception $ex){
-            throw $ex;
+            HomeController::showMessage("Cannot remove pets with reservations");
+            //throw $ex;
         }
     }
 
@@ -114,6 +116,7 @@ class PetDao{
                 $pet->setVaxPlanImg($row["vaxPlanImg"]);
                 $pet->setVideo($row["video"]);
                 $pet->setObservations($row["observations"]);
+                $pet->setPetType($row["petType"]);
 
                 array_push($petList,$pet);
 
@@ -189,6 +192,7 @@ class PetDao{
                 $pet->setVaxPlanImg($row["vaxPlanImg"]);
                 $pet->setVideo($row["video"]);
                 $pet->setObservations($row["observations"]);
+                $pet->setPetType($row["petType"]);
 
                 array_push($petList,$pet);
             }
@@ -199,8 +203,6 @@ class PetDao{
            throw $ex;
         }
     }  
-
-
 
 
 
@@ -254,6 +256,7 @@ class PetDao{
                 $pet->setVaxPlanImg($row["vaxPlanImg"]);
                 $pet->setVideo($row["video"]);
                 $pet->setObservations($row["observations"]);
+                $pet->setPetType($row["petType"]);
 
             }
 
@@ -264,6 +267,39 @@ class PetDao{
             throw $ex;
         }
     }  
+
+    public function modifyPet(Pet $pet){
+
+        try{  
+            $id= $pet->getId();
+            
+            $query= "UPDATE ".$this->tableName." SET id = :id, idOwner = :idOwner , name = :name, photo = :photo, breed = :breed, size = :size, vaxPlanImg = :vaxPlanImg, video = :video, observations = :observations, petType = :petType WHERE (id = ". $id .")";
+
+            $parameters["id"]           = $pet->getId();
+            $parameters["idOwner"]      = $pet->getIdOwner();
+            $parameters["name"]         = $pet->getName();
+            $parameters["photo"]        = $pet->getPhoto();
+            $parameters["breed"]        = $pet->getBreed();        
+            $parameters["size"]         = $pet->getSize();        
+            $parameters["vaxPlanImg"]   = $pet->getVaxPlanImg();        
+            $parameters["video"]        = $pet->getVideo();
+            $parameters["observations"]  = $pet->getObservations();        
+            $parameters["petType"]      = $pet->getPetType();
+            
+            $this->connection = Connection::GetInstance();
+            $this->connection->ExecuteNonQuery($query,$parameters);
+            
+            $ownerDao = new OwnerDAO();
+            $_SESSION["loggedUser"] = $ownerDao->getById($pet->getIdOwner());
+
+        }
+        catch(Exception $ex){
+            throw $ex;
+        }
+          
+
+    }
+
 
 
 

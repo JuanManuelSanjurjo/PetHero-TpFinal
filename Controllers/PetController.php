@@ -1,6 +1,7 @@
 <?php
 namespace Controllers;
 
+use Controllers\OwnerController as OwnerController;
 use DAO\PetDao as PetDao;
 use Models\Pet as Pet;
 use DAO\OwnerDao as OwnerDao;
@@ -102,13 +103,13 @@ class PetController{
         $pet =  array_pop($petList);
        // $pet = $this->PetDao->getByOwnerId($user->getId());
        // $size = (int) $_SERVER['CONTENT_LENGTH'];   
-
+        var_dump($photo);
         if(isset($_POST)  )  {
 
                 //$photo = $_FILES['photo'];
-                    
+                
                 $photoName = $this->checkImgFiles($photo,$user,$pet,'profile');
-    
+                          
                // $vaxPlanImg = $_FILES['vaxPlanImg'];
     
                 $vaxImgName = $this->checkImgFiles($vaxPlanImg,$user,$pet,'vaxImg');
@@ -148,7 +149,7 @@ class PetController{
 
         $this->PetDao->register($pet);
 
-/////  RENUEVA EL LOGGED USER
+/////  RENUEVA EL LOGGED USER HACERLO EN CONTROLLER CORRESPONDIENTE
         $ownerDao = new OwnerDAO();
         $_SESSION["loggedUser"] = $ownerDao->getById($pet->getIdOwner());
                 
@@ -156,9 +157,8 @@ class PetController{
     }
 
     public function cancelPetRegister($idPet){
-        if(!$this->PetDao->cancelPetRegister($idPet)){
-            
-        }
+        $this->PetDao->cancelPetRegister($idPet);
+ 
         require_once(VIEWS_PATH."home-owner.php");
     }
 
@@ -204,10 +204,43 @@ class PetController{
             require_once(VIEWS_PATH."pet-list.php");
         }
     }
+
+    public function modifyPet($name, $breed, $size, $observations, $photo, $vaxPlanImg, $video, $petId){
+        require_once(VIEWS_PATH."validate-session.php");
+        
+        $user = $_SESSION["loggedUser"];
+        
+        $PetDao = new PetDao();
+        $pet= $PetDao->getById($petId);
+
+        $pet->setId($petId);
+        $pet->setName($name);
+        $pet->setBreed($breed);
+        $pet->setSize($size);
+        $pet->setObservations($observations);
+
+        /*      /// faltan fotos
+        if($photo){
+            $pet->setPhoto($this->checkImgFiles($photo,$user,$pet,'profile'));
+        }
+        if($vaxPlanImg){
+            $pet->setPhoto($this->checkImgFiles($vaxPlanImg,$user,$pet,'vaxImg'));
+        }
+        if(!$video){
+            $pet->setPhoto($this->checkImgFiles($video,$user,$pet,'video'));
+        }
+*/
+        $this->PetDao->modifyPet($pet); 
+                    
+/////  RENUEVA EL LOGGED USER
+        $ownerDao = new OwnerDAO();
+        $user = $_SESSION["loggedUser"];
+        $_SESSION["loggedUser"] = $ownerDao->getById($user->getId());
+
+        $OwnerController = new OwnerController();
+        $OwnerController->showHomeView("Pet modification succesful");
+    }
     
 
-    
-    
-    
 }
 ?>

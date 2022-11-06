@@ -167,7 +167,7 @@ class OwnerDAO{
     {
 
         $PetDAO = new PetDao();
-       // $PetDAO->modifyPet($pet);
+        $PetDAO->modifyPet($pet);
         
     }
 

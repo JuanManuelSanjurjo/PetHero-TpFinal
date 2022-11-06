@@ -3,7 +3,7 @@
 
 
   <div class="">
-      <h1>   WELCOME TO <br> PET HERO </h1>
+      <h1> WELCOME KEEPER </h1>
   </div>
 
   <!-- PARA USUARIO KEEPER   HAY QUE DIVIDIRLO -->  
@@ -16,6 +16,13 @@
           <input type="date" style="width: 25%;" min="<?php getdate() ?>" id="Dates" name="dateEnd" placeholder="Select end of period" multiple="true" />
           <button type="submmit" class="large-button">Update Availability</button>
       </form>
+  </div>
+
+  <div class="container">
+    <p class="p-text">Show availabilities</p>
+      <form action="<?php echo FRONT_ROOT."Keeper/showAvailabilities"?>" method="post"> 
+      <button type="submmit" class="large-button">Show</button>  
+    </form>
   </div>
 
   <div class="container">
