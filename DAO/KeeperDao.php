@@ -89,7 +89,7 @@ class KeeperDAO{
     }
 
 
-    public function getFilteredList($pet, $dateStart, $dateEnd){
+    public function getFilteredList($pet, $dateStart, $dateEnd){  ///probar
         $filteredKeeperList = array();
         
         foreach($this->getAll() as $keeper){
@@ -112,7 +112,7 @@ class KeeperDAO{
                 if($keeper->getId() == $reservation->getKeeper()->getId()){
 
                     if(($dateStart==$reservation->getDateStart() && $dateEnd == $reservation->getDateEnd()) )
-                        if($reservation->getPet()->getPetType()!= $pet->getPetType() && $reservation->getPet()->getSize()!= $pet->getSize()); 
+                        if($reservation->getPet()->getPetType()!= $pet->getPetType() || ($reservation->getPet()->getPetType()== "dog" && $reservation->getPet()->getSize()!= $pet->getSize())); 
                             unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);  // CAMBIADO PQ DABA EROR; REVISAR                  
 
                 }

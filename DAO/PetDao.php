@@ -5,6 +5,7 @@ use Exception;
 use Models\Pet as Pet;
 use Models\Owner as Owner;
 use DAO\OwnerDAO as OwnerDAO;
+use DAOJSON\KeeperDAO as KeeperDAO;
 
 class PetDao{
 
@@ -196,7 +197,7 @@ class PetDao{
 
         }
         catch(Exception $ex){
-           return throw $ex;
+           throw $ex;
         }
     }  
 

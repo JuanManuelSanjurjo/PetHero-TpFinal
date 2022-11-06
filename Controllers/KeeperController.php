@@ -32,8 +32,12 @@ class KeeperController{
         require_once(VIEWS_PATH."keeper-list.php");
     }
 /// RPOBABLEMENTE ESTO DEBA ESTAR OWNER Y DESDE EL DAO LLAMAR AL DAO DE KEEPERS
+    
     public function showFilteredKeepers($pet,$dateStart,$dateEnd){        // filtro tambien por RESERVATION
         //$keeperList = $this->KeeperDao->getFilteredList($pet, $dateStart, $dateEnd); // hacer filtro en DAO O CONTROLLER
+        var_dump($pet);
+        var_dump($dateStart,$dateEnd);
+
         $date1=date_create($dateStart);
         $date2=date_create($dateEnd);
         $today = date_create();
@@ -48,9 +52,9 @@ class KeeperController{
             $diff=date_diff($date1,$date2);
         }
         
-        $keeperList = $this->KeeperDao->getAll(); // hacer filtro en DAO O CONTROLLER
+        $keeperList = $this->KeeperDao->getFilteredLIst($pet,$date1,$date2); // hacer filtro en DAO O CONTROLLER
         $owner = $_SESSION["loggedUser"];
-        $petList = $owner->getPetList();
+        $petList = $owner->getPetList();        
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."filter-Keepers.php");
         

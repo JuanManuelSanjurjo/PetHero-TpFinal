@@ -6,8 +6,7 @@
   <p class="p-text">Select your pet</p>
   <select class="dog-select" style="width: 15%"   name="pet" id="role" required>
     <?php foreach($petList as $pet){ ?>
-      <option value=" <?php $pet ?>" > <?php echo $pet->getName()?> </option> <!-- echo $pet["id"] -->
-      <?php  }  ?>
+      <option value="<?php $pet?>" > <?php echo $pet->getName()?> </option> <!-- echo $pet["id"] -->
     </select>
     <p class="p-text">Select start of period</p>
     <input type="date" style="width: 15%;" min="<?php getdate() ?>" id="Dates" name="dateStart" placeholder="Select start of period" multiple="true" />
@@ -15,23 +14,25 @@
     <input type="date" style="width: 15%;" min="<?php getdate() ?>" id="Dates" name="dateEnd" placeholder="Select end of period" multiple="true" />
     <button type="submmit" class="large-button" style="width: 15%; margin-left: 2rem">Filter</button>
   </form>
+  <?php  }  ?>
 </div>
 
 <h1>List of availaable keepers</h1>
 <table class="table">
-          <thead>
-            <tr>
-              <th style="width: 15%;">Username</th>
-              <th style="width: 30%;">Name</th>
-              <th style="width: 30%;">Compensation</th>
-              <th style="width: 30%;">Total</th>
-              <th style="width: 15%;">Pets Accepted</th>
-              <th style="width: 15%;">Book</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php  foreach($keeperList as $keeper){     
-                ?>
+  <thead>
+    <tr>
+      <th style="width: 15%;">Username</th>
+      <th style="width: 30%;">Name</th>
+      <th style="width: 30%;">Compensation</th>
+      <th style="width: 30%;">Total</th>
+      <th style="width: 15%;">Pets Accepted</th>
+      <th style="width: 15%;">Book</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php  foreach($keeperList as $keeper){     
+      ?>
+        <form action="<?php echo FRONT_ROOT."Reservation/makeReservation"?>"> <!-- cambiar el CONTROLLER -->
               <tr>
                 <td class="first-td">  <?php echo $keeper->getUsername();     ?></td>
                 <td>  <?php echo $keeper->getName() .' '. $keeper->getSurname();  ?></td>
@@ -44,12 +45,14 @@
                </td>                
                <td>  <?php echo "$ ". (int) $diff->format("%d%") * $keeper->getCompensation() ;    ?> </td>
                <td>  <?php echo $keeper->getPetType()." dogs or cats";   ?></td>             
-               <td>          
-                    <form action="<?php echo FRONT_ROOT."Reservation/makeReservation"?>"> <!-- cambiar el CONTROLLER -->
+               <td>  
+                    <input type="hidden" name="pet" value="<?php echo $pet->getId()?>">
+                    <input type="hidden" name="dateStart" value="<?php $date1?>">
+                    <input type="hidden" name="dateEnd" value="<?php $date2?>">
                     <button type="submmit" value="confirm" class="large-button">Book keeper</button>
-                    </form>
-                </td>
-              </tr>
+                  </td>
+                </tr>
+              </form>
             <?php  };  ?>
 
           </tbody>
