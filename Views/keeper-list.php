@@ -4,15 +4,15 @@
 <div class="container">
   <form action="<?php echo FRONT_ROOT."Keeper/showFilteredKeepers"?>" method="post" style="background: linear-gradient( #fdc36b, #e08b3b);"> 
   <p class="p-text">Select your pet</p>
-  <select class="dog-select" style="width: 15%"   name="pet" id="role" required>
+  <select class="dog-select" style="width: 15%" name="pet" id="role" required>
     <?php foreach($petList as $pet){ ?>
-      <option value=" <?php $pet ?>" > <?php echo $pet->getName()?> </option> <!-- echo $pet["id"] -->
+      <option value="<?php echo $pet->getId(); ?>" > <?php echo $pet->getName()?> </option> <!-- echo $pet["id"] -->
       <?php  }  ?>
     </select>
     <p class="p-text">Select start of period</p>
-    <input type="date" style="width: 15%;" min="<?php getdate() ?>" id="Dates" name="dateStart" placeholder="Select start of period" multiple="true" />
+    <input type="date" style="width: 15%;" min="<?php getdate() ?>" id="Dates" name="dateStart" placeholder="Select start of period" multiple="true" required />
     <p class="p-text" >Select end of period</p>
-    <input type="date" style="width: 15%;" min="<?php getdate() ?>" id="Dates" name="dateEnd" placeholder="Select end of period" multiple="true" />
+    <input type="date" style="width: 15%;" min="<?php getdate() ?>" id="Dates" name="dateEnd" placeholder="Select end of period" multiple="true" required />
     <button type="submmit" class="large-button" style="width: 15%; margin-left: 2rem">Filter</button>
   </form>
 </div>

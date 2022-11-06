@@ -57,29 +57,26 @@ class ReservationDAO{
             {
                 $reservation = new Reservation();
                 $reservation->setReservationNumber($row["reservationNumber"]);
-                $reservation->setOwner($row["owner"]);
-                $reservation->setKeeper($row["keeper"]);
+                // set owner id
+                $ownerDAO = new OwnerDAO();
+                $owner=$ownerDAO->getById($row["owner"]);
+                $reservation->setOwner($owner);
+                // set keeper id
+                $keeperDAO= new KeeperDao();
+                $keeper = $keeperDAO->getById($row["keeper"]); ///Hacerla en el keeper
+                $reservation->setKeeper($keeper);
+                
                 $reservation->setCompensation($row["compensation"]);
                 $reservation->setDateStart($row["dateStart"]);
                 $reservation->setDateEnd($row["dateEnd"]);
-                $reservation->setPet($row["pet"]);
-                $reservation->setConfirmation($row["confirmation"]);
-                
-                array_push($reservationList,$reservation);
-            }
-
-            foreach($reservationList as $row){
-                $ownerDAO = new OwnerDAO();
-                $owner=$ownerDAO->getById($row->getOwner());
-                $row->setOwner($owner);
-
-                $keeperDAO= new keeperDao();
-                $keeper = $keeperDAO->getById($row->getKeeper()); ///Hacerla en el keeper
-                $row->setKeeper($keeper);
-
+                // set pet id
                 $petDao = new PetDao();
-                $pet = $petDao->getById($row->getPet());
-                $row->setPet($pet);
+                $pet = $petDao->getById($row["pet"]);
+                $reservation->setPet($pet);
+
+                $reservation->setConfirmation($row["confirmation"]);
+
+                array_push($reservationList,$reservation);
             }
 
             return $reservationList;
@@ -89,6 +86,62 @@ class ReservationDAO{
 
     }
 
+
+/*  FUNCION VIEJA GET ALL
+    public function getAll()
+    {
+        try{
+            
+            $reservationList = array();
+            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ".$this->tableName;
+
+            $this->connection = Connection::GetInstance();
+
+            $result = $this->connection->Execute($query);
+
+            foreach($result as $row)
+            {
+                $reservation = new Reservation();
+                $reservation->setReservationNumber($row["reservationNumber"]);
+                $owner =new Owner();
+                $owner->setId($row["owner"]);
+                $reservation->setOwner($owner);
+                $keeper =new Keeper();
+                $keeper->setId($row["keeper"]);
+                $reservation->setKeeper($keeper);
+                $reservation->setCompensation($row["compensation"]);
+                $reservation->setDateStart($row["dateStart"]);
+                $reservation->setDateEnd($row["dateEnd"]);
+                $pet = new Pet();
+                $pet->setId($row["pet"]);
+                $reservation->setPet($pet);
+                $reservation->setConfirmation($row["confirmation"]);
+                
+                array_push($reservationList,$reservation);
+            }
+
+            foreach($reservationList as $row){
+                $ownerDAO = new OwnerDAO();
+                $owner=$ownerDAO->getById($row->getOwner()->getId());
+                $row->setOwner($owner);
+
+                $keeperDAO= new keeperDao();
+                $keeper = $keeperDAO->getById($row->getKeeper()->getId()); ///Hacerla en el keeper
+                $row->setKeeper($keeper);
+
+                $petDao = new PetDao();
+                $pet = $petDao->getById($row->getPet()->getId());
+                $row->setPet($pet);
+                
+            }
+            
+            return $reservationList;
+        }catch(Exception $ex){
+            throw $ex;
+        }
+
+    }
+*/
 
     public function Remove($id)
     {
@@ -150,7 +203,6 @@ class ReservationDAO{
        }catch(Exception $ex){
             throw $ex;
        }
-
 
        
     }

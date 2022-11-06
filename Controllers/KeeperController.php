@@ -38,21 +38,30 @@ class KeeperController{
         $date2=date_create($dateEnd);
         $today = date_create();
         $diff = $today;
-        
-        if($date1 > $date2 ){
-            HomeController::showMessage("End date cant be less than start date");   
-        }elseif($date1 < $today  || $date2 < $today){
-           HomeController::showMessage("Cant set dates in the past");
-        }else{
 
-            $diff=date_diff($date1,$date2);
-        }
+        var_dump($pet);
+        var_dump($dateStart);
+        var_dump($dateEnd);
         
         $keeperList = $this->KeeperDao->getAll(); // hacer filtro en DAO O CONTROLLER
         $owner = $_SESSION["loggedUser"];
         $petList = $owner->getPetList();
-        require_once(VIEWS_PATH."validate-session.php");
-        require_once(VIEWS_PATH."filter-Keepers.php");
+
+
+        if($date1 > $date2 ){
+            HomeController::showMessage("End date cant be less than start date");   
+            $this->showKeeperList();
+        }elseif($date1 < $today  || $date2 < $today){
+            HomeController::showMessage("Cant set dates in the past");
+            $this->showKeeperList();
+        }else{
+            $diff=date_diff($date1,$date2);
+            // HAY QUE PISAR LA KEEPER LIST CON LO FILTRADO EN getFilteredList
+             $keeperList = $this->KeeperDao->getFilteredList($pet,$dateStart,$dateEnd); // hacer filtro en DAO O CONTROLLER
+             require_once(VIEWS_PATH."validate-session.php");
+             require_once(VIEWS_PATH."filter-Keepers.php");
+        }
+        
         
     }
 

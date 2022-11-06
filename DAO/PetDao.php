@@ -196,7 +196,7 @@ class PetDao{
 
         }
         catch(Exception $ex){
-           return throw $ex;
+           throw $ex;
         }
     }  
 
