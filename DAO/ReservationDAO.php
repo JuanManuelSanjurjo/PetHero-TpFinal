@@ -22,15 +22,15 @@ class ReservationDAO{
     public function makeReservation(Reservation $reservation)
     {
         try{
-            $query = "INSERT INTO".$this->tableName."(reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation) VALUES (:reservationNumber, :owner, :keeper, :compensation, :dateStart, :dateEnd, :pet, :confirmation)";
+            $query = "INSERT INTO ".$this->tableName." (reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation) VALUES (:reservationNumber, :owner, :keeper, :compensation, :dateStart, :dateEnd, :pet, :confirmation)";
 
             $parameters["reservationNumber"]= $reservation->getReservationNumber();
-            $parameters["owner"]            = $reservation->getOwner();
-            $parameters["keeper"]           = $reservation->getKeeper();
+            $parameters["owner"]            = $reservation->getOwner()->getId();
+            $parameters["keeper"]           = $reservation->getKeeper()->getId();
             $parameters["dateStart"]        = $reservation->getDateStart();
             $parameters["dateEnd"]          = $reservation->getDateEnd();
-            $parameters["compensation"]     = $reservation->getCompensation();
-            $parameters["pet"]              = $reservation->getPet();
+            $parameters["compensation"]     = $reservation->getCompensation();  // no pone la compensacion
+            $parameters["pet"]              = $reservation->getPet()->getId();
             $parameters["confirmation"]     = $reservation->getConfirmation();
             
             $this->connection = Connection::GetInstance();

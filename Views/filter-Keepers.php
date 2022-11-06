@@ -32,6 +32,7 @@
           <tbody>
             <?php  foreach($keeperList as $keeper){     
               ?>
+              
               <tr>
                 <form action="<?php echo FRONT_ROOT."Reservation/makeReservation"?>"> <!-- cambiar el CONTROLLER -->
                 <td class="first-td">  <?php echo $keeper->getUsername();     ?></td>
@@ -45,14 +46,15 @@
                </td>                
                <td>  <?php echo "$ ". (int) $diff->format("%d%") * $keeper->getCompensation() ;    ?> </td>
                <td>  <?php echo $keeper->getPetType()." dogs or cats";   ?></td>             
-               <td>      
-                    <input type="hidden" name="pet" value="<?php echo $pet->getId(); ?>">
-                    <input type="hidden" name="owner" value="<?php echo $owner->getId(); ?>">
-                    <input type="hidden" name="keeper" value="<?php echo $keeper->getId(); ?>">
-                    <input type="hidden" name="dateStart" value="<?php echo $dateStart; ?>">
-                    <input type="hidden" name="dateEnd" value="<?php echo $dateStart; ?>">
-                    <button type="submmit" value="confirm" class="large-button">Book keeper</button>
-                  </td>
+               <td>
+                      
+                  <button type="submmit" value="confirm" class="large-button">Book keeper</button>
+                </td>
+                <input type="hidden" name="pet" value="<?php echo $pet->getId(); ?>">
+                  <input type="hidden" name="owner" value="<?php echo $owner->getId(); ?>">
+                  <input type="hidden" name="keeper" value="<?php echo $keeper->getId(); ?>">
+                  <input type="hidden" name="dateStart" value="<?php echo $dateStart ?>">
+                  <input type="hidden" name="dateEnd" value="<?php echo $dateStart ?>">
                 </form>
                 </tr>
                 <?php  };  ?>
