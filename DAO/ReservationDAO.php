@@ -19,7 +19,7 @@ class ReservationDAO{
     private $connection;
     private $tableName = "reservation";
 
-    public function register(Reservation $reservation)
+    public function makeReservation(Reservation $reservation)
     {
         try{
             $query = "INSERT INTO".$this->tableName."(reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation) VALUES (:reservationNumber, :owner, :keeper, :compensation, :dateStart, :dateEnd, :pet, :confirmation)";
@@ -27,9 +27,9 @@ class ReservationDAO{
             $parameters["reservationNumber"]= $reservation->getReservationNumber();
             $parameters["owner"]            = $reservation->getOwner();
             $parameters["keeper"]           = $reservation->getKeeper();
-            $parameters["compensation"]     = $reservation->getCompensation();
             $parameters["dateStart"]        = $reservation->getDateStart();
             $parameters["dateEnd"]          = $reservation->getDateEnd();
+            $parameters["compensation"]     = $reservation->getCompensation();
             $parameters["pet"]              = $reservation->getPet();
             $parameters["confirmation"]     = $reservation->getConfirmation();
             
@@ -261,9 +261,7 @@ class ReservationDAO{
     
         }
 
-        public function makeReservation (){
-    
-        }
+
     
 
         

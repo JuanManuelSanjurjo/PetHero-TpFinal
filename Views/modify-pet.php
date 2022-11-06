@@ -15,11 +15,10 @@
             </tr>
         </thead>
         <tbody>
-            <?php    
-          foreach($list as $pet){  
-              ?>
-            <form action="<?php echo FRONT_ROOT."Owner/modifyPet"?>"> <!-- cambiar el CONTROLLER -->
+            <?php foreach($list as $pet){  
+                ?>
             <tr> 
+                <form action="<?php echo FRONT_ROOT."Owner/modifyPet"?>"> <!-- cambiar el CONTROLLER -->
                 <td class="first-td"> <input type="text" name="name" value=" <?php echo $pet->getName() ?>" required></td>
                 <td>  <input type="text" name="breed" value=" <?php echo $pet->getBreed() ?>"></td>
                 <td>  
@@ -46,8 +45,8 @@
                       <input type="hidden" name="petId" value="<?php echo $pet->getId(); ?>">   
                     <button type="submmit" class="large-button">Modify</button>
                 </td>
-            </tr>
             </form>
+            </tr>
             <?php  };  ?>
           
         </tbody>

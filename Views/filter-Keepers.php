@@ -20,7 +20,6 @@
 <h1>List of availaable keepers</h1>
 <table class="table">
           <thead>
-            <form action="<?php echo FRONT_ROOT."Reservation/makeReservation"?>"> <!-- cambiar el CONTROLLER -->
             <tr>
               <th style="width: 15%;">Username</th>
               <th style="width: 30%;">Name</th>
@@ -32,8 +31,9 @@
           </thead>
           <tbody>
             <?php  foreach($keeperList as $keeper){     
-                ?>
+              ?>
               <tr>
+                <form action="<?php echo FRONT_ROOT."Reservation/makeReservation"?>"> <!-- cambiar el CONTROLLER -->
                 <td class="first-td">  <?php echo $keeper->getUsername();     ?></td>
                 <td>  <?php echo $keeper->getName() .' '. $keeper->getSurname();  ?></td>
                 <td>  <?php if($keeper->getCompensation()==null){
@@ -51,22 +51,21 @@
                     <input type="hidden" name="dateEnd" value="<?php echo $dateStart; ?>">
                     <button type="submmit" value="confirm" class="large-button">Book keeper</button>
                   </td>
+                </form>
                 </tr>
-              </form>
                 <?php  };  ?>
 
           </tbody>
         </table>
 
 
-<div class="container">
+ <div class="container">
     <br>
-    <a  href="<?php echo FRONT_ROOT.'Owner/showHomeView'?>"><button class="medium-button">go back</button></a>
+    <a  href="<?php echo FRONT_ROOT.'Owner/showHomeView'?>"><button class="medium-button">Home</button></a>
   </div>
 
 
 
 
 
-
-
+  <?php    include('footer.php'); ?>
