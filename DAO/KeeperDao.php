@@ -93,12 +93,11 @@ class KeeperDAO{
         $filteredKeeperList = array();
         $PetDao = new PetDao();
         $petTosearch = $PetDao->getById($pet);
-        var_dump($pet);
 
         foreach($this->getAll() as $keeper){
             $availabilities = $keeper->getAvailabilityList();
             foreach($availabilities as $interval){
-                if($dateStart >= $interval->getStart() && $dateEnd <= $interval->getEnd()){
+                if($dateStart >= $interval->getStart() && $dateEnd <= $interval->getEnd() && $keeper->getPetType()==$petTosearch->getSize()){
                     array_push($filteredKeeperList,$keeper);
 
                 }
@@ -107,13 +106,14 @@ class KeeperDAO{
 
         $reservationDAO = new ReservationDAO();
         $reservationList =  $reservationDAO->getAll();
-        
+                
         foreach($filteredKeeperList as $keeper){
-            
+
             foreach($reservationList as $reservation){
+
                 if($keeper->getId() == $reservation->getKeeper()->getId()){
                     if($dateStart == $reservation->getDateStart() && $dateEnd == $reservation->getDateEnd()){
-                        if($reservation->getPet()->getPetType() != $petTosearch->getPetType() && $reservation->getPet()->getSize() != $petTosearch->getSize()){
+                        if($reservation->getPet()->getPetType() != $petTosearch->getPetType()  || $reservation->getPet()->getSize() != $petTosearch->getSize()){
                             unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);           
                         }
 
@@ -121,7 +121,7 @@ class KeeperDAO{
                 }
             }
         }   
-        
+
         return $filteredKeeperList;
     }
 
