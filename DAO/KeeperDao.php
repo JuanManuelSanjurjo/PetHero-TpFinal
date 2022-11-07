@@ -93,7 +93,6 @@ class KeeperDAO{
         $filteredKeeperList = array();
         $PetDao = new PetDao();
         $petTosearch = $PetDao->getById($pet);
-        var_dump($pet);
 
         foreach($this->getAll() as $keeper){
             $availabilities = $keeper->getAvailabilityList();

@@ -40,6 +40,8 @@ class KeeperController{
         $today = date_create();
         $diff = $today;
         
+        $selectedPet = $pet; // ACA LLEGA BIEN
+
         $keeperList = $this->KeeperDao->getAll(); // hacer filtro en DAO O CONTROLLER
         $owner = $_SESSION["loggedUser"];
         $petList = $owner->getPetList();
