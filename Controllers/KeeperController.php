@@ -53,10 +53,7 @@ class KeeperController{
             $this->showKeeperList();
         }else{
             $diff=date_diff($date1,$date2);
-            // HAY QUE PISAR LA KEEPER LIST CON LO FILTRADO EN getFilteredList
             $keeperList = $this->KeeperDao->getFilteredList($pet,$dateStart,$dateEnd); // hacer filtro en DAO O CONTROLLER
-            //$keeperList = $this->KeeperDao->getAll(); // hacer filtro en DAO O CONTROLLER
-            
              require_once(VIEWS_PATH."validate-session.php");
              require_once(VIEWS_PATH."filter-Keepers.php");
         }

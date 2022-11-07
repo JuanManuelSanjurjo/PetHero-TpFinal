@@ -32,7 +32,6 @@
           <tbody>
             <?php  foreach($keeperList as $keeper){     
               ?>
-              
               <tr>
                 <form action="<?php echo FRONT_ROOT."Reservation/makeReservation"?>"> <!-- cambiar el CONTROLLER -->
                 <td class="first-td">  <?php echo $keeper->getUsername();     ?></td>
