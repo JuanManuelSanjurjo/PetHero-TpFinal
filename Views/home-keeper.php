@@ -27,11 +27,11 @@
 
   <div class="container" >
     <p class="p-text">Show reservations</p>
-      <form action="<?php echo FRONT_ROOT."Reservation/showAllReservations"?>" method="post"> 
-      <button type="submmit" class="medium-button">Show</button>  
+      <form action="<?php echo FRONT_ROOT."Reservation/showHistoricReservations"?>" method="post"> 
+      <button type="submmit" class="medium-button">History</button>  
     </form>
-    <form action="<?php echo FRONT_ROOT."Reservation/showAllReservations"?>" method="post"> 
-      <button type="submmit" class="medium-button">Show</button>  
+    <form action="<?php echo FRONT_ROOT."Reservation/showReservationToMake"?>" method="post"> 
+      <button type="submmit" class="medium-button">Pending</button>  
     </form>
   </div>
 

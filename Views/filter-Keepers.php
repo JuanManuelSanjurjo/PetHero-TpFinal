@@ -17,7 +17,7 @@
   </form>
 </div>
 
-<h1>List of availaable keepers</h1>
+<h1>List of available keepers</h1>
 <table class="table">
           <thead>
             <tr>

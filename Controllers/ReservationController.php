@@ -31,12 +31,7 @@ class ReservationController{
     }
 
     public function makeReservation($pet, $owner, $keeper, $dateStart, $dateEnd){ // PONER PARAMETROS
-        var_dump($pet);
-        var_dump($owner);
-        var_dump($keeper);
-        var_dump($dateStart);
-        var_dump($dateEnd);
-        
+       
         $reservation = new Reservation();
         $newPet = new Pet();
         $newPet->setId($pet);
@@ -127,7 +122,6 @@ class ReservationController{
         $ReservationList=array();
         date_default_timezone_set("America/Buenos_aires");
         $today=date("Y-m-d",time());    
-        var_dump($today);
 
          
         foreach($reservationListToFiltrate as $row){
@@ -149,7 +143,6 @@ class ReservationController{
     $ReservationList=array();
     date_default_timezone_set("America/Buenos_aires");
     $today=date("Y-m-d",time());    
-    var_dump($today);
 
 
     foreach($reservationListToFiltrate as $row){

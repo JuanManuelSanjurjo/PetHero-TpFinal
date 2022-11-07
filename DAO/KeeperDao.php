@@ -91,7 +91,9 @@ class KeeperDAO{
 
     public function getFilteredList($pet, $dateStart, $dateEnd){
         $filteredKeeperList = array();
-        
+        $PetDao = new PetDao();
+        $petTosearch = $PetDao->getById($pet);
+
         foreach($this->getAll() as $keeper){
             $availabilities = $keeper->getAvailabilityList();
             foreach($availabilities as $interval){
@@ -104,17 +106,17 @@ class KeeperDAO{
 
         $reservationDAO = new ReservationDAO();
         $reservationList =  $reservationDAO->getAll();
-
+        
         foreach($filteredKeeperList as $keeper){
-
+            
             foreach($reservationList as $reservation){
-                
                 if($keeper->getId() == $reservation->getKeeper()->getId()){
+                    if($dateStart == $reservation->getDateStart() && $dateEnd == $reservation->getDateEnd()){
+                        if($reservation->getPet()->getPetType() != $petTosearch->getPetType() && $reservation->getPet()->getSize() != $petTosearch->getSize()){
+                            unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);           
+                        }
 
-                    if(($dateStart==$reservation->getDateStart() && $dateEnd == $reservation->getDateEnd()) )
-                        if($reservation->getPet()->getPetType()!= $pet->getPetType() && $reservation->getPet()->getSize()!= $pet->getSize()); 
-                            unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);  // CAMBIADO PQ DABA EROR; REVISAR                  
-
+                    }
                 }
             }
         }   
