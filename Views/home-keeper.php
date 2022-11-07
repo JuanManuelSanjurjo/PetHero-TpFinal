@@ -1,7 +1,6 @@
 <?php  include('header.php'); ?>
 <?php  include('nav-bar.php'); ?>
 
-
   <div class="">
       <h1> WELCOME KEEPER </h1>
   </div>
@@ -25,14 +24,15 @@
     </form>
   </div>
 
+
   <div class="container" >
     <p class="p-text">Show reservations</p>
-      <form action="<?php echo FRONT_ROOT."Reservation/showHistoricReservations"?>" method="post"> 
-      <button type="submmit" class="medium-button">History</button>  
-    </form>
-    <form action="<?php echo FRONT_ROOT."Reservation/showReservationToMake"?>" method="post"> 
-      <button type="submmit" class="medium-button">Pending</button>  
-    </form>
+      <form style="margin-right: 0px" action="<?php echo FRONT_ROOT."Reservation/showHistoricReservations"?>" method="post"> 
+          <button type="submmit" class="large-button">History</button>  
+      </form>
+      <form action="<?php echo FRONT_ROOT."Reservation/showReservationToMake"?>" method="post"> 
+          <button type="submmit" class="large-button">Pending</button>  
+      </form>
   </div>
 
 

@@ -4,14 +4,14 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Breed</th>
-                <th>Size</th>
-                <th>Observations</th>
-                <th>Photo</th>
-                <th>Vaxination Plan</th>
-                <th>Video</th>
-                <th>Modify</th>
+                <th style="width: 30%;">Name</th>
+                <th style="width: 30%;">Breed</th>
+                <th style="width: 18%;">Size</th>
+                <th style="width: 30%;">Observations</th>
+                <th style="width: 15%;">Photo</th>
+                <th style="width: 15%;">Vaxination Plan</th>
+                <th style="width: 15%;">Video</th>
+                <th style="width: 15%;">Modify</th>
             </tr>
         </thead>
         <tbody>

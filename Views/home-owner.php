@@ -9,13 +9,13 @@
 <!-- PARA USUARIO OWNER -->
   <div class="container">
       <form action="<?php echo FRONT_ROOT."Owner/showMyPetList"?>">    <!-- cambiar el CONTROLLER -->
-          <button type="submmit" class="large-button">Pet list</button>
+          <button type="submmit" class="large-button">My pets</button>
       </form>
   </div>
 
   <div class="container">
       <form action="<?php echo FRONT_ROOT."Keeper/showKeeperList"?>"> <!-- cambiar el CONTROLLER -->
-          <button type="submmit" class="large-button">Show Keepers</button>
+          <button type="submmit" class="large-button">Show me the Keepers</button>
       </form>
   </div>
 

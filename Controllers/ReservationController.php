@@ -134,7 +134,7 @@ class ReservationController{
        
     
         require_once(VIEWS_PATH."validate-session.php");
-        require_once(VIEWS_PATH."reservation-list.php"); 
+        require_once(VIEWS_PATH."reservation-historic.php"); 
    }
 
    public function showReservationToMake(){

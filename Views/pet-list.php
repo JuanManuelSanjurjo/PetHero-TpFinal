@@ -4,14 +4,14 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Breed</th>
-            <th>Size</th>
-            <th>Observations</th>
-            <th>Photo</th>
-            <th>Vaxination Plan</th>
-            <th>Video</th>
-            <th>Remove</th>
+            <th style="width: 20%" >Name</th>
+            <th style="width: 20%" >Breed</th>
+            <th style="width: 10%" >Size</th>
+            <th style="width: 30%" >Observations</th>
+            <th style="width: 15%" >Photo</th>
+            <th style="width: 15%" >Vaxination Plan</th>
+            <th style="width: 15%" >Video</th>
+            <th style="width: 20%" >Remove</th>
           </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
               <td class="first-td">  <?php echo $pet->getName()                    ?></td>
               <td>  <?php echo $pet->getBreed()                   ?></td>
               <td>  <?php echo $pet->getSize()                    ?></td>
-              <td>  <?php echo $pet->getObservations()            ?></td>
+              <td style="font-size: 20px">  <?php echo $pet->getObservations()            ?></td>
               <td><img class="pet-img" src="<?php echo FRONT_ROOT.VIEWS_PATH.'user-images/'. $pet->getPhoto(); ?>" alt="<?php echo $pet->getPhoto()  ?>" ></td>
               <td><img  class="pet-img" src="<?php echo FRONT_ROOT.VIEWS_PATH.'user-images/'. $pet->getVaxPlanImg(); ?>" alt="<?php echo $pet->getVaxPlanImg()  ?>" ></td>
               <td> 
