@@ -12,6 +12,7 @@ use DAO\OwnerDAO as OwnerDAO;
 use DAO\KeeperDAO as KeeperDao;
 use DAO\PetDao as PetDAO;
 use DAO\ReservationDAO as ReservationDAO;
+use DateTimeZone;
 use Models\Reservation;
 
 class ReservationController{
@@ -54,6 +55,9 @@ class ReservationController{
         $reservation->setCompensation($reservation->getCompensation());
 
         $this->ReservationDAO->makeReservation($reservation);
+
+        $ownerController = new OwnerController();
+        $ownerController->showHomeView("The reservation has been made and was sent to the keeper for confirmation");
         
     }
 
@@ -117,7 +121,49 @@ class ReservationController{
         require_once(VIEWS_PATH."reservation-list.php");             
    }
 
+   public function showHistoricReservations(){
+        $user= $_SESSION["loggedUser"];
+        $reservationListToFiltrate = $this->ReservationDAO->getAllReservationsById($user->getId());
+        $ReservationList=array();
+        date_default_timezone_set("America/Buenos_aires");
+        $today=date("Y-m-d",time());    
+        var_dump($today);
 
+         
+        foreach($reservationListToFiltrate as $row){
+
+            if($row->getDateStart()<$today){
+                
+                array_push($ReservationList,$row);
+            }
+        }
+       
+    
+        require_once(VIEWS_PATH."validate-session.php");
+        require_once(VIEWS_PATH."reservation-list.php"); 
+   }
+
+   public function showReservationToMake(){
+    $user= $_SESSION["loggedUser"];
+    $reservationListToFiltrate = $this->ReservationDAO->getAllReservationsById($user->getId());
+    $ReservationList=array();
+    date_default_timezone_set("America/Buenos_aires");
+    $today=date("Y-m-d",time());    
+    var_dump($today);
+
+
+    foreach($reservationListToFiltrate as $row){
+
+        if($row->getDateStart()>=$today){
+            
+            array_push($ReservationList,$row);
+        }
+    }
+    
+
+    require_once(VIEWS_PATH."validate-session.php");
+    require_once(VIEWS_PATH."reservation-list.php"); 
+}
 
 
 
