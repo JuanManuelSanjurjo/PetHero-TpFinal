@@ -213,7 +213,7 @@ class ReservationDAO{
         try{
             
             $reservationList = array();
-            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ". $this->tableName ." WHERE (keeper =" . 256 .");";
+            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ". $this->tableName ." WHERE (keeper =" . $keeperID .");";
                        
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
@@ -270,7 +270,7 @@ class ReservationDAO{
             catch(Exception $ex){
                 throw $ex;
             }
-            }
+    }
     
 
         

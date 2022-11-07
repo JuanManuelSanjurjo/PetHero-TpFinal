@@ -25,10 +25,13 @@
     </form>
   </div>
 
-  <div class="container">
+  <div class="container" >
     <p class="p-text">Show reservations</p>
       <form action="<?php echo FRONT_ROOT."Reservation/showAllReservations"?>" method="post"> 
-      <button type="submmit" class="large-button">Show</button>  
+      <button type="submmit" class="medium-button">Show</button>  
+    </form>
+    <form action="<?php echo FRONT_ROOT."Reservation/showAllReservations"?>" method="post"> 
+      <button type="submmit" class="medium-button">Show</button>  
     </form>
   </div>
 
