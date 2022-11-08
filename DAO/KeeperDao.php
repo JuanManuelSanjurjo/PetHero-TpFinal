@@ -90,7 +90,7 @@ class KeeperDAO{
 
 
     public function getFilteredList($pet, $dateStart, $dateEnd){
-        
+
         $filteredKeeperList = array();
         $PetDao = new PetDao();
         $petTosearch = $PetDao->getById($pet);
@@ -128,14 +128,13 @@ class KeeperDAO{
                     echo $reservation->getDateEnd() ;
                     */
                   
-                    if(($dateStart >=  $reservation->getDateStart() && $dateStart <= $reservation->getDateEnd()) || ($dateEnd >=  $reservation->getDateStart() && $dateEnd <= $reservation->getDateEnd())){
-                        echo " en segundo if   ";
-
+                    if(($dateStart >=  $reservation->getDateStart() && $dateStart <= $reservation->getDateEnd()) || ($dateEnd >=  $reservation->getDateStart() && $dateEnd <= $reservation->getDateEnd()) ||  ($dateStart <= $reservation->getDateStart() && $dateEnd >= $reservation->getDateEnd()) ){
+                        //echo " en segundo if   ";
                         if($reservation->getPet()->getPetType() != $petTosearch->getPetType()  ){
-                            echo " en tercer if";
+                          //  echo " en tercer if";
                             unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);           
                         }else if($reservation->getPet()->getPetType() == "dog"  && $reservation->getPet()->getSize() != $petTosearch->getSize()){
-                            echo " en cuarto if";
+                            //echo " en cuarto if";
                             unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);           
                         }
 
