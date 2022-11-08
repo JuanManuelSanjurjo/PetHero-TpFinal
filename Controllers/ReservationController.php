@@ -64,7 +64,6 @@ class ReservationController{
         }
         HomeController::showMessage("Status updated");
         $this->showAllReservations();
-      
         // hay que hacer esta en el DAO
     }
 

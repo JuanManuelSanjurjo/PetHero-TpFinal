@@ -127,7 +127,7 @@ class KeeperDAO{
                     echo $dateEnd . " ";
                     echo $reservation->getDateEnd() ;
                     */
-                  
+                
                     if(($dateStart >=  $reservation->getDateStart() && $dateStart <= $reservation->getDateEnd()) || ($dateEnd >=  $reservation->getDateStart() && $dateEnd <= $reservation->getDateEnd()) ||  ($dateStart <= $reservation->getDateStart() && $dateEnd >= $reservation->getDateEnd()) ){
                         //echo " en segundo if   ";
                         if($reservation->getPet()->getPetType() != $petTosearch->getPetType()  ){
