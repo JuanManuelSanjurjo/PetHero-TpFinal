@@ -98,8 +98,12 @@ class KeeperDAO{
         foreach($this->getAll() as $keeper){
             $availabilities = $keeper->getAvailabilityList();
             foreach($availabilities as $interval){
-                if($dateStart >= $interval->getStart() && $dateEnd <= $interval->getEnd() && $keeper->getPetType()==$petTosearch->getSize()){
-                    array_push($filteredKeeperList,$keeper);
+                if($dateStart >= $interval->getStart() && $dateEnd <= $interval->getEnd() ){
+                    if($petTosearch->getPetType() == "cat"){
+                        array_push($filteredKeeperList,$keeper);
+                    }elseif($petTosearch->getPetType() == "dog" && $keeper->getPetType() == $petTosearch->getSize()){
+                        array_push($filteredKeeperList,$keeper);
+                    }
 
                 }
             }
@@ -113,21 +117,24 @@ class KeeperDAO{
             foreach($reservationList as $reservation){
 
                 if($keeper->getId() == $reservation->getKeeper()->getId()){
-                   
-                    echo " en primer if";
-                    echo $keeper->getName();
-                    echo $reservation->getPet()->getPetType();
-                    echo $petTosearch->getPetType() ;
-                    echo $dateStart ;
+                   /*
+                    echo " en primer if ";
+                    echo $keeper->getName(). " ";
+                    echo $reservation->getPet()->getPetType() . " ";
+                    echo $petTosearch->getPetType() . " ";
+                    echo $dateStart . " ";
                     echo $reservation->getDateStart() ;
-                    
-                    if($dateStart >=  $reservation->getDateStart() && $dateEnd <= $reservation->getDateEnd()){
+                    echo $dateEnd . " ";
+                    echo $reservation->getDateEnd() ;
+                    */
+                  
+                    if(($dateStart >=  $reservation->getDateStart() && $dateStart <= $reservation->getDateEnd()) || ($dateEnd >=  $reservation->getDateStart() && $dateEnd <= $reservation->getDateEnd())){
                         echo " en segundo if   ";
 
                         if($reservation->getPet()->getPetType() != $petTosearch->getPetType()  ){
                             echo " en tercer if";
                             unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);           
-                        }else if($reservation->getPet()->getPetType() == $petTosearch->getPetType()  && $reservation->getPet()->getSize() != $petTosearch->getSize()){
+                        }else if($reservation->getPet()->getPetType() == "dog"  && $reservation->getPet()->getSize() != $petTosearch->getSize()){
                             echo " en cuarto if";
                             unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);           
                         }
