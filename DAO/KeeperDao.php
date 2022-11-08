@@ -90,6 +90,7 @@ class KeeperDAO{
 
 
     public function getFilteredList($pet, $dateStart, $dateEnd){
+        
         $filteredKeeperList = array();
         $PetDao = new PetDao();
         $petTosearch = $PetDao->getById($pet);
@@ -112,8 +113,22 @@ class KeeperDAO{
             foreach($reservationList as $reservation){
 
                 if($keeper->getId() == $reservation->getKeeper()->getId()){
-                    if($dateStart == $reservation->getDateStart() && $dateEnd == $reservation->getDateEnd()){
-                        if($reservation->getPet()->getPetType() != $petTosearch->getPetType()  || $reservation->getPet()->getSize() != $petTosearch->getSize()){
+                   
+                    echo " en primer if";
+                    echo $keeper->getName();
+                    echo $reservation->getPet()->getPetType();
+                    echo $petTosearch->getPetType() ;
+                    echo $dateStart ;
+                    echo $reservation->getDateStart() ;
+                    
+                    if($dateStart >=  $reservation->getDateStart() && $dateEnd <= $reservation->getDateEnd()){
+                        echo " en segundo if   ";
+
+                        if($reservation->getPet()->getPetType() != $petTosearch->getPetType()  ){
+                            echo " en tercer if";
+                            unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);           
+                        }else if($reservation->getPet()->getPetType() == $petTosearch->getPetType()  && $reservation->getPet()->getSize() != $petTosearch->getSize()){
+                            echo " en cuarto if";
                             unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);           
                         }
 
@@ -121,7 +136,7 @@ class KeeperDAO{
                 }
             }
         }   
-
+        $filteredKeeperList = array_unique($filteredKeeperList, SORT_REGULAR);  // Entrega una sola instancia de cada Keeper
         return $filteredKeeperList;
     }
 

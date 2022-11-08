@@ -160,7 +160,7 @@ class OwnerDAO{
 
         $PetDAO = new PetDao();
         $PetDAO->cancelPetRegister($petId);
-        
+
     }
 
     public function modifyPet($pet)
