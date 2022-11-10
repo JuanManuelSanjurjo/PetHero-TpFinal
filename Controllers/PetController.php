@@ -48,19 +48,19 @@ class PetController{
                     HomeController::showMessage("The file is too big");
                     //echo "The file is too big";
                     $this->cancelPetRegister($pet->getId());
-                    unlink($fileDestination);
+                    //unlink($fileDestination);
                 }
             }else{
                 HomeController::showMessage("There was an error uploading your file");
                 //echo "There was an error uploading your file";
                 $this->cancelPetRegister($pet->getId());
-                unlink($fileDestination);
+                //unlink($fileDestination);
             }
         }else{
             HomeController::showMessage("There was an error uploading files, try again");
             //echo "There was an error uploading files, try again";
             $this->cancelPetRegister($pet->getId());
-            unlink($fileDestination);
+            //unlink($fileDestination);
         }
 
         return $fileName;
@@ -150,14 +150,19 @@ class PetController{
 
 /////  RENUEVA EL LOGGED USER HACERLO EN CONTROLLER CORRESPONDIENTE
         $ownerDao = new OwnerDAO();
-        $_SESSION["loggedUser"] = $ownerDao->getById($pet->getIdOwner());
+        $user = $ownerDao->getById($pet->getIdOwner());
+        $_SESSION["loggedUser"] = $user;
+
+        $petList = $user->getPetList();
+        $pet =  array_pop($petList);
                 
         require_once(VIEWS_PATH."add-files.php");
     }
 
     public function cancelPetRegister($idPet){
+           
         $this->PetDao->cancelPetRegister($idPet);
- 
+
         require_once(VIEWS_PATH."home-owner.php");
     }
 

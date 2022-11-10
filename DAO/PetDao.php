@@ -66,6 +66,7 @@ class PetDao{
 
                 array_push($keepersList,$pet);
             }
+            
 
             return $petList;
         }catch(Exception $ex){
@@ -82,9 +83,24 @@ class PetDao{
  
         $parameters["id"] = $id;
 
+        $pet = $this->getById($id); // Guarda el objeto PET para poder borrar las imagenes/videos despues de la QUERY
+        
         $this->connection = Connection::GetInstance();
-
+        
         $this->connection->ExecuteNonQuery($query,$parameters);
+        
+        //// BORRA IMAGENES DEL DIRECTORIO
+        if($pet->getPhoto()!=null){
+        unlink(ROOT.VIEWS_PATH."user-images/" . $pet->getPhoto());
+        }
+        if($pet->getVaxPlanImg()!=null){
+        unlink(ROOT.VIEWS_PATH."user-images/" . $pet->getVaxPlanImg());
+        }
+        if($pet->getVideo()!=null){
+            unlink(ROOT.VIEWS_PATH."user-videos/" . $pet->getVideo());
+        } 
+        //// BORRA IMAGENES DEL DIRECTORIO
+
         }catch(Exception $ex){
             HomeController::showMessage("Cannot remove pets with reservations");
             //throw $ex;
@@ -221,7 +237,6 @@ class PetDao{
         $this->connection = Connection::GetInstance();
         $this->connection->ExecuteNonQuery($query,$parameters);
 
-        // TRATAR DE MAndarlo a controladora
         $ownerDao = new OwnerDAO();
         $_SESSION["loggedUser"] = $ownerDao->getById($pet->getIdOwner());
              

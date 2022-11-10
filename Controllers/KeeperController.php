@@ -59,8 +59,7 @@ class KeeperController{
              require_once(VIEWS_PATH."validate-session.php");
              require_once(VIEWS_PATH."filter-Keepers.php");
         }
-        
-        
+
     }
 
 

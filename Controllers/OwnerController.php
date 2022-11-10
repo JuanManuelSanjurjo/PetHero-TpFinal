@@ -58,15 +58,13 @@ class OwnerController{
     }
 
     public function removePet($petId){
+        
+       $this->OwnerDAO->removePet($petId);
+       $ownerDao = new OwnerDAO();
+       $user = $_SESSION["loggedUser"];
+       $_SESSION["loggedUser"] = $ownerDao->getById($user->getId());
        
-       if($this->OwnerDAO->removePet($petId)){
-           /// RENUEVA EL LOGGED USER
-           $ownerDao = new OwnerDAO();
-           $user = $_SESSION["loggedUser"];
-           $_SESSION["loggedUser"] = $ownerDao->getById($user->getId());
-          
-           HomeController::showMessage("Pet removed succesfully");
-       }
+       HomeController::showMessage("Pet removed succesfully");
         $this->showMyPetList();
     }
 
@@ -78,7 +76,6 @@ class OwnerController{
 
     }
 
-   
     
 
 }

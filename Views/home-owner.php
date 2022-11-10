@@ -14,8 +14,8 @@
   </div>
 
   <div class="container">
-      <form action="<?php echo FRONT_ROOT."Keeper/showKeeperList"?>"> <!-- cambiar el CONTROLLER -->
-          <button type="submmit" class="large-button">Show me the Keepers</button>
+      <form action="<?php echo FRONT_ROOT."Reservation/getAllOwnerReservationsById"?>"> <!-- cambiar el CONTROLLER -->
+          <button type="submmit" class="large-button">Show my reservations</button>
       </form>
   </div>
 
