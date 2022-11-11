@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-11-2022 a las 23:32:07
+-- Tiempo de generación: 11-11-2022 a las 01:21:11
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `petherobd`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `chats`
+--
+
+CREATE TABLE `chats` (
+  `id` int(11) NOT NULL,
+  `owner` int(11) NOT NULL,
+  `keeper` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
 
@@ -133,6 +145,21 @@ INSERT INTO `reservation` (`reservationNumber`, `owner`, `keeper`, `compensation
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `texts`
+--
+
+CREATE TABLE `texts` (
+  `id` int(50) NOT NULL,
+  `idChat` int(50) NOT NULL,
+  `message` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
+  `from` int(50) NOT NULL,
+  `to` int(50) NOT NULL,
+  `date` datetime(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `timeinterval`
 --
 
@@ -173,6 +200,12 @@ INSERT INTO `timeinterval` (`id`, `start`, `end`, `idKeeper`) VALUES
 --
 
 --
+-- Indices de la tabla `chats`
+--
+ALTER TABLE `chats`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `keepers`
 --
 ALTER TABLE `keepers`
@@ -201,6 +234,12 @@ ALTER TABLE `reservation`
   ADD KEY `fk:idOwner` (`owner`);
 
 --
+-- Indices de la tabla `texts`
+--
+ALTER TABLE `texts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `timeinterval`
 --
 ALTER TABLE `timeinterval`
@@ -210,6 +249,12 @@ ALTER TABLE `timeinterval`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `chats`
+--
+ALTER TABLE `chats`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `keepers`
@@ -234,6 +279,12 @@ ALTER TABLE `pet`
 --
 ALTER TABLE `reservation`
   MODIFY `reservationNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
+
+--
+-- AUTO_INCREMENT de la tabla `texts`
+--
+ALTER TABLE `texts`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `timeinterval`
