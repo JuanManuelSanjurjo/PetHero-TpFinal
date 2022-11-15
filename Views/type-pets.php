@@ -8,21 +8,21 @@
   <br>
 
   <div class="container">
-      <form action="<?php echo FRONT_ROOT."Keeper/setPetType"?>">    <!-- cambiar el CONTROLLER -->
+      <form action="<?php echo FRONT_ROOT."Keeper/setPetType"?>" method="post">    <!-- cambiar el CONTROLLER -->
           <button type="submmit" class="large-button" name="size" value="Small">Small</button>
       </form>
   </div>
   <br>
   <br>
   <div class="container">
-      <form action="<?php echo FRONT_ROOT."Keeper/setPetType"?>"> <!-- cambiar el CONTROLLER -->
+      <form action="<?php echo FRONT_ROOT."Keeper/setPetType"?>" method="post"> <!-- cambiar el CONTROLLER -->
           <button type="submmit" class="large-button" name="size" value="Medium">Medium</button>
       </form>
   </div>
   <br>
   <br>
   <div class="container">
-      <form action="<?php echo FRONT_ROOT."Keeper/setPetType"?>"> <!-- cambiar el CONTROLLER -->
+      <form action="<?php echo FRONT_ROOT."Keeper/setPetType"?>" method="post"> <!-- cambiar el CONTROLLER -->
           <button type="submmit" class="large-button" name="size" value="Big">Big</button>
       </form>
   </div>

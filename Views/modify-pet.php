@@ -18,7 +18,7 @@
             <?php foreach($list as $pet){  
                 ?>
             <tr> 
-                <form action="<?php echo FRONT_ROOT."Pet/modifyPet"?>"> <!-- cambiar el CONTROLLER -->
+                <form action="<?php echo FRONT_ROOT."Pet/modifyPet"?>" method="post"> <!-- cambiar el CONTROLLER -->
                 <td class="first-td"> <input type="text" name="name" value=" <?php echo $pet->getName() ?>" required></td>
                 <td>  <input type="text" name="breed" value=" <?php echo $pet->getBreed() ?>"></td>
                 <td>  

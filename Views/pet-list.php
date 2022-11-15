@@ -32,7 +32,7 @@
                   </td>
                   <?php  };  ?>
                   <td>
-                  <form action="<?php echo FRONT_ROOT."Owner/removePet"?>" > <!-- cambiar el CONTROLLER -->
+                  <form action="<?php echo FRONT_ROOT."Owner/removePet"?>"> <!-- cambiar el CONTROLLER -->
                     <input type="hidden" name="petId" value="<?php echo $pet->getId(); ?>">   
                     <button type="submmit" class="large-button">Remove Pet</button>
                   </form>

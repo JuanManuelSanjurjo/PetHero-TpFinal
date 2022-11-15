@@ -8,25 +8,25 @@
 
 <!-- PARA USUARIO OWNER -->
   <div class="container">
-      <form action="<?php echo FRONT_ROOT."Owner/showMyPetList"?>">    <!-- cambiar el CONTROLLER -->
+      <form action="<?php echo FRONT_ROOT."Owner/showMyPetList"?>" method="post">    <!-- cambiar el CONTROLLER -->
           <button type="submmit" class="large-button">My pets</button>
       </form>
   </div>
 
   <div class="container">
-      <form action="<?php echo FRONT_ROOT."Reservation/getAllOwnerReservationsById"?>"> <!-- cambiar el CONTROLLER -->
+      <form action="<?php echo FRONT_ROOT."Reservation/getAllOwnerReservationsById"?>" method="post"> <!-- cambiar el CONTROLLER -->
           <button type="submmit" class="large-button">Show my reservations</button>
       </form>
   </div>
 
   <div class="container">
-      <form action="<?php echo FRONT_ROOT."Owner/showAddPet"?>"> <!-- cambiar el CONTROLLER -->
+      <form action="<?php echo FRONT_ROOT."Owner/showAddPet"?>" method="post"> <!-- cambiar el CONTROLLER -->
           <button type="submmit" class="large-button">Add Pet</button>
       </form>
   </div>
 
   <div class="container">
-      <form action="<?php echo FRONT_ROOT."Keeper/showKeeperList"?>"> <!-- cambiar el CONTROLLER -->
+      <form action="<?php echo FRONT_ROOT."Keeper/showKeeperList"?>" method="post"> <!-- cambiar el CONTROLLER -->
           <button type="submmit" class="large-button">Make Reservation</button>
       </form>
   </div>

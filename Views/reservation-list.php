@@ -41,11 +41,11 @@
                       }
                           ;?></td>
                 <td >          
-                    <form action="<?php echo FRONT_ROOT."Reservation/setConfirmation"?>"> <!-- cambiar el CONTROLLER -->
+                    <form action="<?php echo FRONT_ROOT."Reservation/setConfirmation"?>" method="post"> <!-- cambiar el CONTROLLER -->
                     <input type="submit" name="confirmation" value="confirm" class="large-button" style="padding: 10px 10px;"></input>
                     <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>">
                    </form>
-                   <form action="<?php echo FRONT_ROOT."Reservation/setConfirmation"?>"> <!-- cambiar el CONTROLLER -->
+                   <form action="<?php echo FRONT_ROOT."Reservation/setConfirmation"?>" method="post"> <!-- cambiar el CONTROLLER -->
                       <input type="submit" name="confirmation" value="reject" class="large-button" style="padding: 10px 10px;"></input>
                       <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>">
                     </form>

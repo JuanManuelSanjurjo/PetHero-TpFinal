@@ -41,7 +41,7 @@
                         }
                         ;?></td>
                 <td >          
-                    <form action="<?php echo FRONT_ROOT."Chat/showChat"?>"> <!-- cambiar el CONTROLLER -->
+                    <form action="<?php echo FRONT_ROOT."Chat/showChat"?>" method="post"> <!-- cambiar el CONTROLLER -->
                     <input type="hidden" id="id" name="keeperId" value="<?php echo $reservation->getKeeper()->getId()  ?>"></input>
                     <input type="hidden" id="id" name="ownerId" value="<?php echo $reservation->getOwner()->getId()  ?>"> </input>
                     <button type="submit"  class="large-button" style="padding: 20px 20px;">Chat</button>
