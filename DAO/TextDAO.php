@@ -7,19 +7,19 @@ use Models\Text as Text;
 class TextDAO{
 
     private $connection;
-    private $tableName="Texts";
+    private $tableName="texts";
 
     public function addText(Text $text)
     {
         try{
-            $query = "INSERT INTO ".$this->tableName." (id, idChat, message, from, to, date) VALUES (:id, :idChat, :message, :from, :to, :date)";
+            $query = "INSERT INTO ".$this->tableName." (id, idChat, message, sender, receiver, textDate) VALUES (:id, :idChat, :message, :sender, :receiver, :textDate)";
 
             $parameters["id"]           =$text->getId();
             $parameters["idChat"]       =$text->getIdChat();
             $parameters["message"]      =$text->getMessage();
-            $parameters["from"]         =$text->getFrom();
-            $parameters["to"]           =$text->getTo();        
-            $parameters["date"]         =$text->getDate();        
+            $parameters["sender"]         =$text->getSender();
+            $parameters["receiver"]           =$text->getReceiver();        
+            $parameters["textDate"]         =$text->getTextDate();        
             
             $this->connection = Connection::GetInstance();
 
@@ -38,7 +38,7 @@ class TextDAO{
         try{
             
             $textList = array();
-            $query = "SELECT id, idChat, message, from, to, date FROM ". $this->tableName;
+            $query = "SELECT id, idChat, message, sender, receiver, textDate FROM ". $this->tableName;
 
             $this->connection = Connection::GetInstance();
 
@@ -51,9 +51,9 @@ class TextDAO{
                 $text->setId($row["id"]);
                 $text->setIdChat ($row["idChat"]);
                 $text->setMessage ($row["message"]);
-                $text->setTo ($row["from"]);
-                $text->setDate ($row["to"]);
-                $text->setDate ($row["date"]);
+                $text->setSender ($row["sender"]);
+                $text->setReceiver ($row["receiver"]);
+                $text->setTextDate ($row["textDate"]);
                 
                 
                 array_push($textList,$text);
@@ -87,10 +87,10 @@ class TextDAO{
             
             $textList = array();
 
-            $query = "SELECT id, idChat, message, from, to, date FROM ". $this->tableName . " WHERE (idChat = :idChat)";
+            $query = "SELECT id, idChat, message, sender, receiver, textDate FROM ". $this->tableName . " WHERE (idChat = :idChat)";
             
             $parameters["idChat"] = $idChat;
-            
+
             $this->connection = Connection::GetInstance();
             $results = $this->connection->Execute($query,$parameters);
             
@@ -101,16 +101,14 @@ class TextDAO{
                 $text->setId($row["id"]);
                 $text->setIdChat ($row["idChat"]);
                 $text->setMessage ($row["message"]);
-                $text->setTo ($row["from"]);
-                $text->setDate ($row["to"]);
-                $text->setDate ($row["date"]);
-                
+                $text->setSender ($row["sender"]);
+                $text->setReceiver ($row["receiver"]);
+                $text->setTextDate ($row["textDate"]);
                 
                 array_push($textList,$text);
-            
             }
+            
             return $textList;
-           
         }
         catch(Exception $ex){
             throw $ex;
@@ -124,7 +122,7 @@ class TextDAO{
             
             $textList = array();
 
-            $query = "SELECT id, idChat, message, from, to, date FROM ". $this->tableName . " WHERE (id = :id)";
+            $query = "SELECT id, idChat, message, sender, receiver, textDate FROM ". $this->tableName . " WHERE (id = :id)";
             
             $parameters["id"] = $id;
             
@@ -138,9 +136,9 @@ class TextDAO{
                 $text->setId($row["id"]);
                 $text->setIdChat ($row["idChat"]);
                 $text->setMessage ($row["message"]);
-                $text->setTo ($row["from"]);
-                $text->setDate ($row["to"]);
-                $text->setDate ($row["date"]);
+                $text->setSender ($row["sender"]);
+                $text->setReceiver ($row["receiver"]);
+                $text->setTextDate ($row["textDate"]);
                 
                 
                 array_push($textList,$text);

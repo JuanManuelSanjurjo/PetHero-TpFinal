@@ -1,6 +1,5 @@
 <?php  include('header.php'); ?>
 
-
 <h1>Pending reservations</h1>
 <table class="table">
           <thead>
@@ -41,6 +40,7 @@
                       }
                           ;?></td>
                 <td >          
+                  <?php if($reservation->getConfirmation() === NULL) {  ?>
                     <form action="<?php echo FRONT_ROOT."Reservation/setConfirmation"?>" method="post"> <!-- cambiar el CONTROLLER -->
                     <input type="submit" name="confirmation" value="confirm" class="large-button" style="padding: 10px 10px;"></input>
                     <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>">
@@ -49,6 +49,7 @@
                       <input type="submit" name="confirmation" value="reject" class="large-button" style="padding: 10px 10px;"></input>
                       <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>">
                     </form>
+                    <?php }  ?>
               </td>
               </tr>
             <?php  };  ?>

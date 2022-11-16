@@ -146,7 +146,7 @@ class ReservationController{
 
     foreach($reservationListToFiltrate as $row){
 
-        if($row->getDateStart()>=$today){
+        if($row->getDateStart()>=$today){ // && is not cancelled
             
             array_push($ReservationList,$row);
         }

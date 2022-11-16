@@ -14,7 +14,7 @@ use Models\Chat;
 class  ChatDao{
 
     private $connection;
-    private $tableName= "Chats";
+    private $tableName= "chats";
 
    
     public function addChat(Text $text)
@@ -137,39 +137,40 @@ class  ChatDao{
         }
     }  
 
-    public function getChatByIds($keeperId,$ownerId){
+    public function getChatByIds($keeper,$owner){
 
         try{
             
           
-            $query = "SELECT id, owner, keeper FROM ". $this->tableName . " WHERE (keeperId, ownerId  = :keeperId, :ownerId)";
+            $query = "SELECT id, owner, keeper FROM ". $this->tableName . " WHERE (keeper = :keeper AND owner = :owner)";
             
-            $parameters["keeperId"] = $keeperId;
-            $parameters["ownerId"] = $ownerId;
-            
+            $parameters["keeper"] = $keeper;
+            $parameters["owner"] = $owner;
+
             $this->connection = Connection::GetInstance();
             $results = $this->connection->Execute($query,$parameters);
-                       
+            
             $chat = new Chat();
-
-            $chat->setId($results["id"]);
-            $ownerDAO = new OwnerDAO();
-            $owner=$ownerDAO->getById($results["owner"]);
-            $chat->setOwner($owner);
-            // set keeper id
-            $keeperDAO= new KeeperDao();
-            $keeper = $keeperDAO->getById($results["keeper"]); ///Hacerla en el keeper
-            $chat->setKeeper($keeper);
-
             
-            if($chat){
-                $textDAO = new TextDAO();
-                $textList = $textDAO->getByIdChat($chat->getId());
-                $chat->setTextList($textList);
+            foreach($results as $row){
+                $chat->setId($row["id"]);
+    
+                $ownerDAO = new OwnerDAO();
+                $owner=$ownerDAO->getById($row["owner"]);
+                $chat->setOwner($owner);
+                // set keeper id
+                $keeperDAO= new KeeperDao();
+                $keeper = $keeperDAO->getById($row["keeper"]); ///Hacerla en el keeper
+                $chat->setKeeper($keeper);
+    
+                if($chat){
+                    $textDAO = new TextDAO();
+                    $textList = $textDAO->getByIdChat($chat->getId());
+                    $chat->setTextList($textList);
+                }
             }
-            
+
             return $chat;
-           
         }
         catch(Exception $ex){
             throw $ex;

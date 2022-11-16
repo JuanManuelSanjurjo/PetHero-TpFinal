@@ -12,35 +12,36 @@
 
 <form action="<?php echo FRONT_ROOT."Chat/sendMessage"?>" method="post" enctype="multipart/form-data">
 <div class="container">
-    <h1 style="margin: 5px;padding: 10px;">Chat with the keeper</h1>
-    <textarea name="message"  maxlength="1000" placeholder="Message to send the keeper" id="Observations" cols="30" rows="10"></textarea> 
+  <h1 style="margin: 5px;padding: 10px;">Chat with the keeper</h1>
+  <textarea name="message"  maxlength="1000" placeholder="Message to send the keeper" id="Observations" cols="30" rows="10"></textarea> 
     <br>
     <button type="submit"  value="submit"  class="medium-button">Send Message</button>
     <input  class="medium-button"  type="reset" value="Clear">
-</div>
-</form>
-<br>
-<table class="table" style="width: 100%;">
-        <?php  
-        $textList = ["marcos","hola c respect  comcer respectal respect  comcer algo al respect  comcer algo al respect","asd","asd","asd"];
-        foreach($textList as $text){     
-            ?>
+  </div>
+  <input type="hidden" id="idChat" name="idChat" value="<?php echo $chat->getId()?>">
+  <br>
+  <table class="table" style="width: 100%;">
+    <?php  
+        foreach($textList as $text){    
+          ?>
           <thead>
             <tr>
-              <th style="width: 90%; text-align:left;padding-left: 10px"><?php echo $text   //$text->getFrom()->getName()   ?></th>  
-              <th style="width: 10%; text-align:center;">  <?php echo "20-11-2022" //$text->getDate()    ?></th>
+              <th style="width: 90%; text-align:left;padding-left: 10px"><?php echo $text->getSender()   ?></th>  
+              <th style="width: 10%; text-align:center;">  <?php echo $text->getTextDate()    ?></th>
             </tr>
           </thead>
           <tbody>
-              <tr>
-                  <td style="width: 80%; text-align:left; padding: 10px" class="first-td">  <?php echo $text //$text->getMessage()    ?></td>
-             </tr>
+            <tr>
+              <td style="width: 80%; text-align:left; padding: 10px" class="first-td">  <?php echo $text->getMessage()    ?></td>
+            </tr>
+            
+            <input type="hidden" id="to" name="keeper" value="<?php echo $chat->getKeeper()->getId() ?>"> 
+            <input type="hidden" id="to" name="owner" value="<?php echo $chat->getOwner()->getId() ?>"> 
 
-            </tbody>
-        <?php  };  ?>
-</table>
-
-
+          </tbody>
+          <?php  };  ?>
+        </table>
+      </form>
 
 
 

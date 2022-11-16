@@ -70,7 +70,6 @@ class KeeperDAO{
                 $keeper->setCompensation ($row["compensation"]);
                 $keeper->setPetType ($row["petType"]);
                 
-
                 array_push($keepersList,$keeper);
             }
 
@@ -116,25 +115,12 @@ class KeeperDAO{
 
             foreach($reservationList as $reservation){
 
-                if($keeper->getId() == $reservation->getKeeper()->getId()){
-                   /*
-                    echo " en primer if ";
-                    echo $keeper->getName(). " ";
-                    echo $reservation->getPet()->getPetType() . " ";
-                    echo $petTosearch->getPetType() . " ";
-                    echo $dateStart . " ";
-                    echo $reservation->getDateStart() ;
-                    echo $dateEnd . " ";
-                    echo $reservation->getDateEnd() ;
-                    */
-                
+                if($keeper->getId() == $reservation->getKeeper()->getId() && $reservation->getConfirmation()!=0){  // if is not cancelled
+            
                     if(($dateStart >=  $reservation->getDateStart() && $dateStart <= $reservation->getDateEnd()) || ($dateEnd >=  $reservation->getDateStart() && $dateEnd <= $reservation->getDateEnd()) ||  ($dateStart <= $reservation->getDateStart() && $dateEnd >= $reservation->getDateEnd()) ){
-                        //echo " en segundo if   ";
                         if($reservation->getPet()->getPetType() != $petTosearch->getPetType()  ){
-                          //  echo " en tercer if";
                             unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);           
                         }else if($reservation->getPet()->getPetType() == "dog"  && $reservation->getPet()->getSize() != $petTosearch->getSize()){
-                            //echo " en cuarto if";
                             unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);           
                         }
 
