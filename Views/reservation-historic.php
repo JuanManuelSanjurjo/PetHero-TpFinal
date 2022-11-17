@@ -14,6 +14,7 @@
               <th style="width: 20%;">Start</th>
               <th style="width: 20%;">End</th>
               <th style="width: 15%;">Status</th>
+              <th style="width: 15%;">Chat</th>
             </tr>
           </thead>
           <tbody>
@@ -34,10 +35,16 @@
                       }else if($reservation->getConfirmation()=== 0){
                         echo  "rejected";   
                       }elseif (!$reservation->getConfirmation()){
-                        echo  "pending";
+                        echo  "unconfirmed";
                       }
                           ;?></td>
-              
+              <td>
+              <form action="<?php echo FRONT_ROOT."Chat/showChat"?>" method="post"> <!-- cambiar el CONTROLLER -->
+                    <input type="hidden" id="id" name="keeper" value="<?php echo $reservation->getKeeper()->getId()  ?>"></input>
+                    <input type="hidden" id="id" name="owner" value="<?php echo $reservation->getOwner()->getId()  ?>"> </input>
+                    <button type="submit"  class="large-button" style="padding: 10px 10px;">Chat</button>
+                    </form>
+              </td>
               </tr>
             <?php  };  ?>
 

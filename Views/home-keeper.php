@@ -26,12 +26,15 @@
 
 
   <div class="container" >
-    <p class="p-text">Show reservations</p>
+    <p class="p-text">Reservations</p>
       <form style="margin-right: 0px" action="<?php echo FRONT_ROOT."Reservation/showHistoricReservations"?>" method="post"> 
           <button type="submmit" class="large-button">History</button>  
       </form>
       <form action="<?php echo FRONT_ROOT."Reservation/showReservationToMake"?>" method="post"> 
           <button type="submmit" class="large-button">Pending</button>  
+      </form>
+      <form action="<?php echo FRONT_ROOT."Chat/showChatList"?>" method="post"> 
+          <button type="submmit" class="large-button">Chats</button>  
       </form>
   </div>
 

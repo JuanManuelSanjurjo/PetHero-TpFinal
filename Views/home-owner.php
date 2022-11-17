@@ -20,6 +20,13 @@
   </div>
 
   <div class="container">
+  <form action="<?php echo FRONT_ROOT."Chat/showChatList"?>" method="post"> 
+          <button type="submmit" class="large-button">Chats</button>  
+      </form>
+  </div>
+ 
+
+  <div class="container">
       <form action="<?php echo FRONT_ROOT."Owner/showAddPet"?>" method="post"> <!-- cambiar el CONTROLLER -->
           <button type="submmit" class="large-button">Add Pet</button>
       </form>

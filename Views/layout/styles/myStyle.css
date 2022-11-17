@@ -30,6 +30,7 @@ body{
 .message{
   max-width: 100%;
   background: linear-gradient( #8230b1, #742d9c); 
+  background: linear-gradient( #cbb9d4, #6b5875); 
   color: #edebee;
   font-size: 20px;
   padding-left: 1% ; 

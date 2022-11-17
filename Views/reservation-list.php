@@ -50,6 +50,11 @@
                       <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>">
                     </form>
                     <?php }  ?>
+                    <form action="<?php echo FRONT_ROOT."Chat/showChat"?>" method="post"> <!-- cambiar el CONTROLLER -->
+                    <input type="hidden" id="id" name="keeper" value="<?php echo $reservation->getKeeper()->getId()  ?>"></input>
+                    <input type="hidden" id="id" name="owner" value="<?php echo $reservation->getOwner()->getId()  ?>"> </input>
+                    <button type="submit"  class="large-button" style="padding: 10px 10px;">Chat</button>
+                    </form>
               </td>
               </tr>
             <?php  };  ?>

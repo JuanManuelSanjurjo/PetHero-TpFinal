@@ -178,6 +178,55 @@ class  ChatDao{
 
     }
 
+    public function getAllByUser($user){
+
+        try{
+            if($user instanceof Owner){
+                $owner = $user->getId();
+                $query = "SELECT id, owner, keeper FROM ". $this->tableName . " WHERE ( owner = :owner)";
+                $parameters["owner"] = $owner;
+            }else{
+                $keeper = $user->getId();
+                $query = "SELECT id, owner, keeper FROM ". $this->tableName . " WHERE ( keeper = :keeper)";
+                $parameters["keeper"] = $keeper;
+            }
+
+
+            $this->connection = Connection::GetInstance();
+            $results = $this->connection->Execute($query,$parameters);
+            
+            
+            $chatList = [];
+            
+            foreach($results as $row){
+                $chat = new Chat();
+                $chat->setId($row["id"]);
+    
+                $ownerDAO = new OwnerDAO();
+                $owner=$ownerDAO->getById($row["owner"]);
+                $chat->setOwner($owner);
+                // set keeper id
+                $keeperDAO= new KeeperDao();
+                $keeper = $keeperDAO->getById($row["keeper"]); ///Hacerla en el keeper
+                $chat->setKeeper($keeper);
+    
+                if($chat){
+                    $textDAO = new TextDAO();
+                    $textList = $textDAO->getByIdChat($chat->getId());
+                    $chat->setTextList($textList);
+                }
+
+                array_push($chatList,$chat);
+            }
+
+            return $chatList;
+        }
+        catch(Exception $ex){
+            throw $ex;
+        }
+
+    }
+
 
 
 }

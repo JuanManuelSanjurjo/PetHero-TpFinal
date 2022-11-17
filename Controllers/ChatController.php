@@ -18,7 +18,7 @@ class ChatController{
     }
 
     public function showChat($keeper, $owner){
-
+        $user = $_SESSION["loggedUser"];
         $chat = $this->ChatDao->getChatByIds($keeper,$owner);
         $textList = array_reverse($chat->getTextList());
 
@@ -32,6 +32,19 @@ class ChatController{
 
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."chat.php");
+    }
+
+
+    public function showChatList() {
+        $user = $_SESSION["loggedUser"];
+        $list = $this->ChatDao->getAllByUser($user);
+        require_once(VIEWS_PATH."validate-session.php");
+
+        if($user instanceof Owner){
+            require_once(VIEWS_PATH."owner-chat-list.php");
+        }else{
+            require_once(VIEWS_PATH."keeper-chat-list.php");
+        }
     }
 
     public function sendMessage($message, $idChat, $keeper, $owner){
