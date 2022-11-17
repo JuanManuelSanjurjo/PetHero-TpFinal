@@ -1,6 +1,7 @@
 <?php
 namespace Controllers;
 
+use Controllers\KeeperController as KeeperController;
 use DAO\UserDao as UserDao;
 use Models\User as User;
 use Models\Keeper as Keeper;
@@ -11,6 +12,7 @@ use DAO\OwnerDAO as OwnerDAO;
 use DAO\KeeperDAO as KeeperDao;
 use DAO\PetDao as PetDAO;
 use DAO\ReservationDAO as ReservationDAO;
+use DateTimeZone;
 use Models\Reservation;
 
 class ReservationController{
@@ -29,12 +31,7 @@ class ReservationController{
     }
 
     public function makeReservation($pet, $owner, $keeper, $dateStart, $dateEnd){ // PONER PARAMETROS
-        var_dump($pet);
-        var_dump($owner);
-        var_dump($keeper);
-       // var_dump($dateStart);
-       // var_dump($dateEnd);
-        
+
         $reservation = new Reservation();
         $newPet = new Pet();
         $newPet->setId($pet);
@@ -53,12 +50,20 @@ class ReservationController{
         $reservation->setCompensation($reservation->getCompensation());
 
         $this->ReservationDAO->makeReservation($reservation);
+
+        $ownerController = new OwnerController();
+        $ownerController->showHomeView("The reservation has been made and was sent to the keeper for confirmation");
         
     }
 
-    public function setConfirmation($reservationId, $confirmation){
-
-        $this->ReservationDAO->setConfirmation($reservationId, $confirmation);
+    public function setConfirmation($confirmation, $reservationId){
+        if($confirmation == "confirm"){
+            $this->ReservationDAO->setConfirmation($reservationId, true);
+        }else{
+            $this->ReservationDAO->setConfirmation($reservationId, false);
+        }
+        HomeController::showMessage("Status updated");
+        $this->showAllReservations();
         // hay que hacer esta en el DAO
     }
 
@@ -104,12 +109,74 @@ class ReservationController{
 
    public function showAllReservations(){
         $user = $_SESSION["loggedUser"];
-        $ReservationList = $this->ReservationDAO->getAllReservationsById($user->getId());             
+        $ReservationList = $this->ReservationDAO->getAllReservationsById($user->getId());
+                     
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."reservation-list.php");             
    }
 
+   public function showHistoricReservations(){
+        $user= $_SESSION["loggedUser"];
+        $reservationListToFiltrate = $this->ReservationDAO->getAllReservationsById($user->getId());
+        $ReservationList=array();
+        date_default_timezone_set("America/Buenos_aires");
+        $today=date("Y-m-d",time());    
 
+         
+        foreach($reservationListToFiltrate as $row){
+
+            if($row->getDateStart()<$today){
+                
+                array_push($ReservationList,$row);
+            }
+        }
+       
+    
+        require_once(VIEWS_PATH."validate-session.php");
+        require_once(VIEWS_PATH."reservation-historic.php"); 
+   }
+
+   public function showReservationToMake(){
+    $user= $_SESSION["loggedUser"];
+    $reservationListToFiltrate = $this->ReservationDAO->getAllReservationsById($user->getId());
+    $ReservationList=array();
+    date_default_timezone_set("America/Buenos_aires");
+    $today=date("Y-m-d",time());    
+
+
+    foreach($reservationListToFiltrate as $row){
+
+        if($row->getDateStart()>=$today){ // && is not cancelled
+            
+            array_push($ReservationList,$row);
+        }
+    }
+    
+
+    require_once(VIEWS_PATH."validate-session.php");
+    require_once(VIEWS_PATH."reservation-list.php"); 
+}
+
+public function getAllOwnerReservationsById(){
+    $user= $_SESSION["loggedUser"];
+    $reservationListToFiltrate = $this->ReservationDAO->getAllOwnerReservationsById($user->getId());
+    $ReservationList=array();
+    date_default_timezone_set("America/Buenos_aires");
+    $today=date("Y-m-d",time());    
+
+
+    foreach($reservationListToFiltrate as $row){
+
+        if($row->getDateStart()>=$today){
+            
+            array_push($ReservationList,$row);
+        }
+    }
+    
+
+    require_once(VIEWS_PATH."validate-session.php");
+    require_once(VIEWS_PATH."reservation-list-owner.php"); 
+}
 
 
 

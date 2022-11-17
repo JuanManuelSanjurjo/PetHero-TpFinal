@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-11-2022 a las 17:04:39
+-- Tiempo de generación: 11-11-2022 a las 01:21:11
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `petherobd`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `chats`
+--
+
+CREATE TABLE `chats` (
+  `id` int(11) NOT NULL,
+  `owner` int(11) NOT NULL,
+  `keeper` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
 
@@ -44,10 +56,9 @@ CREATE TABLE `keepers` (
 --
 
 INSERT INTO `keepers` (`id`, `mail`, `password`, `userName`, `name`, `surname`, `userType`, `compensation`, `petType`) VALUES
-(251, 'jose@hotmail.com', 'Jose1234', 'asd', 'jose', 'jose', 'keeper', NULL, NULL),
-(255, 'maria@maria.com', 'Juanma123', 'asd', 'maria', 'maria', 'keeper', NULL, 'big'),
-(256, 'melisa.labra@outlook.com', 'Melisa123', 'asd', 'Melisa', 'Labra', 'keeper', NULL, NULL),
-(261, 'mama@mama.com', 'Juanma123', 'asdasd', 'mama', 'masda', 'keeper', NULL, NULL);
+(265, 'melisa.labra@outlook.com', 'Melisa123', 'Melisa', 'Melisa', 'Labra', 'keeper', 3000, 'Small'),
+(266, 'jose@hotmail.com', 'Jose1234', 'Jose', 'Jose', 'Sanjurjo', 'keeper', 3500, 'Medium'),
+(267, 'sofia@hotmail.com', 'Sofia123', 'Sofia', 'Sofia', 'Guitierrez', 'keeper', 4000, 'Small');
 
 -- --------------------------------------------------------
 
@@ -70,8 +81,8 @@ CREATE TABLE `owners` (
 --
 
 INSERT INTO `owners` (`id`, `mail`, `password`, `userName`, `name`, `surname`, `userType`) VALUES
-(5, 'juanmanuelsanjurjo@hotmail.com', 'Juanma123', 'Juanma', 'Juan Manuel', 'Sanjurjo', 'owner'),
-(8, 'mariano@hotmail.com', 'Mariano123', 'Mariano', 'Mariano', 'Fernandez', 'owner');
+(9, 'juanmanuelsanjurjo@hotmail.com', 'Juanma123', 'Juanma', 'Juan Manuel', 'Sanjurujo', 'owner'),
+(10, 'mariano@hotmail.com', 'Mariano123', 'Mariano', 'Mariano', 'Fernandez', 'owner');
 
 -- --------------------------------------------------------
 
@@ -92,6 +103,19 @@ CREATE TABLE `pet` (
   `petType` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
+--
+-- Volcado de datos para la tabla `pet`
+--
+
+INSERT INTO `pet` (`id`, `idOwner`, `name`, `photo`, `breed`, `size`, `vaxPlanImg`, `video`, `observations`, `petType`) VALUES
+(38, 9, 'Cheems', '9_38.jpg', 'Profe gimnasia', 'Medium', '9_38_vaxplan.jpg', NULL, 'No muerde pero te manda a hacer burpé', 'dog'),
+(39, 9, 'Cheems Eastwood', '9_39.jpg', 'cheems', 'Small', '9_39_vaxplan.jpg', NULL, '', 'dog'),
+(40, 9, 'Ein', '9_40.jpg', 'Corgi', 'Small', '9_40_vaxplan.jpg', '9_40_video.mkv', '', 'dog'),
+(41, 9, 'Grumpy', '9_41.jpg', 'ni idea', 'Small', '9_41_vaxplan.jpg', NULL, '', 'cat'),
+(42, 10, '  Tincho', '10_42.jpg', '  Cheems Vigorexico', 'Big', '10_42_vaxplan.jpg', NULL, '', 'dog'),
+(43, 10, 'Carlitos', '10_43.jpg', 'Minecraft cheems', 'Small', '10_43_vaxplan.jpg', NULL, '', 'dog'),
+(44, 10, 'Ernestito', '10_44.gif', 'Shiba Inu', 'Medium', '10_44_vaxplan.jpg', NULL, 'Para probar img GIF', 'dog');
+
 -- --------------------------------------------------------
 
 --
@@ -109,6 +133,30 @@ CREATE TABLE `reservation` (
   `confirmation` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
+--
+-- Volcado de datos para la tabla `reservation`
+--
+
+INSERT INTO `reservation` (`reservationNumber`, `owner`, `keeper`, `compensation`, `dateStart`, `dateEnd`, `pet`, `confirmation`) VALUES
+(251, 10, 265, 0, '2022-12-01', '2022-12-01', 44, NULL),
+(252, 10, 266, 0, '2022-12-10', '2022-12-10', 44, NULL),
+(260, 10, 265, 0, '2022-12-01', '2022-12-01', 44, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `texts`
+--
+
+CREATE TABLE `texts` (
+  `id` int(50) NOT NULL,
+  `idChat` int(50) NOT NULL,
+  `message` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
+  `from` int(50) NOT NULL,
+  `to` int(50) NOT NULL,
+  `date` datetime(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -123,8 +171,39 @@ CREATE TABLE `timeinterval` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 --
+-- Volcado de datos para la tabla `timeinterval`
+--
+
+INSERT INTO `timeinterval` (`id`, `start`, `end`, `idKeeper`) VALUES
+(101, '2022-11-25', '2022-11-30', 265),
+(102, '2022-12-01', '2022-12-10', 265),
+(103, '2022-12-12', '2022-12-22', 265),
+(104, '2022-12-05', '2022-12-10', 265),
+(105, '2022-12-20', '2022-12-24', 265),
+(106, '2022-12-15', '2022-12-25', 265),
+(107, '2022-11-25', '2022-11-30', 266),
+(108, '2022-12-01', '2022-12-05', 266),
+(109, '2022-12-01', '2022-12-10', 266),
+(110, '2022-12-10', '2022-12-15', 266),
+(111, '2022-12-15', '2022-12-25', 266),
+(112, '2022-11-25', '2022-11-30', 267),
+(113, '2022-11-25', '2022-12-05', 267),
+(114, '2022-12-01', '2022-12-05', 267),
+(115, '2022-12-01', '2022-12-10', 267),
+(116, '2022-12-10', '2022-12-15', 267),
+(117, '2022-12-15', '2022-12-20', 267),
+(118, '2022-12-15', '2022-12-25', 267),
+(119, '2022-12-20', '2022-12-30', 267);
+
+--
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `chats`
+--
+ALTER TABLE `chats`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `keepers`
@@ -155,6 +234,12 @@ ALTER TABLE `reservation`
   ADD KEY `fk:idOwner` (`owner`);
 
 --
+-- Indices de la tabla `texts`
+--
+ALTER TABLE `texts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `timeinterval`
 --
 ALTER TABLE `timeinterval`
@@ -166,34 +251,46 @@ ALTER TABLE `timeinterval`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `chats`
+--
+ALTER TABLE `chats`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `keepers`
 --
 ALTER TABLE `keepers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=263;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
 
 --
 -- AUTO_INCREMENT de la tabla `owners`
 --
 ALTER TABLE `owners`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservationNumber` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `reservationNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
+
+--
+-- AUTO_INCREMENT de la tabla `texts`
+--
+ALTER TABLE `texts`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `timeinterval`
 --
 ALTER TABLE `timeinterval`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- Restricciones para tablas volcadas

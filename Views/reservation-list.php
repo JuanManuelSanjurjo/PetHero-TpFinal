@@ -1,18 +1,20 @@
 <?php  include('header.php'); ?>
 
-
-<h1>Reservations</h1>
+<h1>Pending reservations</h1>
 <table class="table">
           <thead>
             <tr>
-              <th style="width: 15%;">Reservation number</th>
+              <th style="width: 15%;">Number</th>
               <th style="width: 30%;">Owner</th>
-              <th style="width: 30%;">Total fee</th>
+              <th style="width: 15%;">Total fee</th>
               <th style="width: 30%;">Pet Name</th>
-              <th style="width: 30%;">Pet type</th>
-              <th style="width: 30%;">Pet size</th>
+              <th style="width: 20%;">Photo</th>
+              <th style="width: 15%;">Pet type</th>
+              <th style="width: 15%;">Pet size</th>
+              <th style="width: 20%;">Start</th>
+              <th style="width: 20%;">End</th>
               <th style="width: 15%;">Status</th>
-              <th style="width: 15%;">Confirm</th>
+              <th style="width: 20%;">Confirm</th>
             </tr>
           </thead>
           <tbody>
@@ -21,10 +23,13 @@
               <tr>
                 <td class="first-td">  <?php echo $reservation->getReservationNumber();     ?></td>
                 <td class="first-td">  <?php echo $reservation->getOwner()->getName();     ?></td>
-                <td>  <?php echo $reservation->getCompensation();  ?></td>
+                <td>  <?php echo "$ " . $reservation->getCompensation();  ?></td>
                 <td>  <?php echo  $reservation->getPet()->getName()    ;?></td>
+                <td><img class="pet-img" src="<?php echo FRONT_ROOT.VIEWS_PATH.'user-images/'. $reservation->getPet()->getPhoto(); ?>" alt="<?php echo $reservation->getPet()->getPhoto();  ?>" ></td>
                 <td>  <?php echo  $reservation->getPet()->getPetType()    ;?></td>
                 <td>  <?php echo  $reservation->getPet()->getSize()    ;?></td>
+                <td>  <?php echo  $reservation->getDateStart()    ;?></td>
+                <td>  <?php echo  $reservation->getDateEnd()    ;?></td>
                 <td>  <?php 
                       if($reservation->getConfirmation()== 1){
                         echo  "confirmed";    
@@ -34,11 +39,21 @@
                         echo  "pending";
                       }
                           ;?></td>
-                <td>          
-                    <form action="<?php echo FRONT_ROOT."Reservation/setConfirmation"?>"> <!-- cambiar el CONTROLLER -->
-                    <button type="submmit" value="confirm" class="large-button" style="padding: 10px 10px;">Confirm</button>
-                    <button type="submmit" value="reject" class="large-button" style="padding: 10px 10px;">Reject</button>
-                    <input type="hidden" id="id" name="reservationId" value="<?php $reservation->getReservationNumber  ?>">
+                <td >          
+                  <?php if($reservation->getConfirmation() === NULL) {  ?>
+                    <form action="<?php echo FRONT_ROOT."Reservation/setConfirmation"?>" method="post"> <!-- cambiar el CONTROLLER -->
+                    <input type="submit" name="confirmation" value="confirm" class="large-button" style="padding: 10px 10px;"></input>
+                    <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>">
+                   </form>
+                   <form action="<?php echo FRONT_ROOT."Reservation/setConfirmation"?>" method="post"> <!-- cambiar el CONTROLLER -->
+                      <input type="submit" name="confirmation" value="reject" class="large-button" style="padding: 10px 10px;"></input>
+                      <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>">
+                    </form>
+                    <?php }  ?>
+                    <form action="<?php echo FRONT_ROOT."Chat/showChat"?>" method="post"> <!-- cambiar el CONTROLLER -->
+                    <input type="hidden" id="id" name="keeper" value="<?php echo $reservation->getKeeper()->getId()  ?>"></input>
+                    <input type="hidden" id="id" name="owner" value="<?php echo $reservation->getOwner()->getId()  ?>"> </input>
+                    <button type="submit"  class="large-button" style="padding: 10px 10px;">Chat</button>
                     </form>
               </td>
               </tr>

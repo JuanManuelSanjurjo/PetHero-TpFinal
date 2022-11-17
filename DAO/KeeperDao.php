@@ -70,7 +70,6 @@ class KeeperDAO{
                 $keeper->setCompensation ($row["compensation"]);
                 $keeper->setPetType ($row["petType"]);
                 
-
                 array_push($keepersList,$keeper);
             }
 
@@ -89,14 +88,21 @@ class KeeperDAO{
     }
 
 
-    public function getFilteredList($pet, $dateStart, $dateEnd){  ///probar
+    public function getFilteredList($pet, $dateStart, $dateEnd){
+
         $filteredKeeperList = array();
-        
+        $PetDao = new PetDao();
+        $petTosearch = $PetDao->getById($pet);
+
         foreach($this->getAll() as $keeper){
             $availabilities = $keeper->getAvailabilityList();
             foreach($availabilities as $interval){
-                if($dateStart >= $interval->getStart() && $dateEnd <= $interval->getEnd()){
-                    array_push($filteredKeeperList,$keeper);
+                if($dateStart >= $interval->getStart() && $dateEnd <= $interval->getEnd() ){
+                    if($petTosearch->getPetType() == "cat"){
+                        array_push($filteredKeeperList,$keeper);
+                    }elseif($petTosearch->getPetType() == "dog" && $keeper->getPetType() == $petTosearch->getSize()){
+                        array_push($filteredKeeperList,$keeper);
+                    }
 
                 }
             }
@@ -104,21 +110,25 @@ class KeeperDAO{
 
         $reservationDAO = new ReservationDAO();
         $reservationList =  $reservationDAO->getAll();
-
+                
         foreach($filteredKeeperList as $keeper){
 
             foreach($reservationList as $reservation){
-                
-                if($keeper->getId() == $reservation->getKeeper()->getId()){
 
-                    if(($dateStart==$reservation->getDateStart() && $dateEnd == $reservation->getDateEnd()) )
-                        if($reservation->getPet()->getPetType()!= $pet->getPetType() || ($reservation->getPet()->getPetType()== "dog" && $reservation->getPet()->getSize()!= $pet->getSize())); 
-                            unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);  // CAMBIADO PQ DABA EROR; REVISAR                  
+                if($keeper->getId() == $reservation->getKeeper()->getId() && $reservation->getConfirmation()!=0){  // if is not cancelled
+            
+                    if(($dateStart >=  $reservation->getDateStart() && $dateStart <= $reservation->getDateEnd()) || ($dateEnd >=  $reservation->getDateStart() && $dateEnd <= $reservation->getDateEnd()) ||  ($dateStart <= $reservation->getDateStart() && $dateEnd >= $reservation->getDateEnd()) ){
+                        if($reservation->getPet()->getPetType() != $petTosearch->getPetType()  ){
+                            unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);           
+                        }else if($reservation->getPet()->getPetType() == "dog"  && $reservation->getPet()->getSize() != $petTosearch->getSize()){
+                            unset($filteredKeeperList[array_search($keeper, $filteredKeeperList)]);           
+                        }
 
+                    }
                 }
             }
         }   
-    
+        $filteredKeeperList = array_unique($filteredKeeperList, SORT_REGULAR);  // Entrega una sola instancia de cada Keeper
         return $filteredKeeperList;
     }
 

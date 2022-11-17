@@ -1,3 +1,12 @@
+@keyframes background-pan {
+  from {
+    background-position: 0% center;
+  }
+  to{
+    background-position: -200% center;
+  }
+}
+
 html{
   height: 100%;
 }
@@ -6,15 +15,22 @@ body{
   color: #46016e;
   margin: auto;
   min-height: 100%;
-  background-image: linear-gradient(to bottom ,#d9c2ee,#ad73cf );
+  /*background-image: linear-gradient(to bottom ,#d9c2ee,#ad73cf); */
+  background: linear-gradient(to right, #d38892, #d380c5, #ad73cf,#d380c5,#d38892); 
+  background-size: 200%;
+  animation: background-pan 20s linear infinite;
+
   background-attachment: fixed;
   display: flex;
   flex-direction: column;
 }
 
+
+
 .message{
   max-width: 100%;
   background: linear-gradient( #8230b1, #742d9c); 
+  background: linear-gradient( #cbb9d4, #6b5875); 
   color: #edebee;
   font-size: 20px;
   padding-left: 1% ; 
@@ -22,12 +38,19 @@ body{
 }
 
 .nav-bar{
-  background: linear-gradient( #fdc36b, #e08b3b); 
-  width: 100%;  
+  animation:  background-pan 10s linear infinite;
+  background: linear-gradient(to right, #fdc36b, #e08b3b, #e26e02,#e08b3b,#fdc36b); 
+  background-size: 200%;
+  width: 98.98%;  
   height: 5%; 
   padding: 10px; 
   display:inline-block;   
   box-shadow: 2px 2px 5px #46016e;
+}
+
+.nav-bar:hover{
+  box-shadow: 5px 5px 10px #46016e;
+  transition: ease-in-out 0.1s;
 }
 
 .footer{

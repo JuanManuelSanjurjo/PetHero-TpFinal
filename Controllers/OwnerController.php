@@ -58,14 +58,13 @@ class OwnerController{
     }
 
     public function removePet($petId){
-        $this->OwnerDAO->removePet($petId);
-
-/////  RENUEVA EL LOGGED USER
-        $ownerDao = new OwnerDAO();
-        $user = $_SESSION["loggedUser"];
-        $_SESSION["loggedUser"] = $ownerDao->getById($user->getId());
+        
+       $this->OwnerDAO->removePet($petId);
+       $ownerDao = new OwnerDAO();
+       $user = $_SESSION["loggedUser"];
+       $_SESSION["loggedUser"] = $ownerDao->getById($user->getId());
        
-        HomeController::showMessage("Pet removed succesfully");
+       HomeController::showMessage("Pet removed succesfully");
         $this->showMyPetList();
     }
 
@@ -77,31 +76,7 @@ class OwnerController{
 
     }
 
-    public function modifyPet($name, $breed, $size, $observations, $photo, $photoOG, $vaxPlanImg, $vaxPlanImgOG, $video, $videoOG, $petId){
-        require_once(VIEWS_PATH."validate-session.php");
-        $parameters = [$name, $breed, $size, $observations, $photo, $photoOG, $vaxPlanImg, $vaxPlanImgOG, $video, $videoOG, $petId];
-        var_dump($parameters);
-        $pet = new Pet();
-
-        // HACER GET BY ID Y PASARLE !!!TODOS!!! LOS DATOS
-        //FLITRAR CON IF EL CAMBIO DE FOTOS Y VIDEOS
-
-        $user = $_SESSION["loggedUser"];
-        //$this->OwnerDAO->modifyPet((int) $petId, $pet); 
-            
-/////  RENUEVA EL LOGGED USER
-        $ownerDao = new OwnerDAO();
-        $user = $_SESSION["loggedUser"];
-        $_SESSION["loggedUser"] = $ownerDao->getById($user->getId());
     
-    }
-    
-
-    
-    
-
-    
-
 
 }
 

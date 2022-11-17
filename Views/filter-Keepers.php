@@ -7,7 +7,8 @@
   <select class="dog-select" style="width: 15%"   name="pet" id="role" required>
     <?php foreach($petList as $pet){ ?>
       <option value="<?php echo $pet->getId()?>" > <?php echo $pet->getName()?> </option> <!-- echo $pet["id"] -->
-      <?php  }  ?>
+      <?php  }  
+      ?>
     </select>
     <p class="p-text">Select start of period</p>
     <input type="date" style="width: 15%;" min="<?php getdate() ?>" id="Dates" name="dateStart" placeholder="Select start of period" multiple="true" required />
@@ -17,7 +18,7 @@
   </form>
 </div>
 
-<h1>List of availaable keepers</h1>
+<h1>List of available keepers</h1>
 <table class="table">
           <thead>
             <tr>
@@ -32,7 +33,6 @@
           <tbody>
             <?php  foreach($keeperList as $keeper){     
               ?>
-              
               <tr>
                 <form action="<?php echo FRONT_ROOT."Reservation/makeReservation"?>"> <!-- cambiar el CONTROLLER -->
                 <td class="first-td">  <?php echo $keeper->getUsername();     ?></td>
@@ -47,14 +47,14 @@
                <td>  <?php echo "$ ". (int) $diff->format("%d%") * $keeper->getCompensation() ;    ?> </td>
                <td>  <?php echo $keeper->getPetType()." dogs or cats";   ?></td>             
                <td>
+                 <input type="hidden" name="pet" value="<?php echo $selectedPet; ?>">
+                 <input type="hidden" name="owner" value="<?php echo $owner->getId(); ?>">
+                 <input type="hidden" name="keeper" value="<?php echo $keeper->getId(); ?>">
+                 <input type="hidden" name="dateStart" value="<?php echo $dateStart ?>">
+                 <input type="hidden" name="dateEnd" value="<?php echo $dateEnd ?>">
                       
-                  <button type="submmit" value="confirm" class="large-button">Book keeper</button>
+                 <button type="submmit" value="confirm" class="large-button">Book keeper</button>
                 </td>
-                <input type="hidden" name="pet" value="<?php echo $pet->getId(); ?>">
-                  <input type="hidden" name="owner" value="<?php echo $owner->getId(); ?>">
-                  <input type="hidden" name="keeper" value="<?php echo $keeper->getId(); ?>">
-                  <input type="hidden" name="dateStart" value="<?php echo $dateStart ?>">
-                  <input type="hidden" name="dateEnd" value="<?php echo $dateStart ?>">
                 </form>
                 </tr>
                 <?php  };  ?>

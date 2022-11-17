@@ -1,9 +1,8 @@
 <?php  include('header.php'); ?>
 <?php  include('nav-bar.php'); ?>
 
-
   <div class="">
-      <h1>   WELCOME TO <br> PET HERO </h1>
+      <h1> WELCOME KEEPER </h1>
   </div>
 
   <!-- PARA USUARIO KEEPER   HAY QUE DIVIDIRLO -->  
@@ -19,10 +18,24 @@
   </div>
 
   <div class="container">
-    <p class="p-text">Show reservations</p>
-      <form action="<?php echo FRONT_ROOT."Reservation/showAllReservations"?>" method="post"> 
+    <p class="p-text">Show availabilities</p>
+      <form action="<?php echo FRONT_ROOT."Keeper/showAvailabilities"?>" method="post"> 
       <button type="submmit" class="large-button">Show</button>  
     </form>
+  </div>
+
+
+  <div class="container" >
+    <p class="p-text">Reservations</p>
+      <form style="margin-right: 0px" action="<?php echo FRONT_ROOT."Reservation/showHistoricReservations"?>" method="post"> 
+          <button type="submmit" class="large-button">History</button>  
+      </form>
+      <form action="<?php echo FRONT_ROOT."Reservation/showReservationToMake"?>" method="post"> 
+          <button type="submmit" class="large-button">Pending</button>  
+      </form>
+      <form action="<?php echo FRONT_ROOT."Chat/showChatList"?>" method="post"> 
+          <button type="submmit" class="large-button">Chats</button>  
+      </form>
   </div>
 
 

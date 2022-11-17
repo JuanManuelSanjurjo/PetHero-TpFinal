@@ -3,9 +3,11 @@
 namespace Controllers;
 
 use DAO\KeeperDAO;
+use DAO\AvailabilityDAO as AvailabilityDAO;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
+use MessageFormatter;
 use Models\Keeper;
 use Models\Owner as Owner;
 use Models\TimeInterval as TimeInterval;
@@ -31,18 +33,15 @@ class KeeperController{
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."keeper-list.php");
     }
-/// RPOBABLEMENTE ESTO DEBA ESTAR OWNER Y DESDE EL DAO LLAMAR AL DAO DE KEEPERS
+    
     public function showFilteredKeepers($pet,$dateStart,$dateEnd){        // filtro tambien por RESERVATION
         $date1=date_create($dateStart);
         $date2=date_create($dateEnd);
         $today = date_create();
         $diff = $today;
-
-        var_dump($pet);
-        var_dump("   fecha1   ".$date1->format("Y-m-d"));
-        var_dump("   fecha2   ".$date2->format("Y-m-d"));
-        var_dump("   today   ".$today->format("Y-m-d"));
         
+        $selectedPet = $pet; // ACA LLEGA BIEN
+
         $keeperList = $this->KeeperDao->getAll(); // hacer filtro en DAO O CONTROLLER
         $owner = $_SESSION["loggedUser"];
         $petList = $owner->getPetList();
@@ -56,15 +55,11 @@ class KeeperController{
             $this->showKeeperList();
         }else{
             $diff=date_diff($date1,$date2);
-            // HAY QUE PISAR LA KEEPER LIST CON LO FILTRADO EN getFilteredList
             $keeperList = $this->KeeperDao->getFilteredList($pet,$dateStart,$dateEnd); // hacer filtro en DAO O CONTROLLER
-            $keeperList = $this->KeeperDao->getAll(); // hacer filtro en DAO O CONTROLLER
-            
              require_once(VIEWS_PATH."validate-session.php");
              require_once(VIEWS_PATH."filter-Keepers.php");
         }
-        
-        
+
     }
 
 
@@ -233,6 +228,27 @@ class KeeperController{
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."home-keeper.php");
     }
+
+    public function showAvailabilities(){
+        $user = $_SESSION["loggedUser"];
+        $availabilityList = $user->getAvailabilityList();
+        require_once(VIEWS_PATH."validate-session.php");
+        require_once(VIEWS_PATH."availability-list.php");
+    }
+
+    public function removeAvailability($availabilityId){
+        $AvailabilityDAO = new AvailabilityDAO();
+        if($AvailabilityDAO->remove($availabilityId)){
+            $message = "Avalability cancelled";
+        }else{
+            $message = "An error accurred removing this availability";
+        }
+        $keeper = $_SESSION["loggedUser"];
+        $_SESSION["loggedUser"] = $this->KeeperDao->getById($keeper->getId());
+
+        $this->showHomeView($message);
+
+    }   
 
 
     public function register($email, $name, $surname, $pass, $userName, $userType){
