@@ -7,15 +7,23 @@ use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use DAO\OwnerDAO as OwnerDAO;
 use DAO\KeeperDAO as KeeperDao;
+use PHPMailer\MailService as MailService;
 
 class HomeController{
     private $OwnerDAO;  
     private $KeeperDao;  
 
-    function __construct(){
+    function __construct(){ 
         $this->OwnerDAO = new OwnerDAO();
         $this->KeeperDao = new KeeperDao();
         
+    }
+
+    public function sendMail(){
+
+        $mailer = new MailService();
+
+        $mailer->sendMail("juanmanuelsanjurjo@hotmail.com");
     }
 
     public function register($email, $name, $surname, $pass, $repeatPass, $userName, $userType){

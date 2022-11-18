@@ -1,7 +1,7 @@
 <?php  include('header.php'); ?>
 
 
-<h1>Pending reservations</h1>
+<h1>Chats</h1>
 <table class="table">
           <thead>
             <tr>
