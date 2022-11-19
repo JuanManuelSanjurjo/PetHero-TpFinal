@@ -4,6 +4,19 @@ use Models\Owner;
 
  require 'header.php'; ?>
 
+<!--
+  <div class="nav-bar" >
+  <?php   if($user instanceof Owner) {?>
+      <a style="display: inline-block;" href="<?php echo FRONT_ROOT.'Owner/showHomeView'?>"><button class="medium-button" style="width: 10%;" >go back</button></a>
+      <?php }else{?>
+      <a style="display: inline-block;" href="<?php echo FRONT_ROOT.'Keeper/showHomeView'?>"><button class="medium-button" style="width: 10%;"  >go back</button></a>
+  <?php }?>  
+  <form class="" style="display: inline-block;" action="<?php echo FRONT_ROOT."Home/logout"?>" method="post" > 
+
+  <button type="submmit" class="cancelbtn" style="width: 10%;align-items: center">Log Out</button>
+</form>
+</div> 
+      -->
 
 <div class="container" style="padding: 0;">
   <form class="nav-bar" action="<?php echo FRONT_ROOT."Home/logout"?>" method="post" > 
@@ -44,10 +57,8 @@ use Models\Owner;
             <tr>
               <td style="width: 80%; text-align:left; padding: 10px" class="first-td">  <?php echo $text->getMessage()    ?></td>
             </tr>
-
             <input type="hidden" id="to" name="keeper" value="<?php echo $chat->getKeeper()->getId() ?>"> 
             <input type="hidden" id="to" name="owner" value="<?php echo $chat->getOwner()->getId() ?>"> 
-
           </tbody>
           <?php  };  ?>
         </table>

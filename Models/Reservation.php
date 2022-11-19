@@ -16,7 +16,6 @@ class Reservation{
     private $pet;    
     private $confirmation;  //se setea null y se cambia a true or false
 
-
     /**
      * Get the value of owner
      */ 
