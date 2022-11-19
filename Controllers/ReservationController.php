@@ -14,6 +14,7 @@ use DAO\PetDao as PetDAO;
 use DAO\ReservationDAO as ReservationDAO;
 use DateTimeZone;
 use Models\Reservation;
+use PHPMailer\MailService as MailService;
 
 class ReservationController{
 
@@ -59,13 +60,24 @@ class ReservationController{
     public function setConfirmation($confirmation, $reservationId){
         if($confirmation == "confirm"){
             $this->ReservationDAO->setConfirmation($reservationId, true);
+            $this->sendCupon($reservationId);
         }else{
-            $this->ReservationDAO->setConfirmation($reservationId, false);
+            $this->ReservationDAO->setConfirmation($reservationId, false);            
         }
         HomeController::showMessage("Status updated");
         $this->showAllReservations();
-        // hay que hacer esta en el DAO
     }
+
+    public function sendCupon($reservationId){
+
+        $reservation=$this->ReservationDAO->getReservationById($reservationId);
+
+        $mailer = new MailService();
+
+        $mailer->sendCupon($reservation);
+
+    }
+
 
 
     public function showKeeperList(){
@@ -78,6 +90,7 @@ class ReservationController{
         require_once(VIEWS_PATH."keeper-list.php");
     }
 
+/*
     public function showKeeperListToFiltrate ($Pet,$dateStart,$dateEnd)
     {
        
@@ -105,7 +118,7 @@ class ReservationController{
 
 
     }
-
+*/
 
    public function showAllReservations(){
         $user = $_SESSION["loggedUser"];

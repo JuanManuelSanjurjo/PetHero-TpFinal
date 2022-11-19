@@ -29,11 +29,6 @@
                     <button type="submmit" class="large-button">Register</button>
                </form>
           </div>
-          <div class="container">
-               <form action="<?php echo FRONT_ROOT."Home/sendMail"?>">
-                    <button type="submmit" class="large-button">send random mail</button>
-               </form>
-          </div>
 
 
 <?php require 'footer.php'; ?>

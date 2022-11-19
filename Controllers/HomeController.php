@@ -19,13 +19,6 @@ class HomeController{
         
     }
 
-    public function sendMail(){
-
-        $mailer = new MailService();
-
-        $mailer->sendMail("juanmanuelsanjurjo@hotmail.com");
-    }
-
     public function register($email, $name, $surname, $pass, $repeatPass, $userName, $userType){
 
         $user = $this->userExist($email);

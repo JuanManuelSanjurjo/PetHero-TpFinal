@@ -5,6 +5,7 @@ namespace PHPMailer;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use Models\Reservation as Reservation;
 
 require "PHPMailer\src\PHPMailer.php";
 require "PHPMailer\src\SMTP.php";
@@ -13,7 +14,8 @@ require "PHPMailer\src\Exception.php";
 
 class MailService{
 
-    public function sendMail($address){
+    public function sendCupon($reservation){
+
 
         //`true` enables exceptions
         $mail = new PHPMailer(true);
@@ -31,23 +33,33 @@ class MailService{
                                           
             //Recipients
             $mail->setFrom('petheroapp.ar@gmail.com', 'Pethero App');
-            $mail->addAddress($address, 'Juanma');      //Name is optional
+            $mail->addAddress($reservation->getOwner()->getMail(),$reservation->getOwner()->getUserName());      //Name is optional
             
             //$mail->addAddress('ellen@example.com');             
             //$mail->addReplyTo('info@example.com', 'Information');
             //$mail->addCC('cc@example.com');
             //$mail->addBCC('bcc@example.com');
         
-            //Attachments
-           // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-           // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
-
             //Content
             $mail->isHTML(true);               //Set email format to HTML
             $mail->Subject = 'Here is the subject';
-
+            
             ob_start();   // Out Buffer.
-            $name = "juan manuel sanjurjo";
+            $name = $reservation->getOwner()->getName();
+            $surName = $reservation->getOwner()->getSurname();
+            $pet = $reservation->getPet()->getName();
+            $total = $reservation->getCompensation();
+            $dateStart= $reservation->getDateStart();
+            $dateEnd=$reservation->getDateEnd();
+            $reservationNumber=$reservation->getReservationNumber();
+            $keeper= $reservation->getKeeper()->getUserName();
+            //Attachments
+            $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+            $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+           
+            // si estuvieramos generando codigod e barra y qr lo generariamos antes de la vista
+
+
             require_once(VIEWS_PATH."paymentCupon.php"); 
             $mail->Body    = ob_get_contents();      // 'This is the HTML message body <b>in bold!</b>';
             //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
