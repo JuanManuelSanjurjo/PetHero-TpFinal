@@ -1,11 +1,11 @@
 <?php
 namespace DAO;
 
-use DAO\UserDao as DAOUserDao;
+//use DAO\UserDao as DAOUserDao;
 use Models\Keeper as Keeper;
-use Models\Owner as Owner;
-use Models\User as User;
-use Models\Reservation as Reservation;
+//use Models\Owner as Owner;
+//use Models\User as User;
+//use Models\Reservation as Reservation;
 use Models\TimeInterval as TimeInterval;
 use DAO\Connection as Connection;
 use DAO\AvailabilityDAO as AvailabilityDAO;

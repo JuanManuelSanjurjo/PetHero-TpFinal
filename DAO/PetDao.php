@@ -4,9 +4,9 @@ namespace DAO;
 use Controllers\HomeController;
 use Exception;
 use Models\Pet as Pet;
-use Models\Owner as Owner;
+//use Models\Owner as Owner;
 use DAO\OwnerDAO as OwnerDAO;
-use DAOJSON\KeeperDAO as KeeperDAO;
+//use DAOJSON\KeeperDAO as KeeperDAO;
 
 class PetDao{
 
@@ -146,43 +146,6 @@ class PetDao{
         }
     }
 
-    /*
-    public function getByOwnerId($idOwner)
-    {
-        try{
-            $pet = null;
-            
-            $query = "SELECT id, idOwner, name, photo, breed, size, vaxPlanImg, video, observations, petType FROM ".$this->tableName." WHERE (idOwner = :idOwner)";
-
-            $parameters["idOwner"] = $idOwner;
-            
-            $this->connection = Connection::GetInstance();
-            $results = $this->connection->Execute($query,$parameters);
-                        
-            foreach($results as $row){
-
-
-                $pet = new Pet();
-                $pet->setId($row["id"]);
-                $pet->setIdOwner($row["idOwner"]);
-                $pet->setName($row["name"]);
-                $pet->setPhoto($row["photo"]);
-                $pet->setBreed($row["breed"]);
-                $pet->setSize($row["size"]);
-                $pet->setVaxPlanImg($row["vaxPlanImg"]);
-                $pet->setVideo($row["video"]);
-                $pet->setObservations($row["observations"]);
-
-            }
-            return $pet;
-
-        }
-        catch(Exception $ex){
-            throw $ex;
-        }
-    } 
-
-    */
 
     public function getPetListById($idOwner)
     {

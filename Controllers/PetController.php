@@ -5,7 +5,7 @@ use Controllers\OwnerController as OwnerController;
 use DAO\PetDao as PetDao;
 use Models\Pet as Pet;
 use DAO\OwnerDao as OwnerDao;
-use Models\Owner as Owner;
+//use Models\Owner as Owner;
 
 class PetController{
     private $PetDao;  
@@ -43,73 +43,41 @@ class PetController{
                 if($file['size'] < $size ){   //20mb
                     move_uploaded_file($file['tmp_name'],$fileDestination);
                     HomeController::showMessage("your file:  ". $file['name'] . ", was uploaded succesfully");
-                   // echo '<script>alert("your file:  ' . $file['name'] . ', was uploaded succesfully")</script>';
+                   
                 } else{
                     HomeController::showMessage("The file is too big");
-                    //echo "The file is too big";
+                   
                     $this->cancelPetRegister($pet->getId());
-                    //unlink($fileDestination);
+                  
                 }
             }else{
                 HomeController::showMessage("There was an error uploading your file");
-                //echo "There was an error uploading your file";
+               
                 $this->cancelPetRegister($pet->getId());
-                //unlink($fileDestination);
+                
             }
         }else{
             HomeController::showMessage("There was an error uploading files, try again");
-            //echo "There was an error uploading files, try again";
+           
             $this->cancelPetRegister($pet->getId());
-            //unlink($fileDestination);
+            
         }
 
         return $fileName;
 
     }
-// NO ESTA SIENDO USADA
-/*
-    private function checkVideoFiles($file,$user,$pet){
-        $fileExtExplode = explode('.',$file['name']);
-        $fileExt = strtolower(end( $fileExtExplode));
-        $fileName = $user->getId() . '_' . $pet->getId() .'_video.' . $fileExt;
-        $fileDestination = ROOT.VIEWS_PATH."user-videos/" . $fileName ;
-        
-        $allowed = array('mkv','mov','mp4','264','mpg4','avi');
-        if(in_array($fileExt,$allowed)){
-            if($file['error'] === 0){
-                if($file['size'] < 2000000000 ){   //20mb
-                    move_uploaded_file($file['tmp_name'],$fileDestination);
-                    echo '<script>alert("your file,' . $file['name'] . 'was registered succesfully")</script>';
-                } else{
-                    echo '<script>alert("The video file is too big")</script>';
-                    $this->cancelPetRegister($pet->getId());
-                }
-            }else{
-                echo '<script>alert("There was an error uploading your file")</script>';
-                $this->cancelPetRegister($pet->getId());
-            }
-        }else{
-            echo '<script>alert("Extension not suported: upload as mkv, mov, mp4 or avi")</script>';
-            $this->cancelPetRegister($pet->getId());
-        }
-        return $fileName;
-    }
-*/
+
     public function uploadFile($photo, $vaxPlanImg, $video){
         require_once(VIEWS_PATH."validate-session.php");
         $user = $_SESSION["loggedUser"];
 
         $petList = $user->getPetList();
         $pet =  array_pop($petList);
-       // $pet = $this->PetDao->getByOwnerId($user->getId());
-       // $size = (int) $_SERVER['CONTENT_LENGTH'];   
         if(isset($_POST)  )  {
 
-                //$photo = $_FILES['photo'];
                 
                 $photoName = $this->checkImgFiles($photo,$user,$pet,'profile');
                           
-               // $vaxPlanImg = $_FILES['vaxPlanImg'];
     
                 $vaxImgName = $this->checkImgFiles($vaxPlanImg,$user,$pet,'vaxImg');
     
@@ -117,7 +85,6 @@ class PetController{
                 $pet->setVaxPlanImg($vaxImgName);
                 
                 if($_FILES['video']['size'] != 0){
-                    //$video = $_FILES['video'];
     
                     $videoFileName =  $this->checkImgFiles($video,$user,$pet,'video');
                     $pet->setVideo($videoFileName); 

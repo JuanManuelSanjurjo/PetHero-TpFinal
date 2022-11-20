@@ -1,10 +1,10 @@
 <?php
 namespace DAOJSON;
 
-use DAO\UserDao as DAOUserDao;
+//use DAO\UserDao as DAOUserDao;
 use Models\Keeper as Keeper;
-use Models\Owner as Owner;
-use Models\User as User;
+//use Models\Owner as Owner;
+//use Models\User as User;
 use Models\Reservation as Reservation;
 use Models\TimeInterval;
 

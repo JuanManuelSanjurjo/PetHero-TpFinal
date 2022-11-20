@@ -1,19 +1,19 @@
 <?php
 namespace Controllers;
 
-use Controllers\KeeperController as KeeperController;
-use DAO\UserDao as UserDao;
-use Models\User as User;
+///use Controllers\KeeperController as KeeperController;
+//use DAO\UserDao as UserDao;
+//use Models\User as User;
 use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use Models\Pet as Pet;
-use Models\TimeInterval as TimeInterval;
+//use Models\TimeInterval as TimeInterval;
 use DAO\OwnerDAO as OwnerDAO;
 use DAO\KeeperDAO as KeeperDao;
 use DAO\PaymentDAO as PaymentDAO;
 use DAO\PetDao as PetDAO;
 use DAO\ReservationDAO as ReservationDAO;
-use DateTimeZone;
+//use DateTimeZone;
 use Models\Reservation;
 use PHPMailer\MailService as MailService;
 
@@ -89,30 +89,6 @@ class ReservationController{
         require_once(VIEWS_PATH."filter-Keepers.php");
         require_once(VIEWS_PATH."keeper-list.php");
     }
-/*
-    public function showKeeperListToFiltrate ($Pet,$dateStart,$dateEnd)
-    {
-
-        $KeepersAvailable = array();
-        $keeperList=$this->KeeperDao->getAll();
-        $ReservationList= $this->ReservationDAO->getAll();
-
-        foreach($keeperList as $keeper){
-            $availabilityList=$this->keeper->getAvailabilityList();
-            foreach($availabilityList as $availability){
-                if($dateStart>=$availability->date->start && $dateEnd<=$availability->date->end)
-                {
-                    array_push($KeepersAvailable,$keeper);
-                }
-            }
-
-        }
-
-        foreach($ReservationList as $reservation)
-        {
-        }
-    }
-*/
 
    public function showAllReservations(){
         $user = $_SESSION["loggedUser"];

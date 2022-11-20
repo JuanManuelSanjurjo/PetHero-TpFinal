@@ -1,10 +1,10 @@
 <?php
 namespace DAO;
 
-use Models\Keeper as Keeper;
-use Models\Owner as Owner;
-use Models\User as User;
-use Models\Pet as Pet;
+//use Models\Keeper as Keeper;
+//use Models\Owner as Owner;
+//use Models\User as User;
+//use Models\Pet as Pet;
 use Models\Reservation as Reservation;
 use DAO\Connection as Connection;
 use DAO\OwnerDAO as OwnerDAO;
@@ -86,62 +86,6 @@ class ReservationDAO{
 
     }
 
-
-/*  FUNCION VIEJA GET ALL
-    public function getAll()
-    {
-        try{
-            
-            $reservationList = array();
-            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ".$this->tableName;
-
-            $this->connection = Connection::GetInstance();
-
-            $result = $this->connection->Execute($query);
-
-            foreach($result as $row)
-            {
-                $reservation = new Reservation();
-                $reservation->setReservationNumber($row["reservationNumber"]);
-                $owner =new Owner();
-                $owner->setId($row["owner"]);
-                $reservation->setOwner($owner);
-                $keeper =new Keeper();
-                $keeper->setId($row["keeper"]);
-                $reservation->setKeeper($keeper);
-                $reservation->setCompensation($row["compensation"]);
-                $reservation->setDateStart($row["dateStart"]);
-                $reservation->setDateEnd($row["dateEnd"]);
-                $pet = new Pet();
-                $pet->setId($row["pet"]);
-                $reservation->setPet($pet);
-                $reservation->setConfirmation($row["confirmation"]);
-                
-                array_push($reservationList,$reservation);
-            }
-
-            foreach($reservationList as $row){
-                $ownerDAO = new OwnerDAO();
-                $owner=$ownerDAO->getById($row->getOwner()->getId());
-                $row->setOwner($owner);
-
-                $keeperDAO= new keeperDao();
-                $keeper = $keeperDAO->getById($row->getKeeper()->getId()); ///Hacerla en el keeper
-                $row->setKeeper($keeper);
-
-                $petDao = new PetDao();
-                $pet = $petDao->getById($row->getPet()->getId());
-                $row->setPet($pet);
-                
-            }
-            
-            return $reservationList;
-        }catch(Exception $ex){
-            throw $ex;
-        }
-
-    }
-*/
 
     public function Remove($id)
     {

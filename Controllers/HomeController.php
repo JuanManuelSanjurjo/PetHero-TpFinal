@@ -1,8 +1,6 @@
 <?php
 namespace Controllers;
 
-use DAO\UserDao as UserDao;
-use Models\User as User;
 use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use DAO\OwnerDAO as OwnerDAO;
@@ -82,9 +80,6 @@ class HomeController{
     }        
 
     public function userExist($email){
-       // $keeper = $this->KeeperDao->getByEmail($email);
-       // $owner = $this->OwnerDAO->getByEmail($email);
-
         $keeperController = new KeeperController();
         $ownerController = new OwnerController();
 

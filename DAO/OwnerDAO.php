@@ -2,7 +2,7 @@
 namespace DAO;
 
 use Models\Owner as Owner;
-use Models\Pet as Pet;
+//use Models\Pet as Pet;
 use DAO\Connection as Connection;
 use Exception;
 

@@ -4,7 +4,7 @@ namespace Controllers;
 
 use Models\Owner;
 use DAO\OwnerDAO as OwnerDAO;
-use Models\Pet as Pet;
+//use Models\Pet as Pet;
 
 class OwnerController{
     private $OwnerDAO;

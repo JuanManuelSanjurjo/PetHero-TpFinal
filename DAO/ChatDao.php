@@ -1,13 +1,13 @@
 <?php
 namespace DAO;
 
-use Controllers\HomeController;
+//use Controllers\HomeController;
 use Exception;
 use Models\Text as Text;
 use DAO\TextDAO as TextDAO;
 use Models\Owner as Owner;
 use DAO\OwnerDao as OwnerDao;
-use Models\Keeper as Keeper;
+//use Models\Keeper as Keeper;
 use DAO\KeeperDAO as KeeperDAO;
 use Models\Chat;
 
