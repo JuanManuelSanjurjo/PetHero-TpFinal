@@ -10,6 +10,7 @@ use Models\Pet as Pet;
 use Models\TimeInterval as TimeInterval;
 use DAO\OwnerDAO as OwnerDAO;
 use DAO\KeeperDAO as KeeperDao;
+use DAO\PaymentDAO as PaymentDAO;
 use DAO\PetDao as PetDAO;
 use DAO\ReservationDAO as ReservationDAO;
 use DateTimeZone;
@@ -28,7 +29,8 @@ class ReservationController{
         $this->OwnerDao = new OwnerDAO();
         $this->KeeperDao = new KeeperDao();
         $this->ReservationDAO = new ReservationDAO();
-        $this->PetDAO = new PetDao();             
+        $this->PetDAO = new PetDao();   
+        $this->PaymentDAO = new PaymentDAO();          
     }
 
     public function makeReservation($pet, $owner, $keeper, $dateStart, $dateEnd){ // PONER PARAMETROS
@@ -70,7 +72,6 @@ class ReservationController{
     }
 
     public function sendCupon($reservationId){
-
         $reservation = $this->ReservationDAO->getReservationById($reservationId);
 
         $mailer = new MailService();
@@ -183,6 +184,8 @@ public function getAllOwnerReservationsById(){
     require_once(VIEWS_PATH."validate-session.php");
     require_once(VIEWS_PATH."reservation-list-owner.php"); 
 }
+
+
 
 
 

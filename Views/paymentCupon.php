@@ -4,33 +4,42 @@
 
     <div class="coupon" style="text-align: center;">
         <div class="container" style="background:  #5f04aa;">
+        <br>
           <h1 style="color:aliceblue">Pet Hero</h1>
         </div>
-        <div class="container" style="background: linear-gradient( #ff9900, #e97100); font-weight: bold">
-          <p><?php echo $name . " " . $surname ?></p>
-          <p><?php echo $pet ?></p>
-          <p><?php echo $keeper ?></p>
+        <div class="container" style="background:  #ff9900; font-weight: bold">
+        <br>
+          <p><?php echo "Client: ".$name . " " . $surname ?></p>
+          <p><?php echo "Pet: ".$pet ?></p>
+          <p><?php echo "Selected Keeper: ".$keeper ?></p>
           <p><?php echo "From " .$dateStart . " to " .$dateEnd ?></p>
-          <p><?php echo "Total fee: $ " . $total ?></p>
-          <p><?php echo "Reservation Number: ". $reservationNumber ?></p>
+          <p><?php echo "Total fee: $" . $total ?></p>
+          <p><?php echo "Payment requiered 50%: $" . ($total / 2); ?></p>
+          <p style="color:firebrick"><?php echo "The remanent must be payed on arrival"; ?></p>
+          <p><?php echo "Reservation Number: #". $reservationNumber ?></p>
           <div class="imgcontainer">
-               <img src=" C:\xampp\htdocs\PHP\TPFinal\Views\img\cheems.png" alt="Avatar" >
+            <img src="cid:qr" alt="qr" >
           </div>
+          <p><?php echo "QR code"?></p>
           <div class="imgcontainer">
-          <img src=" TPFinal\Views\img\barcode_cupon.jpeg" alt="Avatar" >
+               <img src="cid:barcode" alt="barcode" >
           </div>
-          <div class="imgcontainer">
-          <img src=" TPFinal\Views\img\barcode_cupon.jpeg" alt="Avatar" >
-          </div>
-          
+          <p><?php echo "Pago Facil / Rapipago"?></p>
+          <p style="color:firebrick"><?php echo "Dont forget to upload your payments in the corresponding reservation"?></p>
+          <br>
         </div>
         <div class="container"  style="background:  #5f04aa;">
-          <p class="expire"  style="color:aliceblue"> <?php echo "Expires:  " . date('y:m:d', strtotime('+3 days')) ?></p>
+          <p class="expire"  style="color:aliceblue;font-weight: bold"> <?php echo "Reservation expires: " . date('y /m /d', strtotime('+3 days')) ?></p>
+          <br>
         </div>
       </div>
 
 </div>
-    
+
+  <div class="container">
+      <br>
+      <a  href="<?php echo FRONT_ROOT.'Owner/showHomeView'?>"><button class="medium-button">go back</button></a>
+    </div>
 
 
 <?php    include('footer.php'); ?>

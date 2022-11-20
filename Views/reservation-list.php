@@ -4,16 +4,17 @@
 <table class="table">
           <thead>
             <tr>
-              <th style="width: 15%;">Number</th>
-              <th style="width: 30%;">Owner</th>
+              <th style="width: 10%;">Number</th>
+              <th style="width: 25%;">Owner</th>
               <th style="width: 15%;">Total fee</th>
-              <th style="width: 30%;">Pet Name</th>
+              <th style="width: 20%;">Pet Name</th>
               <th style="width: 20%;">Photo</th>
               <th style="width: 15%;">Pet type</th>
               <th style="width: 15%;">Pet size</th>
               <th style="width: 20%;">Start</th>
               <th style="width: 20%;">End</th>
               <th style="width: 15%;">Status</th>
+              <th style="width: 15%;">Payment</th>
               <th style="width: 20%;">Confirm</th>
             </tr>
           </thead>
@@ -38,7 +39,14 @@
                       }elseif (!$reservation->getConfirmation()){
                         echo  "pending";
                       }
-                          ;?></td>
+                  ;?></td>
+                <td>
+                    <form action="<?php echo FRONT_ROOT."Payment/showPawment"?>" method="post"> <!-- cambiar el CONTROLLER -->
+                    <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>">
+                    <button type="submit"  class="large-button" style="padding: 10px 10px;">check</button>
+                  </form>
+               
+                </td>
                 <td >          
                   <?php if($reservation->getConfirmation() === NULL) {  ?>
                     <form action="<?php echo FRONT_ROOT."Reservation/setConfirmation"?>" method="post"> <!-- cambiar el CONTROLLER -->

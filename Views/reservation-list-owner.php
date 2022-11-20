@@ -5,16 +5,16 @@
 <table class="table">
           <thead>
             <tr>
-              <th style="width: 15%;">Number</th>
-              <th style="width: 30%;">Keeper</th>
-              <th style="width: 30%;">Pet Name</th>
+              <th style="width: 10%;">Number</th>
+              <th style="width: 20%;">Keeper</th>
+              <th style="width: 20%;">Pet Name</th>
               <th style="width: 20%;">Photo</th>
-              <th style="width: 15%;">Pet type</th>
-              <th style="width: 15%;">Pet size</th>
-              <th style="width: 20%;">Start</th>
-              <th style="width: 20%;">End</th>
+              <th style="width: 10%;">Pet type</th>
+              <th style="width: 10%;">Pet size</th>
+              <th style="width: 15%;">Start</th>
+              <th style="width: 15%;">End</th>
               <th style="width: 15%;">Total fee</th>
-              <th style="width: 15%;">Status</th>
+              <th style="width: 20%;">Status</th>
               <th style="width: 20%;">Chat</th>
             </tr>
           </thead>
@@ -32,9 +32,19 @@
                   <td>  <?php echo  $reservation->getDateEnd()    ;?></td>
                   <td>  <?php echo "$ " . $reservation->getCompensation();  ?></td>
                   <td>  <?php 
-                      if($reservation->getConfirmation()== 1){
-                          echo  "confirmed";    
-                        }else if($reservation->getConfirmation()=== 0){
+                      if($reservation->getConfirmation()== 1){  ?>
+                  
+                        <form action="<?php echo FRONT_ROOT."Payment/generateCupon"?>" method="post"> <!-- cambiar el CONTROLLER -->
+                            <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>"></input>
+                            <button type="submit"  class="large-button" style="padding: 20px 20px;">Generate cupon</button>
+                        </form>
+                        <form action="<?php echo FRONT_ROOT."Payment/uploadPayment"?>" method="post" enctype="multipart/form-data"> <!-- cambiar el CONTROLLER -->
+                            <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>"></input>
+                            <input type="file" placeholder="payamentImg" name="payment" id="Photo" accept=".jpeg,.jpg,.pdf,.gif,.png,.jfif" required>
+                            <button type="submit"  class="large-button" style="padding: 20px 20px;">Upload Payment</button>
+                        </form>
+                      <?php 
+                         }else if($reservation->getConfirmation()=== 0){
                             echo  "rejected";   
                         }elseif (!$reservation->getConfirmation()){
                             echo  "pending";

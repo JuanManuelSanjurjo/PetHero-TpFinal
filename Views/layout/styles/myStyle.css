@@ -175,7 +175,8 @@ textarea:hover{
   box-shadow: 5px 5px 5px #46016e;
 }
 
-input[type=file]{
+
+.petFiles{
   background-color: #5d098d;
   color:#ccc;
   width: 30%;
@@ -187,7 +188,7 @@ input[type=file]{
   margin: auto;
 }
 
-input[type=file]:hover{
+.petFiles:hover{
   background-color: #e97100;
   transition: ease-in-out 0.2s;
   box-shadow: 2px 2px 2px #46016e;
