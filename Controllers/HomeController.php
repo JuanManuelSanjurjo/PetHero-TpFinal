@@ -7,7 +7,7 @@ use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use DAO\OwnerDAO as OwnerDAO;
 use DAO\KeeperDAO as KeeperDao;
-use PHPMailer\MailService as MailService;
+
 
 class HomeController{
     private $OwnerDAO;  

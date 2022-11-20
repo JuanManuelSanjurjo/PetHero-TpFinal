@@ -10,6 +10,7 @@ use Models\Pet as Pet;
 use Models\TimeInterval as TimeInterval;
 use DAO\OwnerDAO as OwnerDAO;
 use DAO\KeeperDAO as KeeperDao;
+use DAO\PaymentDAO as PaymentDAO;
 use DAO\PetDao as PetDAO;
 use DAO\ReservationDAO as ReservationDAO;
 use DateTimeZone;
@@ -28,7 +29,8 @@ class ReservationController{
         $this->OwnerDao = new OwnerDAO();
         $this->KeeperDao = new KeeperDao();
         $this->ReservationDAO = new ReservationDAO();
-        $this->PetDAO = new PetDao();             
+        $this->PetDAO = new PetDao();   
+        $this->PaymentDAO = new PaymentDAO();          
     }
 
     public function makeReservation($pet, $owner, $keeper, $dateStart, $dateEnd){ // PONER PARAMETROS
@@ -58,26 +60,24 @@ class ReservationController{
     }
 
     public function setConfirmation($confirmation, $reservationId){
+        
         if($confirmation == "confirm"){
             $this->ReservationDAO->setConfirmation($reservationId, true);
             $this->sendCupon($reservationId);
         }else{
-            $this->ReservationDAO->setConfirmation($reservationId, false);            
+            $this->ReservationDAO->setConfirmation($reservationId, false);
         }
         HomeController::showMessage("Status updated");
         $this->showAllReservations();
     }
 
     public function sendCupon($reservationId){
-
-        $reservation=$this->ReservationDAO->getReservationById($reservationId);
+        $reservation = $this->ReservationDAO->getReservationById($reservationId);
 
         $mailer = new MailService();
 
         $mailer->sendCupon($reservation);
-
     }
-
 
 
     public function showKeeperList(){
@@ -89,12 +89,10 @@ class ReservationController{
         require_once(VIEWS_PATH."filter-Keepers.php");
         require_once(VIEWS_PATH."keeper-list.php");
     }
-
 /*
     public function showKeeperListToFiltrate ($Pet,$dateStart,$dateEnd)
     {
-       
-        
+
         $KeepersAvailable = array();
         $keeperList=$this->KeeperDao->getAll();
         $ReservationList= $this->ReservationDAO->getAll();
@@ -112,11 +110,7 @@ class ReservationController{
 
         foreach($ReservationList as $reservation)
         {
-            
-
         }
-
-
     }
 */
 
@@ -190,6 +184,8 @@ public function getAllOwnerReservationsById(){
     require_once(VIEWS_PATH."validate-session.php");
     require_once(VIEWS_PATH."reservation-list-owner.php"); 
 }
+
+
 
 
 
