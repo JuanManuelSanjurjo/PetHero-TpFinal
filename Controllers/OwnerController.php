@@ -4,7 +4,7 @@ namespace Controllers;
 
 use Models\Owner;
 use DAO\OwnerDAO as OwnerDAO;
-//use Models\Pet as Pet;
+use Models\Pet as Pet;
 
 class OwnerController{
     private $OwnerDAO;
@@ -64,7 +64,7 @@ class OwnerController{
        $user = $_SESSION["loggedUser"];
        $_SESSION["loggedUser"] = $ownerDao->getById($user->getId());
        
-       HomeController::showMessage("Pet removed succesfully");
+       HomeController::showMessage("Pet removed succesfully.");
         $this->showMyPetList();
     }
 

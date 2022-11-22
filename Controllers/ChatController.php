@@ -6,6 +6,10 @@ use DAO\ChatDao as ChatDao;
 use DAO\TextDAO as TextDAO;
 use Models\Owner;
 use Models\Text as Text;
+use Models\Chat as Chat;
+use DateTimeZone;
+
+
 
 class ChatController{
     private $ChatDao;
@@ -19,7 +23,16 @@ class ChatController{
 
     public function showChat($keeper, $owner){
         $user = $_SESSION["loggedUser"];
-        $chat = $this->ChatDao->getChatByIds($keeper,$owner);
+        $exist = $this->ChatDao->getChatByIds($keeper,$owner);
+
+        if($exist->getId()==null){
+            $chat=new Chat();
+            $chat->setKeeper($keeper);
+            $chat->setOwner($owner);
+            $this->ChatDao->addChat($chat);
+        }
+            
+        $chat=$this->ChatDao->getChatByIds($keeper,$owner);
         $textList = array_reverse($chat->getTextList());
 
         foreach($textList as $text){

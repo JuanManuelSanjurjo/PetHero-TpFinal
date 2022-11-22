@@ -34,11 +34,11 @@
                   <td>  <?php 
                       if($reservation->getConfirmation()== 1){  ?>
                   
-                        <form action="<?php echo FRONT_ROOT."Payment/generateCupon"?>" method="post"> <!-- cambiar el CONTROLLER -->
+                        <form action="<?php echo FRONT_ROOT."Reservation/generateCupon"?>" method="post"> <!-- cambiar el CONTROLLER -->
                             <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>"></input>
                             <button type="submit"  class="large-button" style="padding: 20px 20px;">Generate cupon</button>
                         </form>
-                        <form action="<?php echo FRONT_ROOT."Payment/uploadPayment"?>" method="post" enctype="multipart/form-data"> <!-- cambiar el CONTROLLER -->
+                        <form action="<?php echo FRONT_ROOT."Reservation/uploadPayment"?>" method="post" enctype="multipart/form-data"> <!-- cambiar el CONTROLLER -->
                             <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>"></input>
                             <input type="file" placeholder="payamentImg" name="payment" id="Photo" accept=".jpeg,.jpg,.pdf,.gif,.png,.jfif" required>
                             <button type="submit"  class="large-button" style="padding: 20px 20px;">Upload Payment</button>

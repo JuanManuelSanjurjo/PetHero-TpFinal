@@ -41,7 +41,7 @@
                       }
                   ;?></td>
                 <td>
-                    <form action="<?php echo FRONT_ROOT."Payment/showPawment"?>" method="post"> <!-- cambiar el CONTROLLER -->
+                    <form action="<?php echo FRONT_ROOT."Reservation/showPayment"?>" method="post"> <!-- cambiar el CONTROLLER -->
                     <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>">
                     <button type="submit"  class="large-button" style="padding: 10px 10px;">check</button>
                   </form>

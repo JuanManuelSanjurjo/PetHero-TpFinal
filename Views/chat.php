@@ -42,10 +42,13 @@ use Models\Owner;
     <br>
   </div>
   <input type="hidden" id="idChat" name="idChat" value="<?php echo $chat->getId()?>">
+  <input type="hidden" id="to" name="keeper" value="<?php echo $chat->getKeeper()->getId() ?>"> 
+  <input type="hidden" id="to" name="owner" value="<?php echo $chat->getOwner()->getId() ?>"> 
   <br>
   <table class="table" style="width: 100%;">
     <?php  
-        foreach($textList as $text){    
+          foreach($textList as $text){    
+            if($text->getMessage()){
           ?>
           <thead>
             <tr>
@@ -57,10 +60,8 @@ use Models\Owner;
             <tr>
               <td style="width: 80%; text-align:left; padding: 10px" class="first-td">  <?php echo $text->getMessage()    ?></td>
             </tr>
-            <input type="hidden" id="to" name="keeper" value="<?php echo $chat->getKeeper()->getId() ?>"> 
-            <input type="hidden" id="to" name="owner" value="<?php echo $chat->getOwner()->getId() ?>"> 
           </tbody>
-          <?php  };  ?>
+          <?php  }};  ?>
         </table>
       </form>
 

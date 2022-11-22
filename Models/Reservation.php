@@ -3,7 +3,7 @@ namespace Models;
 
 use Models\Owner as Owner;
 use Models\Keeper as Keeper;
-use Models\TimeInterval as TimeInterval;
+//use Models\TimeInterval as TimeInterval;
 
 class Reservation{
 
@@ -15,6 +15,7 @@ class Reservation{
     private $dateEnd; 
     private $pet;    
     private $confirmation;  //se setea null y se cambia a true or false
+    private $payment;
 
     /**
      * Get the value of owner
@@ -188,6 +189,26 @@ class Reservation{
     }
 
 
+
+    /**
+     * Get the value of payment
+     */ 
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+
+    /**
+     * Set the value of payment
+     *
+     * @return  self
+     */ 
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
 }
 
 ?>

@@ -103,7 +103,7 @@ class PetDao{
         //// BORRA IMAGENES DEL DIRECTORIO
 
         }catch(Exception $ex){
-            HomeController::showMessage("Cannot remove pets with reservations");
+            HomeController::showMessage("Cannot remove pets with reservations.");
             //throw $ex;
         }
     }

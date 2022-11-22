@@ -22,7 +22,7 @@ class ReservationDAO{
     public function makeReservation(Reservation $reservation)
     {
         try{
-            $query = "INSERT INTO ".$this->tableName." (reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation) VALUES (:reservationNumber, :owner, :keeper, :compensation, :dateStart, :dateEnd, :pet, :confirmation)";
+            $query = "INSERT INTO ".$this->tableName." (reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation, payment) VALUES (:reservationNumber, :owner, :keeper, :compensation, :dateStart, :dateEnd, :pet, :confirmation, :payment)";
 
             $parameters["reservationNumber"]= $reservation->getReservationNumber();
             $parameters["owner"]            = $reservation->getOwner()->getId();
@@ -32,6 +32,8 @@ class ReservationDAO{
             $parameters["compensation"]     = $reservation->getCompensation();  // no pone
             $parameters["pet"]              = $reservation->getPet()->getId();
             $parameters["confirmation"]     = $reservation->getConfirmation();
+            $parameters["payment"]     = $reservation->getPayment();
+            
             
             $this->connection = Connection::GetInstance();
 
@@ -47,7 +49,7 @@ class ReservationDAO{
         try{
             
             $reservationList = array();
-            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ".$this->tableName;
+            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation, payment FROM ".$this->tableName;
 
             $this->connection = Connection::GetInstance();
 
@@ -56,7 +58,10 @@ class ReservationDAO{
             foreach($result as $row)
             {
                 $reservation = new Reservation();
+                $reservation->setPayment($row["payment"]);
                 $reservation->setReservationNumber($row["reservationNumber"]);
+                $reservation->setConfirmation($row["confirmation"]);
+
                 // set owner id
                 $ownerDAO = new OwnerDAO();
                 $owner=$ownerDAO->getById($row["owner"]);
@@ -74,7 +79,6 @@ class ReservationDAO{
                 $pet = $petDao->getById($row["pet"]);
                 $reservation->setPet($pet);
 
-                $reservation->setConfirmation($row["confirmation"]);
 
                 array_push($reservationList,$reservation);
             }
@@ -106,7 +110,7 @@ class ReservationDAO{
         
        try{
 
-        $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ".$this->tableName." WHERE (keeper = :keeperID)";
+        $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation, payment FROM ".$this->tableName." WHERE (keeper = :keeperID)";
 
         $this->connection = Connection::GetInstance();
 
@@ -116,6 +120,9 @@ class ReservationDAO{
          {
              $reservation = new Reservation();
              $reservation->setReservationNumber($row["reservationNumber"]);
+             $reservation->setPayment($row["payment"]);
+             $reservation->setConfirmation($row["confirmation"]);
+
              // set owner id
              $ownerDAO = new OwnerDAO();
              $owner=$ownerDAO->getById($row["owner"]);
@@ -133,7 +140,6 @@ class ReservationDAO{
              $pet = $petDao->getById($row["pet"]);
              $reservation->setPet($pet);
 
-             $reservation->setConfirmation($row["confirmation"]);
              
          }
             
@@ -152,7 +158,7 @@ class ReservationDAO{
         try{
             
             $reservationList = array();
-            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ". $this->tableName ." WHERE (keeper =" . $keeperID .");";
+            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation, payment FROM ". $this->tableName ." WHERE (keeper =" . $keeperID .");";
                        
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
@@ -161,6 +167,9 @@ class ReservationDAO{
             {
                 $reservation = new Reservation();
                 $reservation->setReservationNumber($row["reservationNumber"]);
+                $reservation->setPayment($row["payment"]);
+                $reservation->setConfirmation($row["confirmation"]);
+
                 // set owner id
                 $ownerDAO = new OwnerDAO();
                 $owner=$ownerDAO->getById($row["owner"]);
@@ -178,7 +187,6 @@ class ReservationDAO{
                 $pet = $petDao->getById($row["pet"]);
                 $reservation->setPet($pet);
 
-                $reservation->setConfirmation($row["confirmation"]);
                 
                 array_push($reservationList,$reservation);
             }
@@ -198,7 +206,7 @@ class ReservationDAO{
         try{
             
             $reservationList = array();
-            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ". $this->tableName ." WHERE (owner =" . $ownerId .");";
+            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation, payment FROM ". $this->tableName ." WHERE (owner =" . $ownerId .");";
                        
             $this->connection = Connection::GetInstance();
             $result = $this->connection->Execute($query);
@@ -207,6 +215,9 @@ class ReservationDAO{
             {
                 $reservation = new Reservation();
                 $reservation->setReservationNumber($row["reservationNumber"]);
+                $reservation->setPayment($row["payment"]);
+                $reservation->setConfirmation($row["confirmation"]);
+
                 // set owner id
                 $ownerDAO = new OwnerDAO();
                 $owner=$ownerDAO->getById($row["owner"]);
@@ -224,7 +235,6 @@ class ReservationDAO{
                 $pet = $petDao->getById($row["pet"]);
                 $reservation->setPet($pet);
 
-                $reservation->setConfirmation($row["confirmation"]);
                 
                 array_push($reservationList,$reservation);
             }
@@ -261,7 +271,7 @@ class ReservationDAO{
         
         try{
         
-         $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation FROM ".$this->tableName." WHERE (reservationNumber = ".$reservationNumber.")";
+         $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation, payment FROM ".$this->tableName." WHERE (reservationNumber = ".$reservationNumber.")";
  
          $this->connection = Connection::GetInstance();
  
@@ -271,6 +281,7 @@ class ReservationDAO{
          {
              $reservation = new Reservation();
              $reservation->setReservationNumber($row["reservationNumber"]);
+             $reservation->setPayment($row["payment"]);
              // set owner id
              $ownerDAO = new OwnerDAO();
              $owner=$ownerDAO->getById($row["owner"]);
@@ -300,6 +311,27 @@ class ReservationDAO{
  
         
      }
+
+
+     
+    public function updatePayment($payment, $reservationNumber){
+
+        try{  
+    
+            $query= "UPDATE ".$this->tableName." SET payment = :payment WHERE (reservationNumber = ". $reservationNumber .")";
+                  
+            $parameters["payment"]= $payment;
+                
+            $this->connection = Connection::GetInstance();
+            $this->connection->ExecuteNonQuery($query,$parameters);
+    
+            }
+        catch(Exception $ex){
+            throw $ex;
+        }
+
+
+    }
 
     
 

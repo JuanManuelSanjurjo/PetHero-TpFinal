@@ -17,14 +17,14 @@ class  ChatDao{
     private $tableName= "chats";
 
    
-    public function addChat(Text $text)
+    public function addChat(Chat $chat)
     {
         try{
             $query = "INSERT INTO ".$this->tableName." (id, owner, keeper) VALUES (:id, :owner, :keeper)";
 
-            $parameters["id"]           =$text->getId();
-            $parameters["owner"]       =$text->getIdChat();
-            $parameters["keeper"]      =$text->getMessage();
+            $parameters["id"]           =$chat->getId();
+            $parameters["owner"]       =$chat->getOwner();
+            $parameters["keeper"]      =$chat->getKeeper();            
             
             $this->connection = Connection::GetInstance();
 
@@ -125,7 +125,11 @@ class  ChatDao{
                 if($chat){
                     $textDAO = new TextDAO();
                     $textList = $textDAO->getByIdChat($chat->getId());
-                    $chat->setTextList($textList);
+                    if($textList){
+                        $chat->setTextList($textList);
+                    }else{
+                        $chat->setTextList(array());
+                    }
                 }
     
             
@@ -140,8 +144,7 @@ class  ChatDao{
     public function getChatByIds($keeper,$owner){
 
         try{
-            
-          
+                      
             $query = "SELECT id, owner, keeper FROM ". $this->tableName . " WHERE (keeper = :keeper AND owner = :owner)";
             
             $parameters["keeper"] = $keeper;

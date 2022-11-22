@@ -5,7 +5,7 @@ use Controllers\OwnerController as OwnerController;
 use DAO\PetDao as PetDao;
 use Models\Pet as Pet;
 use DAO\OwnerDao as OwnerDao;
-//use Models\Owner as Owner;
+use Models\Owner as Owner;
 
 class PetController{
     private $PetDao;  
@@ -42,22 +42,22 @@ class PetController{
             if($file['error'] == 0){
                 if($file['size'] < $size ){   //20mb
                     move_uploaded_file($file['tmp_name'],$fileDestination);
-                    HomeController::showMessage("your file:  ". $file['name'] . ", was uploaded succesfully");
+                    HomeController::showMessage("your file:  ". $file['name'] . ", was uploaded succesfully.");
                    
                 } else{
-                    HomeController::showMessage("The file is too big");
+                    HomeController::showMessage("The file is too big.");
                    
                     $this->cancelPetRegister($pet->getId());
                   
                 }
             }else{
-                HomeController::showMessage("There was an error uploading your file");
+                HomeController::showMessage("There was an error uploading your file.");
                
                 $this->cancelPetRegister($pet->getId());
                 
             }
         }else{
-            HomeController::showMessage("There was an error uploading files, try again");
+            HomeController::showMessage("There was an error uploading files, try again.");
            
             $this->cancelPetRegister($pet->getId());
             

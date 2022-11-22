@@ -2,6 +2,8 @@
 namespace PHPMailer;
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
+
+use Controllers\HomeController;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -75,9 +77,10 @@ class MailService{
             */
                      
             $mail->send();
-            echo 'Message has been sent';
+            HomeController::showMessage("The owner has been notified via email.");
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            HomeController::showMessage("There was an error. You need to contact the owner to arrange payment.");
+           /// $mail->ErrorInfo}";
         }
     }
 
@@ -92,8 +95,9 @@ class MailService{
         $dateStart = $reservation->getDateStart(); 
         $dateEnd = $reservation->getDateEnd(); 
         $keeper = $reservation->getKeeper()->getUserName(); 
-       // $qrCupon = ROOT.IMG_PATH."qr_cupon.jpeg"; 
-        //$barcodeCupon = ROOT.IMG_PATH."barcode_cupon.jpeg"; 
+        $qrCupon = "cid:qr"; 
+        $barcodeCupon = "cid:barcode";        
+
         require_once(VIEWS_PATH."paymentCupon.php"); 
         $body   = ob_get_contents();       
 

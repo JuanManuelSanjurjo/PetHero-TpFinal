@@ -43,10 +43,10 @@ class KeeperController{
 
 
         if($date1->format("Y-m-d") > $date2->format("Y-m-d") ){
-            HomeController::showMessage("End date cant be less than start date");   
+            HomeController::showMessage("End date cant be less than start date.");   
             $this->showKeeperList();
         }elseif($date1->format("Y-m-d") < $today->format("Y-m-d") ){
-            HomeController::showMessage("Cant set dates in the past");
+            HomeController::showMessage("Cant set dates in the past.");
             $this->showKeeperList();
         }else{
             $diff=date_diff($date1,$date2);

@@ -18,11 +18,11 @@
           <p style="color:firebrick"><?php echo "The remanent must be payed on arrival"; ?></p>
           <p><?php echo "Reservation Number: #". $reservationNumber ?></p>
           <div class="imgcontainer">
-            <img src="cid:qr" alt="qr" >
+            <img src="<?php echo $qrCupon?>" alt="qr"  >
           </div>
           <p><?php echo "QR code"?></p>
           <div class="imgcontainer">
-               <img src="cid:barcode" alt="barcode" >
+               <img src="<?php echo $barcodeCupon?>" alt="barcode" >
           </div>
           <p><?php echo "Pago Facil / Rapipago"?></p>
           <p style="color:firebrick"><?php echo "Dont forget to upload your payments in the corresponding reservation"?></p>

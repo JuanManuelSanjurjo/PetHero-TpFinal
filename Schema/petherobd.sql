@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2022 a las 01:21:11
+-- Tiempo de generación: 22-11-2022 a las 03:02:03
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -32,6 +32,13 @@ CREATE TABLE `chats` (
   `owner` int(11) NOT NULL,
   `keeper` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `chats`
+--
+
+INSERT INTO `chats` (`id`, `owner`, `keeper`) VALUES
+(9, 10, 266);
 
 -- --------------------------------------------------------
 
@@ -130,17 +137,39 @@ CREATE TABLE `reservation` (
   `dateStart` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `dateEnd` varchar(50) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `pet` int(11) NOT NULL,
-  `confirmation` tinyint(1) DEFAULT NULL
+  `confirmation` tinyint(1) DEFAULT NULL,
+  `payment` varchar(150) COLLATE utf8mb4_spanish2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `reservation`
 --
 
-INSERT INTO `reservation` (`reservationNumber`, `owner`, `keeper`, `compensation`, `dateStart`, `dateEnd`, `pet`, `confirmation`) VALUES
-(251, 10, 265, 0, '2022-12-01', '2022-12-01', 44, NULL),
-(252, 10, 266, 0, '2022-12-10', '2022-12-10', 44, NULL),
-(260, 10, 265, 0, '2022-12-01', '2022-12-01', 44, NULL);
+INSERT INTO `reservation` (`reservationNumber`, `owner`, `keeper`, `compensation`, `dateStart`, `dateEnd`, `pet`, `confirmation`, `payment`) VALUES
+(251, 10, 265, 0, '2022-12-01', '2022-12-01', 44, NULL, NULL),
+(252, 10, 266, 0, '2022-12-10', '2022-12-10', 44, NULL, '10_252_payment.png'),
+(260, 10, 265, 0, '2022-12-01', '2022-12-01', 44, NULL, NULL),
+(261, 10, 266, 0, '2022-12-20', '2022-12-24', 44, NULL, NULL),
+(262, 10, 266, 0, '2022-12-20', '2022-12-24', 44, NULL, NULL),
+(263, 9, 267, 0, '2022-12-20', '2022-12-27', 41, 1, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `smpt_credentials`
+--
+
+CREATE TABLE `smpt_credentials` (
+  `smpt_pass` varchar(50) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `smpt_credentials`
+--
+
+INSERT INTO `smpt_credentials` (`smpt_pass`) VALUES
+('ghcapcpdlldzwgcx'),
+('ghcapcpdlldzwgcx');
 
 -- --------------------------------------------------------
 
@@ -151,11 +180,18 @@ INSERT INTO `reservation` (`reservationNumber`, `owner`, `keeper`, `compensation
 CREATE TABLE `texts` (
   `id` int(50) NOT NULL,
   `idChat` int(50) NOT NULL,
-  `message` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
-  `from` int(50) NOT NULL,
-  `to` int(50) NOT NULL,
-  `date` datetime(1) NOT NULL
+  `message` varchar(500) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `sender` int(50) NOT NULL,
+  `receiver` int(50) NOT NULL,
+  `textDate` datetime(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `texts`
+--
+
+INSERT INTO `texts` (`id`, `idChat`, `message`, `sender`, `receiver`, `textDate`) VALUES
+(21, 9, 'asdasd', 266, 10, '2022-11-21 22:17:46.0');
 
 -- --------------------------------------------------------
 
@@ -203,7 +239,9 @@ INSERT INTO `timeinterval` (`id`, `start`, `end`, `idKeeper`) VALUES
 -- Indices de la tabla `chats`
 --
 ALTER TABLE `chats`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_owner` (`owner`),
+  ADD KEY `fk_id_keeper` (`keeper`);
 
 --
 -- Indices de la tabla `keepers`
@@ -237,7 +275,8 @@ ALTER TABLE `reservation`
 -- Indices de la tabla `texts`
 --
 ALTER TABLE `texts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_chat` (`idChat`);
 
 --
 -- Indices de la tabla `timeinterval`
@@ -254,7 +293,7 @@ ALTER TABLE `timeinterval`
 -- AUTO_INCREMENT de la tabla `chats`
 --
 ALTER TABLE `chats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `keepers`
@@ -278,13 +317,13 @@ ALTER TABLE `pet`
 -- AUTO_INCREMENT de la tabla `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservationNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
+  MODIFY `reservationNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=264;
 
 --
 -- AUTO_INCREMENT de la tabla `texts`
 --
 ALTER TABLE `texts`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `timeinterval`
@@ -295,6 +334,13 @@ ALTER TABLE `timeinterval`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `chats`
+--
+ALTER TABLE `chats`
+  ADD CONSTRAINT `fk_id_keeper` FOREIGN KEY (`keeper`) REFERENCES `keepers` (`id`),
+  ADD CONSTRAINT `fk_id_owner` FOREIGN KEY (`owner`) REFERENCES `owners` (`id`);
 
 --
 -- Filtros para la tabla `pet`
@@ -309,6 +355,12 @@ ALTER TABLE `reservation`
   ADD CONSTRAINT `fk:idOwner` FOREIGN KEY (`owner`) REFERENCES `owners` (`id`),
   ADD CONSTRAINT `fk_idKeeper` FOREIGN KEY (`keeper`) REFERENCES `keepers` (`id`),
   ADD CONSTRAINT `fk_idPet` FOREIGN KEY (`pet`) REFERENCES `pet` (`id`);
+
+--
+-- Filtros para la tabla `texts`
+--
+ALTER TABLE `texts`
+  ADD CONSTRAINT `fk_id_chat` FOREIGN KEY (`idChat`) REFERENCES `chats` (`id`);
 
 --
 -- Filtros para la tabla `timeinterval`
