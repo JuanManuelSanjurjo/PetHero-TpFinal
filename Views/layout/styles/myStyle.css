@@ -148,8 +148,11 @@ input[type=date],
 input[type=number]{
   width: 30%;
 }
+h1:hover{
+  transition: ease-in-out 0.2s;
+  color: #ff9900;
+}
 
-h1:hover,
 h2:hover,
 input[type=email]:hover,
 input[type=password]:hover,
@@ -187,6 +190,18 @@ textarea:hover{
   display: block;
   margin: auto;
 }
+
+.defaultFileInput{
+  background: linear-gradient( #6d04aa, #5f04aa);
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    border-radius: 10px;
+}
+
 
 .petFiles:hover{
   background-color: #e97100;

@@ -61,7 +61,11 @@ class ReservationController{
         
         if($confirmation == "confirm"){
             $this->ReservationDAO->setConfirmation($reservationId, true);
-            $this->sendCupon($reservationId);
+            if($this->sendCupon($reservationId)){
+                HomeController::showMessage("The owner has been notified via email.");
+            }else{
+                HomeController::showMessage("There was an error. You need to contact the owner to arrange payment.");
+            }
         }else{
             $this->ReservationDAO->setConfirmation($reservationId, false);
         }
@@ -73,8 +77,9 @@ class ReservationController{
         $reservation = $this->ReservationDAO->getReservationById($reservationId);
 
         $mailer = new MailService();
-
-        $mailer->sendCupon($reservation);
+        $body = $this->generateCuponForMail($reservationId);
+        $mail = $mailer->sendCupon($reservation, $body);
+        return $mail;
     }
 
 
@@ -180,8 +185,8 @@ public function generateCupon($reservationId){
 public function generateCuponForMail($reservationId){
     $reservation = $this->ReservationDAO->getReservationById($reservationId);
 
-    ob_start();   // Out Buffer.
-        
+     ob_start();   // Out Buffer.
+            
     $reservationNumber = $reservation->getReservationNumber();
     $name = $reservation->getOwner()->getName();
     $surname = $reservation->getOwner()->getSurname();
@@ -190,12 +195,12 @@ public function generateCuponForMail($reservationId){
     $dateStart = $reservation->getDateStart(); 
     $dateEnd = $reservation->getDateEnd(); 
     $keeper = $reservation->getKeeper()->getUserName(); 
-    //$qrCupon = FRONT_ROOT.IMG_PATH."qr_cupon.jpeg"; 
-    //$barcodeCupon = FRONT_ROOT.IMG_PATH."barcode_cupon.jpeg"; 
-    
+    $qrCupon = "cid:qr"; 
+    $barcodeCupon = "cid:barcode";        
     require_once(VIEWS_PATH."paymentCupon.php"); 
     $body   = ob_get_contents();       
     ob_get_clean();
+    
     return $body;
 }
 

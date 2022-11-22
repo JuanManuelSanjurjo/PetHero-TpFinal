@@ -1,16 +1,16 @@
 <?php  include('header.php'); ?>
 
-    <h1>Your Pets</h1>
+    <h1 style="letter-spacing: normal">YOUR PETS</h1>
       <table class="table">
         <thead>
           <tr>
-            <th style="width: 20%" >Name</th>
+            <th style="width: 15%" >Name</th>
             <th style="width: 20%" >Breed</th>
             <th style="width: 10%" >Size</th>
             <th style="width: 25%" >Observations</th>
             <th style="width: 15%" >Photo</th>
             <th style="width: 15%" >Vaxination Plan</th>
-            <th style="width: 15%" >Video</th>
+            <th style="width: 20%" >Video</th>
             <th style="width: 20%" >Remove</th>
           </tr>
         </thead>

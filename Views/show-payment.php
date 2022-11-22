@@ -1,9 +1,15 @@
 <?php  include('header.php'); ?>
 
 <h1>Payment</h1>
+<?php if($reservation->getPayment()){ ?>
 <div class="container">
 <img src=" <?php echo FRONT_ROOT.VIEWS_PATH."payments/" . $reservation->getPayment() ?>" alt="Payment bill">
 </div>
+<?php }else {  ?>
+ <div class="container">
+<h2>There are no payments yet</h2>
+</div>
+<?php   } ?>
 <div class="container">
  <br>
  <a  href="<?php echo FRONT_ROOT.'Keeper/showHomeView'?>"><button class="medium-button">Home</button></a>

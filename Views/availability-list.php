@@ -1,7 +1,7 @@
 <?php  include('header.php'); ?>
 
 
-<h1>Availabilities</h1>
+<h1>AVAILABILITIES</h1>
 <table class="table">
           <thead>
             <tr>

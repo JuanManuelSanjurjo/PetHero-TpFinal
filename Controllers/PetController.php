@@ -195,10 +195,10 @@ class PetController{
             $pet->setPhoto($this->checkImgFiles($photo,$user,$pet,'profile'));
         }
         if($vaxPlanImg){
-            $pet->setPhoto($this->checkImgFiles($vaxPlanImg,$user,$pet,'vaxImg'));
+            $pet->setVaxPlanImg($this->checkImgFiles($vaxPlanImg,$user,$pet,'vaxImg'));
         }
-        if(!$video){
-            $pet->setPhoto($this->checkImgFiles($video,$user,$pet,'video'));
+        if($video){
+            $pet->setVideo($this->checkImgFiles($video,$user,$pet,'video'));
         }
 */
         $this->PetDao->modifyPet($pet); 

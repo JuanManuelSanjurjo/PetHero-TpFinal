@@ -3,7 +3,6 @@ namespace PHPMailer;
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 
-use Controllers\HomeController;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -16,10 +15,9 @@ require "PHPMailer\src\Exception.php";
 
 class MailService{
 
-    public function sendCupon($reservation){
+    public function sendCupon($reservation, $body){
 
-        //`true` enables exceptions
-        $mail = new PHPMailer(true);
+        $mail = new PHPMailer(true);                                //true enables exceptions
         
         try {
             //Server settings
@@ -36,75 +34,24 @@ class MailService{
             //Recipients
             $mail->setFrom('petheroapp.ar@gmail.com', 'Pethero App');
             $mail->addAddress($reservation->getOwner()->getMail(), $reservation->getOwner()->getUserName());                   //Name is optional
-            
-            //$mail->addAddress('ellen@example.com');             
-            //$mail->addReplyTo('info@example.com', 'Information');
-            //$mail->addCC('cc@example.com');
-            //$mail->addBCC('bcc@example.com');
-        
-            //Attachments
-           // $mail->addAttachment('/var/tmp/file.tar.gz');          //Add attachments
-           // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');     //Optional name
-            
+
             //Content
             $mail->isHTML(true);                                     //Set email format to HTML
             $mail->Subject = 'Here is your payment cupon';
             $mail->addEmbeddedImage(IMG_PATH."barcode_cupon.jpeg","barcode"); 
             $mail->addEmbeddedImage(IMG_PATH."qr_cupon.jpeg","qr"); 
 
-            $mail->Body    =  $this->generateCupon($reservation);
-            /*
-            ob_start();   // Out Buffer.
-            
-            $reservationNumber = $reservation->getReservationNumber();
-            $name = $reservation->getOwner()->getName();
-            $surname = $reservation->getOwner()->getSurname();
-            $pet = $reservation->getPet()->getName();
-            $total = $reservation->getCompensation();
-            $dateStart = $reservation->getDateStart(); 
-            $dateEnd = $reservation->getDateEnd(); 
-            $keeper = $reservation->getKeeper()->getUserName(); 
-            // si estuvieramos generando codigod e barra y qr lo generariamos antes de la vista
-            
-            require_once(VIEWS_PATH."paymentCupon.php"); 
-            $mail->Body    = ob_get_contents();       
-            // $mail->addEmbeddedImage(FRONT_ROOT.IMG_PATH."barcode_cupon.jpeg","one","barcode"); 
-
-            // 'This is the HTML message body <b>in bold!</b>';
-            
-            //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-            ob_get_clean();
-            */
-                     
+            $mail->Body =  $body;
+                          
             $mail->send();
-            HomeController::showMessage("The owner has been notified via email.");
+            return true;
+
         } catch (Exception $e) {
-            HomeController::showMessage("There was an error. You need to contact the owner to arrange payment.");
-           /// $mail->ErrorInfo}";
+            return false;
+
         }
     }
 
-    public function generateCupon($reservation){
-        ob_start();   // Out Buffer.
-            
-        $reservationNumber = $reservation->getReservationNumber();
-        $name = $reservation->getOwner()->getName();
-        $surname = $reservation->getOwner()->getSurname();
-        $pet = $reservation->getPet()->getName();
-        $total = $reservation->getCompensation();
-        $dateStart = $reservation->getDateStart(); 
-        $dateEnd = $reservation->getDateEnd(); 
-        $keeper = $reservation->getKeeper()->getUserName(); 
-        $qrCupon = "cid:qr"; 
-        $barcodeCupon = "cid:barcode";        
-
-        require_once(VIEWS_PATH."paymentCupon.php"); 
-        $body   = ob_get_contents();       
-
-        ob_get_clean();
-        
-        return $body;
-    }
 
     public function getCredentials(){
         
@@ -126,6 +73,7 @@ class MailService{
             throw $ex;
         }
     }
+
 }
 
 ?>

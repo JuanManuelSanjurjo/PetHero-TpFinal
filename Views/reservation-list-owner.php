@@ -30,18 +30,18 @@
                   <td>  <?php echo  $reservation->getPet()->getSize()    ;?></td>
                   <td>  <?php echo  $reservation->getDateStart()    ;?></td>
                   <td>  <?php echo  $reservation->getDateEnd()    ;?></td>
-                  <td>  <?php echo "$ " . $reservation->getCompensation();  ?></td>
+                  <td>  <?php echo "$" . $reservation->getCompensation();  ?></td>
                   <td>  <?php 
                       if($reservation->getConfirmation()== 1){  ?>
-                  
                         <form action="<?php echo FRONT_ROOT."Reservation/generateCupon"?>" method="post"> <!-- cambiar el CONTROLLER -->
                             <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>"></input>
-                            <button type="submit"  class="large-button" style="padding: 20px 20px;">Generate cupon</button>
+                            <button type="submit"  class="large-button" style="padding: 5px 5px;">Generate cupon</button>
                         </form>
                         <form action="<?php echo FRONT_ROOT."Reservation/uploadPayment"?>" method="post" enctype="multipart/form-data"> <!-- cambiar el CONTROLLER -->
                             <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>"></input>
-                            <input type="file" placeholder="payamentImg" name="payment" id="Photo" accept=".jpeg,.jpg,.pdf,.gif,.png,.jfif" required>
-                            <button type="submit"  class="large-button" style="padding: 20px 20px;">Upload Payment</button>
+                            <button  class="large-button" style="padding: 5px 5px;"><label for="files" >Select payment</label></button>
+                            <input type="file" id="files" class="defaultFileInput" placeholder="payamentImg" name="payment" id="Photo" accept=".jpeg,.jpg,.pdf,.gif,.png,.jfif" required hidden>
+                            <button type="submit"  class="large-button" style="padding: 5px 5px;">Upload</button>
                         </form>
                       <?php 
                          }else if($reservation->getConfirmation()=== 0){
