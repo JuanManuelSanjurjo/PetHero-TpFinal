@@ -4,20 +4,22 @@ namespace Controllers;
 
 use DAO\KeeperDAO;
 use DAO\AvailabilityDAO as AvailabilityDAO;
+use DAO\ReservationDAO;
 use Models\Keeper;
 use Models\TimeInterval as TimeInterval;
 
 class KeeperController{
     private $KeeperDao;
+    private $ReservationDAO;
 
 
     function __construct(){
         $this->KeeperDao = new KeeperDAO();
+        $this->ReservationDAO = new ReservationDAO();
     }
 
     public function keeperExist($email){
-        $keeper = $this->KeeperDao->getByEmail($email);
-        
+        $keeper = $this->KeeperDao->getByEmail($email);        
         return $keeper;
     }
 
@@ -40,21 +42,29 @@ class KeeperController{
         $keeperList = $this->KeeperDao->getAll(); 
         $owner = $_SESSION["loggedUser"];
         $petList = $owner->getPetList();
+        $reservation=$this->ReservationDAO->getReservationPetId($pet);
 
-
-        if($date1->format("Y-m-d") > $date2->format("Y-m-d") ){
-            HomeController::showMessage("End date cant be less than start date.");   
-            $this->showKeeperList();
-        }elseif($date1->format("Y-m-d") < $today->format("Y-m-d") ){
-            HomeController::showMessage("Cant set dates in the past.");
-            $this->showKeeperList();
-        }else{
-            $diff=date_diff($date1,$date2);
-            $keeperList = $this->KeeperDao->getFilteredList($pet,$dateStart,$dateEnd); // hacer filtro en DAO O CONTROLLER
-             require_once(VIEWS_PATH."validate-session.php");
-             require_once(VIEWS_PATH."filter-Keepers.php");
+        foreach($reservation as $row){
+            if(($dateStart >=  $row->getDateStart() && $dateStart <= $row->getDateEnd()) || ($dateEnd >=  $row->getDateStart() && $dateEnd <= $row->getDateEnd()) ||  ($dateStart <= $row->getDateStart() && $dateEnd >= $row->getDateEnd())){
+                HomeController::showMessage("There is an overlap with the dates you booked a reservation. The pet already has a reservation for that period");
+                $this->showKeeperList();
+                $flag=false;
+            }
         }
-
+        if($flag){
+            if($date1->format("Y-m-d") > $date2->format("Y-m-d") ){
+                HomeController::showMessage("End date cant be less than start date.");   
+                $this->showKeeperList();
+            }elseif($date1->format("Y-m-d") < $today->format("Y-m-d") ){
+                HomeController::showMessage("Cant set dates in the past.");
+                $this->showKeeperList();
+            }else{
+                $diff=date_diff($date1,$date2);
+                $keeperList = $this->KeeperDao->getFilteredList($pet,$dateStart,$dateEnd); // hacer filtro en DAO O CONTROLLER
+                 require_once(VIEWS_PATH."validate-session.php");
+                 require_once(VIEWS_PATH."filter-Keepers.php");
+            }
+        }
     }
 
 

@@ -333,7 +333,51 @@ class ReservationDAO{
 
     }
 
-    
+    public function getReservationPetId($pet){
+        
+        try{
+            
+            $reservationList = array();
+            $query= "SELECT reservationNumber, owner, keeper, compensation, dateStart, dateEnd, pet, confirmation, payment FROM ". $this->tableName ." WHERE (pet =" . $pet .");";
+                       
+            $this->connection = Connection::GetInstance();
+            $result = $this->connection->Execute($query);
+            
+            foreach($result as $row)
+            {
+                $reservation = new Reservation();
+                $reservation->setReservationNumber($row["reservationNumber"]);
+                $reservation->setPayment($row["payment"]);
+                $reservation->setConfirmation($row["confirmation"]);
+
+                // set owner id
+                $ownerDAO = new OwnerDAO();
+                $owner=$ownerDAO->getById($row["owner"]);
+                $reservation->setOwner($owner);
+                // set keeper id
+                $keeperDAO= new KeeperDao();
+                $keeper = $keeperDAO->getById($row["keeper"]); ///Hacerla en el keeper
+                $reservation->setKeeper($keeper);
+                
+                $reservation->setCompensation($row["compensation"]);
+                $reservation->setDateStart($row["dateStart"]);
+                $reservation->setDateEnd($row["dateEnd"]);
+                // set pet id
+                $petDao = new PetDao();
+                $pet = $petDao->getById($row["pet"]);
+                $reservation->setPet($pet);
+
+                
+                array_push($reservationList,$reservation);
+            }
+                        
+            return $reservationList;
+        }catch(Exception $ex){
+            throw $ex;
+        }
+        
+        
+    }
 
     
 }
