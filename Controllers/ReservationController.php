@@ -45,7 +45,7 @@ class ReservationController{
         $this->ReservationDAO->makeReservation($reservation);
 
         $ownerController = new OwnerController();
-        $ownerController->showHomeView("The reservation has been made and was sent to the keeper for confirmation");
+        $ownerController->showHomeView("Reservation made. You will be notified of the confirmation via email");
         
     }
 
@@ -60,6 +60,13 @@ class ReservationController{
             }
         }else{
             $this->ReservationDAO->setConfirmation($reservationId, false);
+            
+            if($this->sendCancelation($reservationId)){
+                HomeController::showMessage("The owner has been notified via email.");
+            }else{
+                HomeController::showMessage("There was an error. Please try to reach to the owner");
+            };
+
         }
         HomeController::showMessage("Status updated.");
         $this->showAllReservations();
@@ -71,6 +78,15 @@ class ReservationController{
         $mailer = new MailService();
         $body = $this->generateCuponForMail($reservationId);
         $mail = $mailer->sendCupon($reservation, $body);
+        return $mail;
+    }
+
+    public function sendCancelation($reservationId){
+        $reservation = $this->ReservationDAO->getReservationById($reservationId);
+
+        $mailer = new MailService();
+        $body = $this->cancelationNotice($reservationId);
+        $mail = $mailer->sendNotice($reservation, $body);
         return $mail;
     }
 
@@ -153,6 +169,24 @@ public function getAllOwnerReservationsById(){
     require_once(VIEWS_PATH."reservation-list-owner.php"); 
 }
 
+public function cancelationNotice($reservationId){
+    $reservation = $this->ReservationDAO->getReservationById($reservationId);
+
+     ob_start();   // Out Buffer.
+            
+    $reservationNumber = $reservation->getReservationNumber();
+    $name = $reservation->getOwner()->getName();
+    $surname = $reservation->getOwner()->getSurname();
+    $pet = $reservation->getPet()->getName();
+    $dateStart = $reservation->getDateStart(); 
+    $dateEnd = $reservation->getDateEnd(); 
+    $keeper = $reservation->getKeeper()->getUserName(); 
+    require_once(VIEWS_PATH."cancelationNotice.php"); 
+    $body   = ob_get_contents();       
+    ob_get_clean();
+    
+    return $body;
+}
 
 
 public function generateCupon($reservationId){
@@ -193,6 +227,7 @@ public function generateCuponForMail($reservationId){
     
     return $body;
 }
+
 
 private function checkPaymentImg($file, $reservationId){
     $user = $_SESSION["loggedUser"];
