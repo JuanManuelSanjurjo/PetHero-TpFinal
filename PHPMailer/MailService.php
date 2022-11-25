@@ -52,6 +52,38 @@ class MailService{
         }
     }
 
+    public function sendNotice ($reservation, $body){
+        $mail = new PHPMailer(true);                                //true enables exceptions
+        
+        try {
+            //Server settings
+            $mail->SMTPDebug = 0;                                    // SMTP::DEBUG_SERVER;  //Enable verbose debug output
+            $mail->isSMTP();                                         //Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                    //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                //Enable SMTP authentication
+            $mail->Username   = 'petheroapp.ar@gmail.com';           //SMTP username
+            $mail->Password   =  $this->getCredentials();            //SMTP password
+            $mail->SMTPSecure =  'ssl';                              //PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $mail->Port       = 465;                                 // ssl implicit port 465, ssl explicit port 587 , default  25     //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+                                   
+            //Recipients
+            $mail->setFrom('petheroapp.ar@gmail.com', 'Pethero App');
+            $mail->addAddress($reservation->getOwner()->getMail(), $reservation->getOwner()->getUserName());                   //Name is optional
+
+            //Content
+            $mail->isHTML(true);                                     //Set email format to HTML
+            $mail->Subject = 'Your reservation has been denied';
+           
+            $mail->Body =  $body;
+                          
+            $mail->send();
+            return true;
+
+        } catch (Exception $e) {
+            return false;
+
+        }
+    }
 
     public function getCredentials(){
         
