@@ -12,7 +12,6 @@ class KeeperController{
     private $KeeperDao;
     private $ReservationDAO;
 
-
     function __construct(){
         $this->KeeperDao = new KeeperDAO();
         $this->ReservationDAO = new ReservationDAO();
@@ -43,7 +42,7 @@ class KeeperController{
         $owner = $_SESSION["loggedUser"];
         $petList = $owner->getPetList();
         $reservation=$this->ReservationDAO->getReservationPetId($pet);
-
+        $flag = true;
         foreach($reservation as $row){
             if(($dateStart >=  $row->getDateStart() && $dateStart <= $row->getDateEnd()) || ($dateEnd >=  $row->getDateStart() && $dateEnd <= $row->getDateEnd()) ||  ($dateStart <= $row->getDateStart() && $dateEnd >= $row->getDateEnd())){
                 HomeController::showMessage("There is an overlap with the dates you booked a reservation. The pet already has a reservation for that period");
@@ -51,7 +50,7 @@ class KeeperController{
                 $flag=false;
             }
         }
-        if($flag){
+        if($flag==true){
             if($date1->format("Y-m-d") > $date2->format("Y-m-d") ){
                 HomeController::showMessage("End date cant be less than start date.");   
                 $this->showKeeperList();

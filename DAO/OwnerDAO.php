@@ -1,8 +1,10 @@
 <?php
 namespace DAO;
 
+use Controllers\HomeController;
 use Models\Owner as Owner;
 //use Models\Pet as Pet;
+use DAO\PetDao as PetDao;
 use DAO\Connection as Connection;
 use Exception;
 
@@ -159,7 +161,12 @@ class OwnerDAO{
     {
 
         $PetDAO = new PetDao();
-        $PetDAO->cancelPetRegister($petId);
+        $flag = $PetDAO->cancelPetRegister($petId);
+        if($flag==0){
+            HomeController::showMessage("Cannot remove pets with reservations.");
+        }else if($flag ==1){
+            HomeController::showMessage("Pet removed succesfully.");
+        }
 
     }
 

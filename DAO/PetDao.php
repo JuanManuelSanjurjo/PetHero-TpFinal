@@ -80,30 +80,30 @@ class PetDao{
     public function cancelPetRegister($id)
     {
         try{
-        $query= "DELETE FROM ".$this->tableName." WHERE (id = :id)";
- 
-        $parameters["id"] = $id;
+            $query= "DELETE FROM ".$this->tableName." WHERE (id = :id)";
+    
+            $parameters["id"] = $id;
 
-        $pet = $this->getById($id); // Guarda el objeto PET para poder borrar las imagenes/videos despues de la QUERY
-        
-        $this->connection = Connection::GetInstance();
-        
-        $this->connection->ExecuteNonQuery($query,$parameters);
-        
-        //// BORRA IMAGENES DEL DIRECTORIO
-        if($pet->getPhoto()!=null){
-        unlink(ROOT.VIEWS_PATH."user-images/" . $pet->getPhoto());
-        }
-        if($pet->getVaxPlanImg()!=null){
-        unlink(ROOT.VIEWS_PATH."user-images/" . $pet->getVaxPlanImg());
-        }
-        if($pet->getVideo()!=null){
-            unlink(ROOT.VIEWS_PATH."user-videos/" . $pet->getVideo());
-        } 
-        //// BORRA IMAGENES DEL DIRECTORIO
-
+            $pet = $this->getById($id); // Guarda el objeto PET para poder borrar las imagenes/videos despues de la QUERY
+            
+            $this->connection = Connection::GetInstance();
+            
+            $this->connection->ExecuteNonQuery($query,$parameters);
+            
+            //// BORRA IMAGENES DEL DIRECTORIO
+            if($pet->getPhoto()!=null){
+            unlink(ROOT.VIEWS_PATH."user-images/" . $pet->getPhoto());
+            }
+            if($pet->getVaxPlanImg()!=null){
+            unlink(ROOT.VIEWS_PATH."user-images/" . $pet->getVaxPlanImg());
+            }
+            if($pet->getVideo()!=null){
+                unlink(ROOT.VIEWS_PATH."user-videos/" . $pet->getVideo());
+            } 
+            //// BORRA IMAGENES DEL DIRECTORIO
+            return 1;
         }catch(Exception $ex){
-            HomeController::showMessage("Cannot remove pets with reservations.");
+            return 0;
             //throw $ex;
         }
     }

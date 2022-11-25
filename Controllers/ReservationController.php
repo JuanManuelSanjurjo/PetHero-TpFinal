@@ -2,15 +2,12 @@
 namespace Controllers;
 
 use Controllers\KeeperController as KeeperController;
-//use DAO\UserDao as UserDao;
+
 use Models\User as User;
 use Models\Keeper as Keeper;
 use Models\Owner as Owner;
 use Models\Pet as Pet;
-//use Models\TimeInterval as TimeInterval;
-use DAO\OwnerDAO as OwnerDAO;
 use DAO\KeeperDAO as KeeperDao;
-use DAO\PetDao as PetDAO;
 use DAO\ReservationDAO as ReservationDAO;
 use DateTimeZone;
 use Models\Reservation;
@@ -18,17 +15,12 @@ use PHPMailer\MailService as MailService;
 
 class ReservationController{
 
-    private $OwnerDao;  
     private $KeeperDao;
     private $ReservationDAO;
-    private $PetDAO;
 
-    
     function __construct(){
-        $this->OwnerDao = new OwnerDAO();
         $this->KeeperDao = new KeeperDao();
         $this->ReservationDAO = new ReservationDAO();
-        $this->PetDAO = new PetDao();   
     }
 
     public function makeReservation($pet, $owner, $keeper, $dateStart, $dateEnd){ // PONER PARAMETROS
@@ -116,7 +108,6 @@ class ReservationController{
                 array_push($ReservationList,$row);
             }
         }
-       
     
         require_once(VIEWS_PATH."validate-session.php");
         require_once(VIEWS_PATH."reservation-historic.php"); 
@@ -137,7 +128,6 @@ class ReservationController{
             array_push($ReservationList,$row);
         }
     }
-    
 
     require_once(VIEWS_PATH."validate-session.php");
     require_once(VIEWS_PATH."reservation-list.php"); 
@@ -277,11 +267,6 @@ public function getPayment($reservationId){
     }
 
 }
-
-
-
-
-
 
 
 

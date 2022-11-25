@@ -17,8 +17,7 @@ class ChatController{
 
     function __construct(){
         $this->ChatDao = new ChatDao();
-        $this->TextDAO = new TextDAO();
-            
+        $this->TextDAO = new TextDAO(); 
     }
 
     public function showChat($keeper, $owner){

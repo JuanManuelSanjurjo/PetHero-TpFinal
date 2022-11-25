@@ -64,7 +64,6 @@ class OwnerController{
        $user = $_SESSION["loggedUser"];
        $_SESSION["loggedUser"] = $ownerDao->getById($user->getId());
        
-       HomeController::showMessage("Pet removed succesfully.");
         $this->showMyPetList();
     }
 
