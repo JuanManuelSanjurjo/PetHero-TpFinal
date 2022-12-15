@@ -149,6 +149,7 @@ class ReservationController{
     require_once(VIEWS_PATH."reservation-list.php"); 
 }
 
+
 public function getAllOwnerReservationsById(){
     $user= $_SESSION["loggedUser"];
     $reservationListToFiltrate = $this->ReservationDAO->getAllOwnerReservationsById($user->getId());
@@ -263,14 +264,24 @@ private function checkPaymentImg($file, $reservationId){
 public function uploadPayment($reservationId, $payment){
     require_once(VIEWS_PATH."validate-session.php");
     $user = $_SESSION["loggedUser"];
-    echo "asdasdasdasdasdasdasd";
     if(isset($_POST)  )  {
         $photoName = $this->checkPaymentImg($payment, $reservationId);       
     }        
 
     $this->ReservationDAO->updatePayment($photoName,$reservationId);
     
-    $ReservationList=$this->ReservationDAO->getAllOwnerReservationsById($user->getId());
+    $reservationListToFiltrate= $this->ReservationDAO->getAllOwnerReservationsById($user->getId());
+    $ReservationList=array();
+    date_default_timezone_set("America/Buenos_aires");
+    $today=date("Y-m-d",time());    
+    
+    foreach($reservationListToFiltrate as $row){
+
+        if($row->getDateStart()>=$today){ // && is not cancelled
+            
+            array_push($ReservationList,$row);
+        }
+    }
 
     require_once(VIEWS_PATH."reservation-list-owner.php");
 }

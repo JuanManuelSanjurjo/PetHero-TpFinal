@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-11-2022 a las 02:51:26
+-- Tiempo de generación: 15-12-2022 a las 15:03:46
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -41,7 +41,8 @@ INSERT INTO `chats` (`id`, `owner`, `keeper`) VALUES
 (9, 10, 266),
 (12, 10, 268),
 (13, 9, 266),
-(14, 9, 265);
+(14, 9, 265),
+(15, 9, 268);
 
 -- --------------------------------------------------------
 
@@ -69,7 +70,13 @@ INSERT INTO `keepers` (`id`, `mail`, `password`, `userName`, `name`, `surname`, 
 (265, 'melisa.labra@outlook.com', 'Melisa123', 'Melisa', 'Melisa', 'Labra', 'keeper', 3000, 'Small'),
 (266, 'jose@hotmail.com', 'Jose1234', 'Jose', 'Jose', 'Sanjurjo', 'keeper', 3500, 'Medium'),
 (267, 'sofia@hotmail.com', 'Sofia123', 'Sofia', 'Sofia', 'Guitierrez', 'keeper', 4000, 'Small'),
-(268, 'juanmanuelsanjurjo@gmail.com', 'Juanma123', 'JuanmaKeeper', 'Juan Manuel', 'Keeper', 'keeper', 2600, 'Big');
+(268, 'juanmanuelsanjurjo@gmail.com', 'Juanma123', 'JuanmaKeeper', 'Juan Manuel', 'Keeper', 'keeper', 2600, 'Big'),
+(269, 'metal_8920@hotmail.com', 'Mario123', 'Marito baracus', 'Mario', 'Baracus', 'keeper', 3200, 'Medium'),
+(270, 'mariano@hotmail.com', 'Mariano123', 'Mariano F', 'Mariano', 'Fernandez', 'keeper', 4500, 'Medium'),
+(271, 'asd@asd.com', 'Juanma123', 'ASD DSA', 'ASD', 'FGH', 'keeper', 5000, 'Small'),
+(272, 'cristianhalm@hotmail.com', 'Cristian123', 'Cristian', 'Cristian', 'Halm', 'keeper', 4500, 'Medium'),
+(273, 'nicolasbertolucci@hotmail.com', 'Nicolas123', 'Nico', 'Nicolas', 'Bertolucci', 'keeper', 4700, 'Small'),
+(274, 'esteban@hotmail.com', 'Esteban123', 'Steban', 'Esteban', 'Quito', 'keeper', NULL, 'small');
 
 -- --------------------------------------------------------
 
@@ -93,7 +100,9 @@ CREATE TABLE `owners` (
 
 INSERT INTO `owners` (`id`, `mail`, `password`, `userName`, `name`, `surname`, `userType`) VALUES
 (9, 'juanmanuelsanjurjo@hotmail.com', 'Juanma123', 'Juanma', 'Juan Manuel', 'Sanjurujo', 'owner'),
-(10, 'fernandezmariano12@gmail.com', 'Mariano123', 'Mariano', 'Mariano', 'Fernandez', 'owner');
+(10, 'fernandezmariano12@gmail.com', 'Mariano123', 'Mariano', 'Mariano', 'Fernandez', 'owner'),
+(11, 'cristian.halm92@gmail.com', 'Cristian123', 'Cristian', 'Cristian', 'Halm', 'owner'),
+(12, 'nicoberto13@gmail.com', 'Nicolas123', 'Nicolas', 'Nicolas', 'Bertolucci', 'owner');
 
 -- --------------------------------------------------------
 
@@ -153,10 +162,16 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`reservationNumber`, `owner`, `keeper`, `compensation`, `dateStart`, `dateEnd`, `pet`, `confirmation`, `payment`) VALUES
-(266, 10, 268, 0, '2022-12-01', '2022-12-07', 44, 1, NULL),
-(267, 10, 266, 0, '2022-12-16', '2022-12-18', 55, NULL, NULL),
-(268, 9, 266, 0, '2022-12-28', '2022-12-30', 45, NULL, NULL),
-(269, 9, 265, 0, '2022-12-21', '2022-12-23', 49, NULL, NULL);
+(10, 10, 268, 12500, '2021-12-10', '2021-12-20', 53, 1, NULL),
+(15, 9, 268, 10500, '2021-11-10', '2021-11-20', 46, 1, NULL),
+(266, 10, 268, 0, '2022-12-01', '2022-12-07', 44, 1, '10_266_payment.jpg'),
+(267, 10, 266, 0, '2022-12-16', '2022-12-18', 55, 1, '10_267_payment.jpg'),
+(268, 9, 266, 0, '2022-12-28', '2022-12-30', 45, 1, '9_268_payment.jpg'),
+(269, 9, 265, 0, '2022-12-21', '2022-12-23', 49, NULL, NULL),
+(1500, 9, 266, 11000, '2022-10-10', '2022-10-20', 50, NULL, NULL),
+(1501, 9, 268, 15000, '2022-09-20', '2022-09-25', 49, NULL, NULL),
+(2502, 10, 270, 0, '2023-01-17', '2023-01-20', 53, 1, '10_2502_payment.jpg'),
+(2503, 9, 268, 0, '2022-12-26', '2022-12-30', 49, 1, '9_2503_payment.jpg');
 
 -- --------------------------------------------------------
 
@@ -199,7 +214,10 @@ INSERT INTO `texts` (`id`, `idChat`, `message`, `sender`, `receiver`, `textDate`
 (22, 12, 'Hola como estas, queria saber un poco del lugar donde los cuidas, muchas gracias!', 10, 268, '2022-11-24 22:38:17.0'),
 (23, 12, 'Hola, como va? es un lugar grande con patio, asi que si quiere estar al aire libre puede tranquilamente. Alguna otra duda?', 268, 10, '2022-11-24 22:42:28.0'),
 (24, 12, 'Genial, muchas gracias, nos vemos el dia de la reserva!', 10, 268, '2022-11-24 22:42:56.0'),
-(25, 13, 'Hola, buen dia, necesitaria saber si te gusta hacer burpes?, gracias.', 9, 266, '2022-11-24 22:47:42.0');
+(25, 13, 'Hola, buen dia, necesitaria saber si te gusta hacer burpes?, gracias.', 9, 266, '2022-11-24 22:47:42.0'),
+(26, 13, 'Hola como estas?', 9, 266, '2022-11-25 21:52:41.0'),
+(27, 13, 'si mew gusta no nhay problema\r\n', 266, 9, '2022-11-25 21:53:06.0'),
+(28, 9, 'Hola jose, como estas?', 10, 266, '2022-12-15 10:15:40.0');
 
 -- --------------------------------------------------------
 
@@ -250,7 +268,14 @@ INSERT INTO `timeinterval` (`id`, `start`, `end`, `idKeeper`) VALUES
 (130, '2023-01-16', '2023-01-25', 267),
 (131, '2023-01-16', '2023-01-25', 267),
 (132, '2023-01-16', '2023-01-25', 267),
-(133, '2023-01-16', '2023-01-25', 267);
+(133, '2023-01-16', '2023-01-25', 267),
+(136, '2022-12-20', '2022-12-25', 270),
+(137, '2022-12-26', '2022-12-30', 270),
+(138, '2023-01-01', '2023-01-05', 270),
+(139, '2023-01-06', '2023-01-10', 270),
+(140, '2023-01-11', '2023-01-15', 270),
+(141, '2023-01-16', '2023-01-20', 270),
+(142, '2023-01-21', '2023-01-30', 270);
 
 --
 -- Índices para tablas volcadas
@@ -314,43 +339,43 @@ ALTER TABLE `timeinterval`
 -- AUTO_INCREMENT de la tabla `chats`
 --
 ALTER TABLE `chats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `keepers`
 --
 ALTER TABLE `keepers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=269;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=275;
 
 --
 -- AUTO_INCREMENT de la tabla `owners`
 --
 ALTER TABLE `owners`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservationNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=270;
+  MODIFY `reservationNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2504;
 
 --
 -- AUTO_INCREMENT de la tabla `texts`
 --
 ALTER TABLE `texts`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `timeinterval`
 --
 ALTER TABLE `timeinterval`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 
 --
 -- Restricciones para tablas volcadas

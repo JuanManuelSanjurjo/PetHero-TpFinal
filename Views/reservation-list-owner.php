@@ -39,8 +39,8 @@
                         </form>
                         <form action="<?php echo FRONT_ROOT."Reservation/uploadPayment"?>" method="post" enctype="multipart/form-data"> <!-- cambiar el CONTROLLER -->
                             <input type="hidden" id="id" name="reservationId" value="<?php echo $reservation->getReservationNumber()  ?>"></input>
-                            <button  class="large-button" style="padding: 5px 5px;"><label for="files" >Select payment</label></button>
-                            <input type="file" id="files" class="defaultFileInput" placeholder="payamentImg" name="payment" id="Photo" accept=".jpeg,.jpg,.pdf,.gif,.png,.jfif" required hidden>
+                          <!--  <button  class="large-button" style="padding: 5px 5px;"><label for="files" >Select payment</label></button> -->
+                            <input type="file" id="files" class="defaultFileInput" placeholder="payamentImg" name="payment" id="Photo" accept=".jpeg,.jpg,.pdf,.gif,.png,.jfif" required >
                             <button type="submit"  class="large-button" style="padding: 5px 5px;">Upload</button>
                         </form>
                       <?php 
