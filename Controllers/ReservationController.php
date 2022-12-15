@@ -263,7 +263,7 @@ private function checkPaymentImg($file, $reservationId){
 public function uploadPayment($reservationId, $payment){
     require_once(VIEWS_PATH."validate-session.php");
     $user = $_SESSION["loggedUser"];
-
+    echo "asdasdasdasdasdasdasd";
     if(isset($_POST)  )  {
         $photoName = $this->checkPaymentImg($payment, $reservationId);       
     }        

@@ -1,9 +1,7 @@
 <?php
 namespace Models;
 
-
 class Text{
-
     private $id;
     private $idChat;
     private $message;

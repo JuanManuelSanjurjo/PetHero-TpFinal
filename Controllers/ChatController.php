@@ -10,7 +10,6 @@ use Models\Chat as Chat;
 use DateTimeZone;
 
 
-
 class ChatController{
     private $ChatDao;
     private $TextDAO;
